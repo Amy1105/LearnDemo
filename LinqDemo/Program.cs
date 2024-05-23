@@ -67,7 +67,72 @@ foreach (char c in stringQuery2)
 //}
 
 
+{
+
+
+
+    Pet pet1 = new Pet() { Name = "Turbo", Age = 2 };
+    Pet pet2 = new Pet() { Name = "Peanut", Age = 8 };
+
+    // Create two lists of pets.
+    List<Pet> pets1 = new List<Pet> { pet1, pet2 };
+    List<Pet> pets2 =
+        new List<Pet> { new Pet { Name = "Turbo", Age = 2 },
+                        new Pet { Name = "Peanut", Age = 8 } };
+
+    bool equal = pets1.SequenceEqual(pets2);
+
+    Console.WriteLine("The lists {0} equal.", equal ? "are" : "are not");
+
+
+/*
+ This code produces the following output:
+
+ The lists are not equal.
+*/
+}
+
+{
+
+    // Create two arrays.
+    string[] fruits1 = { "orange" };
+    string[] fruits2 = { "orange", "apple" };
+
+    // Get the only item in the first array.
+    string fruit1 = fruits1.AsQueryable().Single();
+
+    Console.WriteLine("First query: " + fruit1);
+
+    try
+    {
+        // Try to get the only item in the second array.
+        string fruit2 = fruits2.AsQueryable().Single();
+        Console.WriteLine("Second query: " + fruit2);
+    }
+    catch (System.InvalidOperationException)
+    {
+        Console.WriteLine(
+            "Second query: The collection does not contain exactly one element."
+            );
+    }
+
+    /*
+        This code produces the following output:
+
+        First query: orange
+        Second query: The collection does not contain exactly one element
+    */
+}
+
 Console.ReadKey();
+
+
+class Pet
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
 
 
 
