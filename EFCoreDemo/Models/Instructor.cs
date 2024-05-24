@@ -39,6 +39,7 @@ namespace EFCoreDemo.Models
 
         public ICollection<Course> Courses { get; set; }
 
+        [Display(Name = "Office")]
         public int OfficeAssignmentID { set; get; }
         public OfficeAssignment OfficeAssignment { get; set; }
     } 

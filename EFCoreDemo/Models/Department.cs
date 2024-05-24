@@ -28,9 +28,12 @@ namespace EFCoreDemo.Models
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
+        [Display(Name = "Responsible person")]
         public int? InstructorID { get; set; }
 
         public Instructor Administrator { get; set; }
-        public ICollection<Course> Courses { get; set; }
+
+        [Display(Name = "所属该部门的老师")]
+        public ICollection<Instructor> Instructors { get; set; }
     }
 }

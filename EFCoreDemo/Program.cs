@@ -45,16 +45,16 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
 
 //事务
 
-var Count = context.Courses.Count();
+//var Count = context.Courses.Count();
 
-Console.WriteLine($"before  count:{Count}");
-Stopwatch stopwatch = Stopwatch.StartNew();
+//Console.WriteLine($"before  count:{Count}");
+//Stopwatch stopwatch = Stopwatch.StartNew();
 
-await EFBullkInsert.AddConectTablesAsync(context);
-stopwatch.Stop();
-Console.WriteLine($"addRange  spend:{stopwatch.ElapsedMilliseconds} ms");
-Count = context.Courses.Count();
-Console.WriteLine($"after  count:{Count}");
+//await EFBullkInsert.AddConectTablesAsync(context);
+//stopwatch.Stop();
+//Console.WriteLine($"addRange  spend:{stopwatch.ElapsedMilliseconds} ms");
+//Count = context.Courses.Count();
+//Console.WriteLine($"after  count:{Count}");
 
 
 //简单实体的批量添加
@@ -94,5 +94,15 @@ Console.WriteLine($"after  count:{Count}");
 //bullk快速的原因？？？
 
 
+
+
+{
+
+
+    LinqConect.SingleInclude(context);
+
+   // LinqConect.SingleLINQ(context);
+
+}
 Console.ReadKey();
 
