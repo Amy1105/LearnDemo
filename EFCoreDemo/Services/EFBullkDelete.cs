@@ -1,42 +1,29 @@
-﻿using EFCore.BulkExtensions;
+﻿using BenchmarkDotNet.Attributes;
+using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreDemo.Services
 {
     public class EFBullkDelete
     {
-        public static void AddStudents(SchoolContext context)
-        {
-            //一个学生可以有多门课，先添加课
-
-            List<Student> students = new List<Student>(); 
-            foreach (var i in Enumerable.Range(1, 100))
-            {
-                students.Add(new Student
-                {
-                    FirstMidName = "Gytis"+i.ToString(),
-                    LastName = "Barzdukas",
-                    EnrollmentDate = DateTime.Parse("2018-09-01"),                   
-                });
-            }
-            context.Students.AddRange(students);
-            context.SaveChanges();  
+        [Benchmark]
+        public static Task DeletesAsync(SchoolContext context)
+        {           
+            var courses = context.Courses.AsNoTracking().ToList();           
+            context.Courses.RemoveRange(courses);
+            return context.SaveChangesAsync();
         }
 
-
-        public static void AddStudentsWithBullk(SchoolContext context)
-        {
-            List<Student> students = new List<Student>();
-            foreach (var i in Enumerable.Range(101, 100))
+        [Benchmark]
+        public static Task DeleteWithBullkAsync(SchoolContext context)
+        {         
+            var courses = context.Courses.AsNoTracking().ToList();           
+            var configUpdateBy = new BulkConfig
             {
-                students.Add(new Student
-                {
-                    FirstMidName = "GytisBullk"+i.ToString(),
-                    LastName = "Barzdukas",
-                    EnrollmentDate = DateTime.Parse("2019-09-01"),
-                });
-            }           
-            context.BulkInsert(students);
+                SetOutputIdentity = true,               
+            };
+            return context.BulkDeleteAsync(courses, configUpdateBy);
         }
     }
 }
