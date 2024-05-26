@@ -17,7 +17,7 @@ namespace EFCoreDemo.Models
         public string Title { get; set; }
 
         [Range(0, 5)]
-        public int Credits { get; set; }    
+        public int? Credits { get; set; }    
 
         public ICollection<Enrollment> Enrollments { get; set; }
         public ICollection<Instructor> Instructors { get; set; }

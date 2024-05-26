@@ -3,6 +3,7 @@ using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace EFCoreDemo.Services
 {
@@ -40,22 +41,29 @@ namespace EFCoreDemo.Services
         public  Task AddAndUpdateWithBullkAsync(SchoolContext context)
         {
             int counter = 0;
-            var courses = context.Courses.AsNoTracking().ToList();
+            var courses = context.Courses.ToList();
             foreach (var course in courses)
             {
                 course.Title = "Desc .BulkUpdate " + counter++;
             }
             courses.AddRange(Common.GetCourses(10000));
+            var lst = courses.Where(x => x.Credits == null).Count();
+            Console.WriteLine(lst);
             var configUpdateBy = new BulkConfig
             {
                 //当对多个相关表执行BulkInsert时很有用，以获取表的PK并将其设置为第二个的FK。
                 SetOutputIdentity = true,
-                //如果“标识”列存在并且未添加到UpdateByProp中，则会自动排除该列
-                UpdateByProperties = new List<string> { nameof(Course.Title) },
-                //如果需要更改超过一半的columns，则可以使用Properties ToExclude。不允许同时设置这两个列表。
-                //PropertiesToInclude = new List<string> { nameof(Item.Name), nameof(Item.Description) }, // "Name" in list not necessary since is in UpdateBy
+                //用于指定自定义属性，我们希望通过该属性进行更新。
+                //UpdateByProperties = new List<string> { nameof(Course.CourseID) },
+                //执行插入/更新时，可以通过添加明确选择要影响的属性他们的名字输入到PropertiesToInclude中。
+                PropertiesToInclude = new List<string> { nameof(Course.Title),nameof(Course.Credits) }, // "Name" in list not necessary since is in UpdateBy
             };
-            return context.BulkInsertOrUpdateAsync(courses, configUpdateBy);
-        }       
+            return context.BulkInsertOrUpdateAsync(courses, configUpdateBy,a=> WriteProgress(a));
+        }
+
+        private static void WriteProgress(decimal percentage)
+        {
+            Debug.WriteLine(percentage);
+        }
     }
 }

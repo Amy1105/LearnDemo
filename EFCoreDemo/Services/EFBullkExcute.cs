@@ -30,14 +30,14 @@ namespace EFCoreDemo.Services
 
         #region  新增
         [Benchmark]
-        public  Task AddConectTablesAsync()
+        public  Task AddConectTablesAsync(SchoolContext _context)
         {
             _context.Courses.AddRange(Common.GetCourses(Count));
             return _context.SaveChangesAsync();
         }
 
         [Benchmark]
-        public  Task AddConectTablesWithBullkAsync()
+        public  Task AddConectTablesWithBullkAsync(SchoolContext _context)
         {
             _context.BulkInsertAsync(Common.GetCourses(Count));
             return _context.BulkSaveChangesAsync();

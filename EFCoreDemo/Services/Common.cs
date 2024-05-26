@@ -1,4 +1,5 @@
 ﻿using EFCoreDemo.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +34,22 @@ namespace EFCoreDemo.Services
                 Courses.Add(new Course
                 {
                     Title = "bulkLiterature" + i.ToString(),
-                    Credits = i,
+                    Credits = 5,
                     Instructors = instructors
                 });
             }
             return Courses;
+        }
+
+        public static void Print(SchoolContext context,int n)
+        {
+            var acource = context.Courses.Include(x => x.Instructors).First(x => x.CourseID==n);
+            Console.WriteLine($"课程:{acource.CourseID},{acource.Title}");
+
+            foreach (var instructor in acource.Instructors)
+            {
+                Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+            }
         }
     }
 }
