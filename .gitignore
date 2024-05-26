@@ -87,4 +87,5 @@ TVC.Server/VOL.WebApi/Log/
 
 package-lock.json
 yarn.lock
+.db
 

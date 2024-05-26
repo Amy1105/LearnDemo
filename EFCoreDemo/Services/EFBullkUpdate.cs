@@ -1,14 +1,30 @@
 ﻿using BenchmarkDotNet.Attributes;
 using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreDemo.Services
 {
     public class EFBullkUpdate
     {
+        private const int Count = 10000;
+
+        SchoolContext context = null;
+        [GlobalSetup]
+        public async Task Setup()
+        {
+            var connection = new SqliteConnection("Data Source=../../../School.db");
+            connection.Open();
+            var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
+            builder.UseSqlite(connection);
+            context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
+
+        }
+
+
         [Benchmark]
-        public static Task UpdatesAsync(SchoolContext context)
+        public  Task UpdatesAsync(SchoolContext context)
         {
             int counter = 0;
             var courses = context.Courses;
@@ -21,7 +37,7 @@ namespace EFCoreDemo.Services
         }
 
         [Benchmark]
-        public static Task UpdateWithBullkAsync(SchoolContext context)
+        public  Task UpdateWithBullkAsync(SchoolContext context)
         {
             int counter = 0;
             var courses = context.Courses.AsNoTracking();
