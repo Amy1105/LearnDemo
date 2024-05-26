@@ -2,62 +2,28 @@
 using BenchmarkDotNet.Running;
 using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace EFCoreDemo.Services
 {
+    [MemoryDiagnoser]
     public class EFBullkInsert
     {
         private const int Count = 10000;
-
-        #region 单体批量新增
-        [Benchmark]
-        public static void AddStudents(SchoolContext context)
-        {
-            //一个学生可以有多门课，先添加课
-
-            List<Student> students = new List<Student>();
-            foreach (var i in Enumerable.Range(1, Count))
-            {
-                students.Add(new Student
-                {
-                    FirstMidName = "Gytis" + i.ToString(),
-                    LastName = "Barzdukas",
-                    EnrollmentDate = DateTime.Parse("2018-09-01"),
-                });
-            }
-            context.Students.AddRange(students);
-            context.SaveChanges();
-        }
-
-        [Benchmark]
-        public static void AddStudentsWithBullk(SchoolContext context)
-        {
-            List<Student> students = new List<Student>();
-            foreach (var i in Enumerable.Range(1, Count))
-            {
-                students.Add(new Student
-                {
-                    FirstMidName = "GytisBullk" + i.ToString(),
-                    LastName = "Barzdukas",
-                    EnrollmentDate = DateTime.Parse("2019-09-01"),
-                });
-            }
-            context.BulkInsert(students);
-        }
-        #endregion
-
-        #region  联表新增
+      
+        #region  新增
         [Benchmark]
         public static Task AddConectTablesAsync(SchoolContext context)
         {           
-            context.Courses.AddRange(GetCourses());
+            context.Courses.AddRange(GetCourses(Count));
             return context.SaveChangesAsync();
         }
 
         [Benchmark]
         public static Task AddConectTablesWithBullkAsync(SchoolContext context)
         {
-            context.BulkInsertAsync(GetCourses());
+            context.BulkInsertAsync(GetCourses(Count));
             return context.BulkSaveChangesAsync();
         }
 
@@ -67,7 +33,7 @@ namespace EFCoreDemo.Services
         /// 构建课程实体（联表）
         /// </summary>
         /// <returns></returns>
-        public static List<Course> GetCourses()
+        public static List<Course> GetCourses(int Count)
         {
             List<Course> Courses = new List<Course>();
             foreach (var i in Enumerable.Range(1, Count))
@@ -78,36 +44,101 @@ namespace EFCoreDemo.Services
                 {
                     instructors.Add(new Instructor
                     {
-                        FirstMidName = "Kim" + i.ToString() + "-" + j.ToString(),
+                        FirstMidName = "bulkKim" + i.ToString() + "-" + j.ToString(),
                         LastName = "Abercrombie" + i.ToString() + "-" + j.ToString(),
                         HireDate = DateTime.Parse("1995-03-11"),
                     });
-                }
-                //这门课所属部门
-                var engineering = new Department
-                {
-                    Name = "Engineering" + i.ToString(),
-                    Budget = 350000,
-                    StartDate = DateTime.Parse("2007-09-01"),
-                };
+                }                
                 //这门课
                 Courses.Add(new Course
                 {
-                    Title = "Literature",
-                    Credits = 4,
-                    Instructors = instructors,
-                    Department = engineering
+                    Title = "bulkLiterature"+i.ToString(),
+                    Credits =i,
+                    Instructors = instructors      
                 });
             }
             return Courses;
         }
 
 
-        #region  新增或修改
+
+        //#region  update    
+
+        //[Benchmark]
+        //public static Task UpdatesAsync(SchoolContext context)
+        //{
+        //    int counter = 0;
+        //    var courses = context.Courses;
+        //    foreach (var course in courses)
+        //    {
+        //        course.Title = "Desc Update " + counter++;
+        //    }
+        //    context.Courses.UpdateRange(courses);
+        //    return context.SaveChangesAsync();
+        //}
+
+        //[Benchmark]
+        //public static Task UpdateWithBullkAsync(SchoolContext context)
+        //{
+        //    int counter = 0;
+        //    var courses = context.Courses.AsNoTracking();
+        //    foreach (var course in courses)
+        //    {
+        //        course.Title = "Desc .BulkUpdate " + counter++;
+        //    }
+        //    var configUpdateBy = new BulkConfig
+        //    {
+        //        //当对多个相关表执行BulkInsert时很有用，以获取表的PK并将其设置为第二个的FK。
+        //        SetOutputIdentity = true,
+        //        //如果“标识”列存在并且未添加到UpdateByProp中，则会自动排除该列
+        //        UpdateByProperties = new List<string> { nameof(Course.Title) },
+        //        //如果需要更改超过一半的columns，则可以使用Properties ToExclude。不允许同时设置这两个列表。
+        //        //PropertiesToInclude = new List<string> { nameof(Item.Name), nameof(Item.Description) }, // "Name" in list not necessary since is in UpdateBy
+        //    };
+        //    return context.BulkUpdateAsync(courses, configUpdateBy);
+        //}
 
 
+        //#endregion
 
-        #endregion
+        //#region  add update
+
+        //[Benchmark]
+        //public static Task AddAndUpdatesAsync(SchoolContext context)
+        //{
+        //    int counter = 0;
+        //    var courses = context.Courses.ToList();
+        //    foreach (var course in courses)
+        //    {
+        //        course.Title = "Desc Update " + counter++;
+        //    }
+        //    courses.AddRange(GetCourses(10000));
+        //    context.Courses.UpdateRange(courses);
+        //    return context.SaveChangesAsync();
+        //}
+
+        //[Benchmark]
+        //public static Task AddAndUpdateWithBullkAsync(SchoolContext context)
+        //{
+        //    int counter = 0;
+        //    var courses = context.Courses.AsNoTracking().ToList();
+        //    foreach (var course in courses)
+        //    {
+        //        course.Title = "Desc .BulkUpdate " + counter++;
+        //    }
+        //    courses.AddRange(GetCourses(10000));
+        //    var configUpdateBy = new BulkConfig
+        //    {
+        //        //当对多个相关表执行BulkInsert时很有用，以获取表的PK并将其设置为第二个的FK。
+        //        SetOutputIdentity = true,
+        //        //如果“标识”列存在并且未添加到UpdateByProp中，则会自动排除该列
+        //        UpdateByProperties = new List<string> { nameof(Course.Title) },
+        //        //如果需要更改超过一半的columns，则可以使用Properties ToExclude。不允许同时设置这两个列表。
+        //        //PropertiesToInclude = new List<string> { nameof(Item.Name), nameof(Item.Description) }, // "Name" in list not necessary since is in UpdateBy
+        //    };
+        //    return context.BulkInsertOrUpdateAsync(courses, configUpdateBy);
+        //}
+        //#endregion
 
     }
 }

@@ -7,6 +7,8 @@ using EFCoreDemo.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using EFCore.BulkExtensions;
+using BenchmarkDotNet.Running;
 
 var connection = new SqliteConnection("Data Source=../../../School.db");
 connection.Open();
@@ -16,22 +18,34 @@ builder.UseSqlite(connection);
 var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
 
 
-////建库
+//建库
 //context.Database.EnsureCreated();
 ////加初始化数据
 //DbInitializer.Initialize(context);
 //Console.WriteLine("data init.");
 
 
-//查询Course，Department，Enrollment，Instructor，OfficeAssignment，Student
-//var students = context.Students.Include(x=>x.Enrollments);
-//foreach(var student in students)
-//{
-//    Console.WriteLine($"student:{student.ID},{student.FullName}");
+var summery = BenchmarkRunnerCore.Run<typeof(Program).Assembly>();
 
-//    foreach (var enrollment in student.Enrollments)
+//await EFBullkInsert.AddConectTablesAsync(context);
+
+
+await EFBullkInsert.AddConectTablesWithBullkAsync(context);
+
+//查询Course，Department，Enrollment，Instructor，OfficeAssignment，Student
+
+//Console.WriteLine($"insert课程:{context.Courses.Count()}条");
+
+
+
+//var courses = context.Courses.Include(x => x.Instructors).Where(x=>x.CourseID>6000).Take(10);
+//foreach (var cource in courses)
+//{
+//    Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
+
+//    foreach (var instructor in cource.Instructors)
 //    {
-//        Console.WriteLine($"----enrollment :{enrollment.EnrollmentID}-{enrollment.Grade.ToString()}");
+//        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
 //    }
 //}
 
@@ -99,7 +113,7 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
 {
 
 
-    LinqConect.SingleInclude(context);
+    //LinqConect.SingleInclude(context);
 
    // LinqConect.SingleLINQ(context);
 

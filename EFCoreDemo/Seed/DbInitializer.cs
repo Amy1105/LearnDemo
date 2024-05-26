@@ -132,12 +132,15 @@ namespace EFCoreDemo.Seed
             var officeAssignments = new OfficeAssignment[]
             {
                 new OfficeAssignment {
+                    InstructorID=fakhouri.ID,
                     Instructor = fakhouri,
                     Location = "Smith 17" },
                 new OfficeAssignment {
+                     InstructorID=harui.ID,
                     Instructor = harui,
                     Location = "Gowan 27" },
                 new OfficeAssignment {
+                     InstructorID=kapoor.ID,
                     Instructor = kapoor,
                     Location = "Thompson 304" }
             };
@@ -191,7 +194,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 1050,
                 Title = "Chemistry",
                 Credits = 3,
-                Department = engineering,
+              
                 Instructors = new List<Instructor> { kapoor, harui }
             };
 
@@ -200,7 +203,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 4022,
                 Title = "Microeconomics",
                 Credits = 3,
-                Department = economics,
+               
                 Instructors = new List<Instructor> { zheng }
             };
 
@@ -209,7 +212,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 4041,
                 Title = "Macroeconomics",
                 Credits = 3,
-                Department = economics,
+              
                 Instructors = new List<Instructor> { zheng }
             };
 
@@ -218,7 +221,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 1045,
                 Title = "Calculus",
                 Credits = 4,
-                Department = mathematics,
+              
                 Instructors = new List<Instructor> { fakhouri }
             };
 
@@ -227,7 +230,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 3141,
                 Title = "Trigonometry",
                 Credits = 4,
-                Department = mathematics,
+              
                 Instructors = new List<Instructor> { harui }
             };
 
@@ -236,7 +239,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 2021,
                 Title = "Composition",
                 Credits = 3,
-                Department = english,
+              
                 Instructors = new List<Instructor> { abercrombie }
             };
 
@@ -245,7 +248,7 @@ namespace EFCoreDemo.Seed
                 CourseID = 2042,
                 Title = "Literature",
                 Credits = 4,
-                Department = english,
+             
                 Instructors = new List<Instructor> { abercrombie }
             };
 
