@@ -13,25 +13,19 @@ namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkDelete
     {
-        private const int Count = 10000;
-        SqliteConnection connection = null;   
-        
-        SchoolContext context = null;
+        private const int Count = 10000;       
 
-        [GlobalSetup]
-        public  void Setup()
+        [Benchmark]
+        public Task DeletesAsync()
         {
-            connection= new SqliteConnection("Data Source=School.db");
+            SqliteConnection connection = null;
+            SchoolContext context = null;
+            connection = new SqliteConnection("Data Source=School.db");
             connection.Open();
             var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
             builder.UseSqlite(connection);
             context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
-        }
-     
-        [Benchmark]
-        public Task DeletesAsync()
-        {
-            var courses = context.Courses.AsNoTracking().ToList();
+            var courses = context.Courses.Take(Count).AsNoTracking().ToList();
             context.Courses.RemoveRange(courses);
             return context.SaveChangesAsync();
         }
@@ -39,12 +33,15 @@ namespace EFCoreDemo.Services
         [Benchmark]
         public Task DeleteWithBullkAsync()
         {
-            var courses = context.Courses.AsNoTracking().ToList();
-            var configUpdateBy = new BulkConfig
-            {
-                SetOutputIdentity = true,
-            };
-            return context.BulkDeleteAsync(courses, configUpdateBy);
+            SqliteConnection connection = null;
+            SchoolContext context = null;
+            connection = new SqliteConnection("Data Source=School.db");
+            connection.Open();
+            var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
+            builder.UseSqlite(connection);
+            context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
+            var courses = context.Courses.Take(Count).AsNoTracking().ToList();           
+            return context.BulkDeleteAsync(courses);
         }
     }
 }

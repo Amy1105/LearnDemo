@@ -21,7 +21,9 @@ namespace EFCoreDemo.Services
         [GlobalSetup]
         public  void Setup()
         {
-            connection= new SqliteConnection("Data Source=School.db");
+            SqliteConnection connection = null;
+            SchoolContext context = null;
+            connection = new SqliteConnection("Data Source=School.db");
             connection.Open();
             var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
             builder.UseSqlite(connection);
@@ -41,8 +43,7 @@ namespace EFCoreDemo.Services
         [Benchmark]
         public  Task AddConectTablesWithBullkAsync()
         {
-            context.BulkInsertAsync(Common.GetCourses(Count));
-            return context.BulkSaveChangesAsync();
+            return context.BulkInsertAsync(Common.GetCourses(Count));            
         }
 
         #endregion

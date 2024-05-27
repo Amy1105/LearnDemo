@@ -13,48 +13,49 @@ namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkUpdate
     {
-        private const int Count = 10000;
-        SqliteConnection connection = null;   
-        
-        SchoolContext context = null;
+        private const int Count = 10000;                    
 
-        [GlobalSetup]
-        public  void Setup()
+        [Benchmark]
+        public async Task UpdatesAsync()
         {
-            connection= new SqliteConnection("Data Source=School.db");
+            SqliteConnection connection = null;
+
+            SchoolContext context = null;
+
+            connection = new SqliteConnection("Data Source=School.db");
             connection.Open();
             var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
             builder.UseSqlite(connection);
             context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
-        }
-     
-
-
-      
-
-        [Benchmark]
-        public void UpdatesAsync()
-        {
             int counter = 0;
-            var courses = context.Courses.AsNoTracking().ToList();
+            var courses = context.Courses.Take(Count).AsNoTracking().ToList();
             foreach (var course in courses)
             {
                 counter++;
                 course.Title = "Desc Update " + counter.ToString();
-            }
+            }         
             context.Courses.UpdateRange(courses);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         [Benchmark]
         public Task UpdateWithBullkAsync()
         {
+            SqliteConnection connection = null;
+
+            SchoolContext context = null;
+
+            connection = new SqliteConnection("Data Source=School.db");
+            connection.Open();
+            var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
+            builder.UseSqlite(connection);
+            context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
             int counter = 0;
-            var courses = context.Courses.AsNoTracking().ToList();
+            var courses = context.Courses.Take(Count).AsNoTracking().ToList();
             foreach (var course in courses)
             {
                 counter++;
-                course.Title = "Desc .BulkUpdate " + counter.ToString();
+                course.Title = "Desc .Bulk Update " + counter.ToString();
             }
             var configUpdateBy = new BulkConfig
             {
@@ -63,10 +64,7 @@ namespace EFCoreDemo.Services
                 //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
                 PropertiesToInclude = new List<string> { nameof(Course.Title) },
                 //用于指定自定义属性，我们希望通过该属性进行更新。
-                UpdateByProperties = new List<string> { nameof(Course.CourseID) },
-                CalculateStats = true,
-                //如果需要更改超过一半的columns，则可以使用Properties ToExclude。不允许同时设置这两个列表。
-                //PropertiesToInclude = new List<string> { nameof(Item.Name), nameof(Item.Description) }, // "Name" in list not necessary since is in UpdateBy
+                //UpdateByProperties = new List<string> { nameof(Course.CourseID) },                
             };
             return context.BulkUpdateAsync(courses, configUpdateBy);
         }

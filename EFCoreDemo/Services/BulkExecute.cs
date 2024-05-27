@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace EFCoreDemo.Services
 {
@@ -24,6 +25,14 @@ namespace EFCoreDemo.Services
             //初始化数据
             DbInitializer.Initialize(context);
             Console.WriteLine("data init.");
+        }
+
+        public static void Read(SchoolContext context)
+        {
+            var courses = new List<Course>();
+            var items = courses.Select(a => new Course { Credits =5 }).ToList(); // Items list with only Name set
+             context.BulkRead(items); //Items list will be loaded from Db with data(other properties)
+            Console.WriteLine(courses.Count);
         }
 
         public static Task AddConectTablesAsync(SchoolContext _context)
@@ -41,7 +50,7 @@ namespace EFCoreDemo.Services
         public static Task UpdatesAsync(SchoolContext context, int n)
         {
             int counter = 0;
-            var courses = context.Courses.Where(x => x.CourseID == n).AsNoTracking().ToList();
+            var courses = context.Courses.Where(x => x.CourseID < n).AsNoTracking().ToList();
             foreach (var course in courses)
             {
                 counter++;
@@ -54,29 +63,13 @@ namespace EFCoreDemo.Services
         public static Task UpdateWithBullkAsync(SchoolContext context, int n)
         {
             int counter = 0;
-            var courses = context.Courses.Where(x => x.CourseID == n).AsNoTracking().ToList();
+            var courses = context.Courses.Where(x => x.CourseID > n).AsNoTracking().ToList();
             foreach (var course in courses)
             {
                 counter++;
                 course.Title = "Desc .BulkUpdate " + counter.ToString();
             }
-            var configUpdateBy = new BulkConfig
-            {                                
-                PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
-
-                SetOutputIdentity = false,//Id值将更新为数据库中的新值
-
-                //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
-                //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
-
-                //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
-                PropertiesToInclude = new List<string> { nameof(Course.Title) },
-
-                //用于指定自定义属性，我们希望通过该属性进行更新。
-                //UpdateByProperties = new List<string> { nameof(Course.CourseID) },
-
-            };
-            return context.BulkUpdateAsync(courses, configUpdateBy);
+            return context.BulkUpdateAsync(courses);          
         }
        
         public  static Task AddAndUpdatesAsync(SchoolContext context)
@@ -137,7 +130,6 @@ namespace EFCoreDemo.Services
             context.Courses.RemoveRange(courses);
             return context.SaveChangesAsync();
         }
-
        
         public static Task DeleteWithBullkAsync(SchoolContext context)
         {

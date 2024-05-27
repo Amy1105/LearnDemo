@@ -1,10 +1,24 @@
 ﻿using EFCoreDemo.Services;
 using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Attributes;
+using EFCoreDemo;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 //支持的环境
 //支持的数据库类型
 
 {
+    //SqliteConnection connection = null;
+
+    //SchoolContext context = null;
+
+    //connection = new SqliteConnection("Data Source=../../../School.db");
+    //connection.Open();
+    //var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
+    //builder.UseSqlite(connection);
+    //context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
+
     //BulkExecute.InitDB(context);
 
     //Console.WriteLine($"before insert课程:{context.Courses.Count()}条");
@@ -14,6 +28,13 @@ using BenchmarkDotNet.Running;
     //Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
     //await BulkExecute.AddConectTablesWithBullkAsync(context);
     //Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+
+    //var count1 = context.Courses.Where(x => x.CourseID > 10000).AsNoTracking().Count();
+    //Console.WriteLine($"{count1}");
+
+    //var count2 = context.Courses.Where(x => x.CourseID < 10000).AsNoTracking().Count();
+    //Console.WriteLine($"{count2}");
+
 
     //Console.WriteLine($"before update");
     //Common.Print(context, 7744);
@@ -64,8 +85,12 @@ using BenchmarkDotNet.Running;
 
 
 //基准测试
-var summary = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+//var summary = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
 
 
-Console.WriteLine("summary:");
-Console.WriteLine(summary);
+//var summary = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
+
+
+var summary = BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
+
+Console.ReadKey();
