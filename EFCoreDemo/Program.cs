@@ -1,21 +1,5 @@
-﻿
-
-using EFCoreDemo;
-using EFCoreDemo.Models;
-using EFCoreDemo.Seed;
-using EFCoreDemo.Services;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using EFCore.BulkExtensions;
+﻿using EFCoreDemo.Services;
 using BenchmarkDotNet.Running;
-
-var connection = new SqliteConnection("Data Source=../../../School.db");
-connection.Open();
-
-var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
-builder.UseSqlite(connection);
-var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
 
 //支持的环境
 //支持的数据库类型
@@ -43,7 +27,6 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
     //Console.WriteLine($"after update bulk");
     //Common.Print(context, 7745);
 
-
     //Console.WriteLine($"before add update");
     //Common.Print(context, 10500);
     //await BulkExecute.AddAndUpdatesAsync(context);
@@ -51,24 +34,20 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
     //Common.Print(context, 10500);
     //Console.WriteLine($"add update 课程:{context.Courses.Count()}条");
 
-
-    Console.WriteLine($"before add update bulk");
-    Common.Print(context, 8501);
-    await BulkExecute.AddAndUpdateWithBullkAsync(context);
-    Console.WriteLine($"after add update bulk");
-    Common.Print(context, 8501);
-    Console.WriteLine($"add update 课程:{context.Courses.Count()}条");
-
+    //Console.WriteLine($"before add update bulk");
+    //Common.Print(context, 8501);
+    //await BulkExecute.AddAndUpdateWithBullkAsync(context);
+    //Console.WriteLine($"after add update bulk");
+    //Common.Print(context, 8501);
+    //Console.WriteLine($"add update 课程:{context.Courses.Count()}条");
 
     //Console.WriteLine($"delete before课程:{context.Courses.Count()}条");
     //await BulkExecute.DeletesAsync(context);
     //Console.WriteLine($"delete after课程:{context.Courses.Count()}条");
 
-
     //Console.WriteLine($"delete bulk before课程:{context.Courses.Count()}条");
     //await BulkExecute.DeleteWithBullkAsync(context);
     //Console.WriteLine($"delete bulk after课程:{context.Courses.Count()}条");
-
 
     ////查询
     //var courses = context.Courses.Include(x => x.Instructors).Where(x => x.CourseID < 10000);//.Take(10);
@@ -84,11 +63,9 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
 }
 
 
-
 //基准测试
-//var summary = BenchmarkRunner.Run<EFBullkBenchmark>();
+var summary = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
 
 
-
-Console.ReadKey();
-
+Console.WriteLine("summary:");
+Console.WriteLine(summary);
