@@ -61,16 +61,20 @@ namespace EFCoreDemo.Services
                 course.Title = "Desc .BulkUpdate " + counter.ToString();
             }
             var configUpdateBy = new BulkConfig
-            {
-                //当对多个相关表执行BulkInsert时很有用，以获取表的PK并将其设置为第二个的FK。
-                SetOutputIdentity = true,
+            {                                
+                PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
+
+                SetOutputIdentity = false,//Id值将更新为数据库中的新值
+
+                //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
+                //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
+
                 //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
                 PropertiesToInclude = new List<string> { nameof(Course.Title) },
+
                 //用于指定自定义属性，我们希望通过该属性进行更新。
-                UpdateByProperties = new List<string> { nameof(Course.CourseID) },
-                CalculateStats = true,
-                //如果需要更改超过一半的columns，则可以使用Properties ToExclude。不允许同时设置这两个列表。
-                //PropertiesToInclude = new List<string> { nameof(Item.Name), nameof(Item.Description) }, // "Name" in list not necessary since is in UpdateBy
+                //UpdateByProperties = new List<string> { nameof(Course.CourseID) },
+
             };
             return context.BulkUpdateAsync(courses, configUpdateBy);
         }
@@ -81,33 +85,43 @@ namespace EFCoreDemo.Services
             var courses = context.Courses.ToList();
             foreach (var course in courses)
             {
-                course.Title = "Desc Update " + counter++;
+                course.Title = "Desc Add Update " + counter++;
             }
-            courses.AddRange(Common.GetCourses(10000));
+            courses.AddRange(Common.GetCourses(Count));
             context.Courses.UpdateRange(courses);
             return context.SaveChangesAsync();
         }
 
-       
+        /// <summary>
+        /// 对于BulkInsertOrUpdate和IdentityId的SQLite组合，自动设置将无法正常工作，因为它不像SqlServer那样具有完整的MERGE功能。
+        /// 相反，列表可以分为两个列表，并分别调用BulkInsert和BulkUpdate。
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static Task AddAndUpdateWithBullkAsync(SchoolContext context)
         {
             int counter = 0;
             var courses = context.Courses.ToList();
             foreach (var course in courses)
             {
-                course.Title = "Desc .BulkUpdate " + counter++;
+                course.Title = "Desc Add Update .BulkUpdate " + counter++;
             }
-            courses.AddRange(Common.GetCourses(10000));
-            var lst = courses.Where(x => x.Credits == null).Count();
-            Console.WriteLine(lst);
+            courses.AddRange(Common.GetCourses(Count));         
             var configUpdateBy = new BulkConfig
             {
-                //当对多个相关表执行BulkInsert时很有用，以获取表的PK并将其设置为第二个的FK。
-                SetOutputIdentity = true,
-                //用于指定自定义属性，我们希望通过该属性进行更新。
-                //UpdateByProperties = new List<string> { nameof(Course.CourseID) },
-                //执行插入/更新时，可以通过添加明确选择要影响的属性他们的名字输入到PropertiesToInclude中。
-                PropertiesToInclude = new List<string> { nameof(Course.Title), nameof(Course.Credits) }, // "Name" in list not necessary since is in UpdateBy
+                PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
+
+                SetOutputIdentity = false,//Id值将更新为数据库中的新值
+
+                //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
+                //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
+
+                //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
+                PropertiesToInclude = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
+
+                //用于指定自定义属性，我们希望通过该属性进行更新。当在UpdateByProps中设置多个道具时，然后通过组合的列进行匹配，
+                //比如基于这些列的唯一约束。在同时具有“标识”列的情况下使用UpdateByProperties要求排除Id属性
+                UpdateByProperties = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
             };
             return context.BulkInsertOrUpdateAsync(courses, configUpdateBy, a => WriteProgress(a));
         }

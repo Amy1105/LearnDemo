@@ -20,17 +20,11 @@ namespace EFCoreDemo
 
    
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Course>().ToTable(nameof(Course))
-            //    .HasMany(c => c.Instructors)
-            //    .WithMany(i => i.Courses);
-            //modelBuilder.Entity<Student>().ToTable(nameof(Student));
-            //modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
+        {            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }

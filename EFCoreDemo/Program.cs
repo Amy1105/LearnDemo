@@ -23,51 +23,51 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
 {
     //BulkExecute.InitDB(context);
 
-    await BulkExecute.AddConectTablesAsync(context);
-    Console.WriteLine($"insert课程:{context.Courses.Count()}条");
+    //Console.WriteLine($"before insert课程:{context.Courses.Count()}条");
+    //await BulkExecute.AddConectTablesAsync(context);
+    //Console.WriteLine($"after insert课程:{context.Courses.Count()}条");
+
+    //Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
+    //await BulkExecute.AddConectTablesWithBullkAsync(context);
+    //Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+
+    //Console.WriteLine($"before update");
+    //Common.Print(context, 7744);
+    //await BulkExecute.UpdatesAsync(context, 7744);
+    //Console.WriteLine($"after update");
+    //Common.Print(context, 7744);
+
+    //Console.WriteLine($"before update bulk");
+    //Common.Print(context, 7745);
+    //await BulkExecute.UpdateWithBullkAsync(context, 7745);
+    //Console.WriteLine($"after update bulk");
+    //Common.Print(context, 7745);
 
 
-    await BulkExecute.AddConectTablesWithBullkAsync(context);
-    Console.WriteLine($"insert课程:{context.Courses.Count()}条");
-
-  
-    Console.WriteLine($"before update");
-    Common.Print(context, 7744);
-    await BulkExecute.UpdatesAsync(context, 7744);
-
-    Console.WriteLine($"after update");
-    Common.Print(context, 7744);
-
-    Console.WriteLine($"before update");
-    Common.Print(context, 7745);
-    await BulkExecute.UpdateWithBullkAsync(context, 7745);
-    Console.WriteLine($"after update");
-    Common.Print(context, 7745);
+    //Console.WriteLine($"before add update");
+    //Common.Print(context, 10500);
+    //await BulkExecute.AddAndUpdatesAsync(context);
+    //Console.WriteLine($"after add update");
+    //Common.Print(context, 10500);
+    //Console.WriteLine($"add update 课程:{context.Courses.Count()}条");
 
 
-    Console.WriteLine($"before update");
-    Common.Print(context, 10500);
-    await BulkExecute.AddAndUpdatesAsync(context);
-    Console.WriteLine($"after update");
-    Common.Print(context, 10500);
-
-    
-    Console.WriteLine($"before add update");
-    Common.Print(context, 10501);
+    Console.WriteLine($"before add update bulk");
+    Common.Print(context, 8501);
     await BulkExecute.AddAndUpdateWithBullkAsync(context);
-    Console.WriteLine($"after add update");
-    Common.Print(context, 10501);
-
+    Console.WriteLine($"after add update bulk");
+    Common.Print(context, 8501);
     Console.WriteLine($"add update 课程:{context.Courses.Count()}条");
 
 
-    Console.WriteLine($"delete before课程:{context.Courses.Count()}条");   
+    //Console.WriteLine($"delete before课程:{context.Courses.Count()}条");
+    //await BulkExecute.DeletesAsync(context);
+    //Console.WriteLine($"delete after课程:{context.Courses.Count()}条");
 
-    await BulkExecute.DeletesAsync(context);
 
-    await BulkExecute.DeleteWithBullkAsync(context);
-
-    Console.WriteLine($"delete after课程:{context.Courses.Count()}条");
+    //Console.WriteLine($"delete bulk before课程:{context.Courses.Count()}条");
+    //await BulkExecute.DeleteWithBullkAsync(context);
+    //Console.WriteLine($"delete bulk after课程:{context.Courses.Count()}条");
 
 
     ////查询
@@ -86,7 +86,7 @@ var context = new SchoolContext(builder.Options as DbContextOptions<SchoolContex
 
 
 //基准测试
-var summary = BenchmarkRunner.Run<EFBullkBenchmark>();
+//var summary = BenchmarkRunner.Run<EFBullkBenchmark>();
 
 
 
