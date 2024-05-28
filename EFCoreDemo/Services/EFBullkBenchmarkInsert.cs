@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace EFCoreDemo.Services
 {
@@ -28,23 +29,27 @@ namespace EFCoreDemo.Services
             var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
             builder.UseSqlite(connection);
             context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
+
+            string directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Console.WriteLine("当前执行文件所在的相对路径: " + directory);
+
         }
-     
+
 
 
         #region  新增
         [Benchmark]
-        public  Task AddConectTablesAsync()
-        {           
+        public Task AddConectTablesAsync()
+        {
             context.Courses.AddRange(Common.GetCourses(Count));
             return context.SaveChangesAsync();
         }
 
-        [Benchmark]
-        public  Task AddConectTablesWithBullkAsync()
-        {
-            return context.BulkInsertAsync(Common.GetCourses(Count));            
-        }
+        //[Benchmark]
+        //public  Task AddConectTablesWithBullkAsync()
+        //{
+        //    return context.BulkInsertAsync(Common.GetCourses(Count));            
+        //}
 
         #endregion
     }

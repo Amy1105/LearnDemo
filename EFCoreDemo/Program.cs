@@ -4,21 +4,27 @@ using BenchmarkDotNet.Attributes;
 using EFCoreDemo;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 //支持的环境
 //支持的数据库类型
 
-{
+{  
+    //string directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    //Console.WriteLine("当前执行文件所在的相对路径: " + directory);
+    // C:\Projects\LearnDemo\EFCoreDemo\bin\Release\net8.0
+
+
     //SqliteConnection connection = null;
-
     //SchoolContext context = null;
-
     //connection = new SqliteConnection("Data Source=../../../School.db");
     //connection.Open();
     //var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
     //builder.UseSqlite(connection);
     //context = new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);
-
     //BulkExecute.InitDB(context);
 
     //Console.WriteLine($"before insert课程:{context.Courses.Count()}条");
@@ -91,6 +97,6 @@ using Microsoft.EntityFrameworkCore;
 //var summary = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
 
 
-var summary = BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
+//var summary = BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
 
 Console.ReadKey();
