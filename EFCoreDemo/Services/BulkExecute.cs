@@ -16,18 +16,22 @@ namespace EFCoreDemo.Services
 {
     public class BulkExecute
     {
+        private readonly SchoolContext context;
+        public BulkExecute(SchoolContext _context)
+        {
+            context = _context;
+        }
         private const int Count = 10000;
 
         public void InitDB()
         {
-            using(var context=Helper.GetContext())
-            {
+           
                 //建库
                 context.Database.EnsureCreated();
                 //初始化数据
                 DbInitializer.Initialize(context);
                 Console.WriteLine("data init.");
-            }           
+                   
         }
 
 
@@ -39,12 +43,11 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task BulkInsertAsync()
         {
-            using (var context = Helper.GetContext())
-            {
+          
                 Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
                 await context.BulkInsertAsync(Common.GetCourses(Count));
                 Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
-            }                
+                        
         }
 
         /// <summary>
@@ -55,8 +58,7 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task BulkUpdateAsync()
         {
-            using (var context = Helper.GetContext())
-            {
+           
                 Console.WriteLine($"before update bulk");
                 var sample = context.Courses.AsNoTracking().First();
                 Common.Print(context, sample.CourseID);
@@ -70,7 +72,7 @@ namespace EFCoreDemo.Services
                 await context.BulkUpdateAsync(courses);
                 Console.WriteLine($"after update bulk");
                 Common.Print(context, sample.CourseID);
-            }                
+                           
         }
      
         /// <summary>

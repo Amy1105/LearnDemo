@@ -1,13 +1,14 @@
 ﻿using EFCoreDemo.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace EFCoreDemo
 {
     public class SchoolContext : DbContext
-    {
+    {        
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
-        {
+        {           
         }
 
         public DbSet<Course> Courses { get; set; }
