@@ -8,43 +8,42 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 
 namespace EFCoreDemo.Services
 {
-    public class EFBullkBenchmarkUpdate
+    public class EFBullkBenchmarkRead
     {
         private const int Count = 10000;                    
 
         [Benchmark]
-        public async Task UpdatesAsync()
+        public void ReadAsync()
         {
             using (var context = Helper.GetContext())
-            {
-                int counter = 0;
+            {               
                 var courses = context.Courses.Take(Count).AsNoTracking().ToList();
-                foreach (var course in courses)
+                var ids=courses.Select(g => g.CourseID).ToList();
+                var res= context.Courses.Where(x=> ids.Contains(x.CourseID)).Take(100).ToList(); 
+                foreach(var course in res)
                 {
-                    counter++;
-                    course.Title = "Desc Update " + counter.ToString();
+                    Console.WriteLine($"课程:{course.CourseID},{course.Title}");
                 }
-                context.Courses.UpdateRange(courses);
-                await context.SaveChangesAsync();
             }               
         }
 
         [Benchmark]
-        public Task UpdateWithBullkAsync()
+        public void ReadBullkAsync()
         {
             using (var context = Helper.GetContext())
             {
-                int counter = 0;
                 var courses = context.Courses.Take(Count).AsNoTracking().ToList();
-                foreach (var course in courses)
+                var ids = courses.Select(g => new Course() { CourseID=g.CourseID }).ToList();                              
+                 context.BulkUpdateAsync(ids);
+                var res = ids.Take(100).ToList();
+                foreach (var course in res)
                 {
-                    counter++;
-                    course.Title = "Desc .Bulk Update " + counter.ToString();
-                }               
-                return context.BulkUpdateAsync(courses);
+                    Console.WriteLine($"课程:{course.CourseID},{course.Title}");
+                }
             }               
         }
     }
