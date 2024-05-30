@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "SchoolDB": "Data Source=School.db"
+    "SchoolDB": "Data Source=../../../School.db"
   }
 }

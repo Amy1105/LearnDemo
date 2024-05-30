@@ -1,14 +1,16 @@
 ﻿using EFCoreDemo.Models;
+using EFCoreDemo.Seed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Reflection.Metadata;
 
 namespace EFCoreDemo
 {
     public class SchoolContext : DbContext
     {        
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
-        {           
+        {            
         }
 
         public DbSet<Course> Courses { get; set; }
@@ -26,8 +28,9 @@ namespace EFCoreDemo
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.UseSqlite("Data Source=../../../School.db");
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        }
+            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        }       
     }
 }
