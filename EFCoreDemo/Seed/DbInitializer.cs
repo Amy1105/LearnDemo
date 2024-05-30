@@ -323,7 +323,21 @@ namespace EFCoreDemo.Seed
                 }
             };
 
-            context.AddRange(enrollments);
+            Order orderInfo =new Order();
+          var address=  new Address() { Name = "小明", Phone = "15996478657", City = "南京", Province = "江苏省", District = "雨花区", Street = "郁金香16号", Postal_code = "21000" };
+
+            var orderdetail = new OrderDetail() { Count = 1, Price = 16.98M, Description = "时尚单品", ProductName = "凉席", Amount = 16.98M, order = orderInfo };
+
+            orderInfo = new Order()
+            {
+                CreateTime = DateTime.Now,
+                IsPay = true,
+                PayTime = DateTime.Now,
+                address = address,
+                AddressID = address.Id,
+                OrderDetails=new List<OrderDetail>() { orderdetail }
+            };
+          
             context.SaveChanges();
         }
     }

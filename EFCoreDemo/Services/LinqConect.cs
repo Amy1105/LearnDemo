@@ -1,101 +1,202 @@
 ﻿using BenchmarkDotNet.Attributes;
+using EFCoreDemo.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EFCoreDemo.Services
 {
     public class LinqConect
     {
-
-        [Benchmark]
-        public static void SingleInclude(SchoolContext context)
+        private readonly SchoolContext context;
+        public LinqConect(SchoolContext _context)
         {
-            var data = context.Enrollments.Include(x => x.Student).ToList();
-            
+            context= _context;
         }
 
-        [Benchmark]
-        public static void SingleLINQ(SchoolContext context)
+        /*
+         * SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "o0"."Id", "o0"."Amount", "o0"."Count", "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName"
+      FROM "Orders" AS "o"
+      LEFT JOIN "OrderDetails" AS "o0" ON "o"."Id" = "o0"."OrderId"
+      ORDER BY "o"."Id"
+         */
+        public void SingleInclude()
         {
-            var query = from a in context.Enrollments
-                        join b in context.Students on a.StudentID equals b.ID into g
+            var data = context.Orders.Include(x => x.OrderDetails).ToList();
+            foreach (var d in data)
+            {
+                Console.WriteLine($"order:{d.Id},{d.CreateTime.ToString("yyyy-hh-dd hh:mm:ss")}，地址：{d.address.ToString()}");
+
+                foreach (var od in d.OrderDetails)
+                {
+                    Console.WriteLine($"----:{od.ProductName}-{od.Count}/{od.Price}={od.Amount}");
+                }
+            }
+        }
+
+        /*
+          SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "o0"."Id", "o0"."Amount", "o0"."Count", "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName"
+      FROM "Orders" AS "o"
+      LEFT JOIN "OrderDetails" AS "o0" ON "o"."Id" = "o0"."OrderId"
+         */
+
+        public void SingleLINQ()
+        {
+           
+            var query = from a in context.Orders  
+                        join b in context.OrderDetails on a.Id equals b.OrderId into g
                         from b in g.DefaultIfEmpty()
                         select new
                         {
-                            a,
-                            b
+                          a,b
                         };
 
-            var db = query.ToList();
+            var data = query.ToList();
+            foreach (var d in data)
+            {
+                Console.WriteLine($"order:{d.a.Id},{d.a.CreateTime.ToString("yyyy-hh-dd hh:mm:ss")}，地址：{d.a.address.ToString()}");
+
+                foreach (var od in d.a.OrderDetails)
+                {
+                    Console.WriteLine($"----:{od.ProductName}-{od.Count}/{od.Price}={od.Amount}");
+                }
+            }
+        }
+
+        /*
+           SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "a"."Id", "o0"."Id", "o0"."Amount", "o0"."Count",
+        "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName", "a"."City", "a"."District", "a"."Name", 
+        "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street"
+      FROM "Orders" AS "o"
+      INNER JOIN "Addresss" AS "a" ON "o"."AddressID" = "a"."Id"
+      LEFT JOIN "OrderDetails" AS "o0" ON "o"."Id" = "o0"."OrderId"
+      ORDER BY "o"."Id", "a"."Id"
+         */
+        [Benchmark]
+        public void MultipleInclude()
+        {
+            var blogs = context.Orders
+                .Include(blog => blog.OrderDetails)
+                .Include(blog => blog.address)
+                .ToList();
+        }
+
+
+        /***
+          SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "o0"."Id", "o0"."Amount", "o0"."Count", 
+        "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName", "a"."Id", "a"."City", "a"."District", "a"."Name", 
+        "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street"
+      FROM "Orders" AS "o"
+      LEFT JOIN "OrderDetails" AS "o0" ON "o"."Id" = "o0"."OrderId"
+      LEFT JOIN "Addresss" AS "a" ON "o"."AddressID" = "a"."Id"
+         */
+        [Benchmark]
+        public void MultipleLINQ()
+        {
+            var query = from a in context.Orders
+                        join b in context.OrderDetails on a.Id equals b.OrderId into g
+                        from b in g.DefaultIfEmpty()
+                        join c in context.Addresss on a.AddressID equals c.Id into m
+                        from c in m.DefaultIfEmpty()
+                        select new
+                        {
+                            a,
+                            b,
+                            c
+                        };
+            var blogs = query.ToList();
 
         }
 
-        //[Benchmark]
-        //public void MultipleInclude()
-        //{
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Posts)
-        //        .Include(blog => blog.Owner)
-        //        .ToList();
-        //}
+        /*
+          SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "o0"."Id", "o0"."Amount", "o0"."Count", "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName", "a"."Id", "a"."City", "a"."District", "a"."Name", "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street"
+      FROM "Orders" AS "o"
+      LEFT JOIN "OrderDetails" AS "o0" ON "o"."Id" = "o0"."OrderId"
+      INNER JOIN "Addresss" AS "a" ON "o"."AddressID" = "a"."Id"
+         * 
+         */
 
-        //[Benchmark]
-        //public void MultipleLINQ()
-        //{
-        //    var query = from a in context.Blogs
-        //                join b in context.Posts on a.BlogId equals b.BlogId into g
-        //                from b in g.DefaultIfEmpty()
-        //                join c in context.Person on a.OwnerId equals c.PersonId into m
-        //                from c in m.DefaultIfEmpty()
-        //                select new
-        //                {
-        //                    a,
-        //                    b,
-        //                    c
-        //                };
-        //    var blogs = query.ToList();
+        [Benchmark]
+        public void MultipleLINQ2()
+        {
+            var query = from a in context.Orders
+                        join b in context.OrderDetails on a.Id equals b.OrderId into g
+                        from b in g.DefaultIfEmpty()
+                        join c in context.Addresss on a.AddressID equals c.Id into m
+                        from c in m
+                        select new
+                        {
+                            a,
+                            b,
+                            c
+                        };
+            var blogs = query.ToList();
 
-        //}
+        }
 
-        //[Benchmark]
-        //public void SingleChildInclude()
-        //{
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Posts)
-        //        .ThenInclude(post => post.Author)
-        //        .ToList();
-        //}
+        /*
+          SELECT "o"."Id", "o"."Amount", "o"."Count", "o"."Description", "o"."OrderId", "o"."Price", "o"."ProductName", 
+        "o0"."Id", "o0"."AddressID", "o0"."CreateTime", "o0"."IsPay", "o0"."PayTime", "a"."Id", "a"."City", "a"."District", 
+        "a"."Name", "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street"
+      FROM "OrderDetails" AS "o"
+      INNER JOIN "Orders" AS "o0" ON "o"."OrderId" = "o0"."Id"
+      INNER JOIN "Addresss" AS "a" ON "o0"."AddressID" = "a"."Id"
+         * 
+         */
 
-        //[Benchmark]
-        //public void SingleChildLINQ()
-        //{
-        //    var query0 =
-        //        from post in context.Posts
-        //        join person in context.Person on post.AuthorId equals person.PersonId into g
-        //        from person in g.DefaultIfEmpty()
-        //        select new
-        //        {
-        //            post,
-        //            person
-        //        };
+        [Benchmark]
+        public void SingleChildInclude()
+        {
+            var blogs = context.OrderDetails
+                .Include(blog => blog.order)
+                .ThenInclude(post => post.address)
+                .ToList();
+        }
 
-        //    var query1 =
-        //        from a in context.Posts
-        //        join b in query0 on a.AuthorId equals b.post.BlogId into g
-        //        from b in g.DefaultIfEmpty()
-        //        select new
-        //        {
-        //            a,
-        //            b.post,
-        //            b.person
-        //        };
+        /*
+          SELECT "a"."Id", "a"."City", "a"."District", "a"."Name", "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street", 
+        "t"."Id", "t"."Amount", "t"."Count", "t"."Description", "t"."OrderId", "t"."Price", "t"."ProductName", "t"."Id0",
+        "t"."AddressID", "t"."CreateTime", "t"."IsPay", "t"."PayTime"
+      FROM "Addresss" AS "a"
+      LEFT JOIN (
+          SELECT "o"."Id", "o"."Amount", "o"."Count", "o"."Description", "o"."OrderId", "o"."Price", "o"."ProductName", 
+        "o0"."Id" AS "Id0", "o0"."AddressID", "o0"."CreateTime", "o0"."IsPay", "o0"."PayTime"
+          FROM "OrderDetails" AS "o"
+          LEFT JOIN "Orders" AS "o0" ON "o"."OrderId" = "o0"."Id"
+      ) AS "t" ON "a"."Id" = "t"."AddressID"
+         * 
+         */
 
-        //    var blogs = query1.ToList();
-        //}
+
+        [Benchmark]
+        public void SingleChildLINQ()
+        {
+            var query0 =
+                from post in context.OrderDetails
+                join person in context.Orders on post.OrderId equals person.Id into g
+                from person in g.DefaultIfEmpty()
+                select new
+                {
+                    post,
+                    person
+                };
+
+            var query1 =
+                from a in context.Addresss
+                join b in query0 on a.Id equals b.person.AddressID into g
+                from b in g.DefaultIfEmpty()
+                select new
+                {
+                    a,
+                    b.post,
+                    b.person
+                };
+            var blogs = query1.ToList();
+        }
 
 
         //[Benchmark]

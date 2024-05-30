@@ -20,8 +20,10 @@ namespace EFCoreDemo
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Address> Addresss { get; set; }
 
-   
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
         }

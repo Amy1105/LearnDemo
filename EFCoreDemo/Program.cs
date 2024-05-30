@@ -25,6 +25,7 @@ try
     });
 
     builder.Services.AddTransient<BulkExecute>();
+    builder.Services.AddTransient<LinqConect>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -33,10 +34,26 @@ try
     var app = builder.Build();
     using (var scope = app.Services.CreateScope())
     {
-        //var services = scope.ServiceProvider;
-        //var bulkExecute = services.GetRequiredService<BulkExecute>();
+        var services = scope.ServiceProvider;
+        var bulkExecute = services.GetRequiredService<BulkExecute>();
+        var linqConect = services.GetRequiredService<LinqConect>();
+
+      
 
         //bulkExecute.InitDB();
+
+        //linqConect.SingleInclude();
+
+       // linqConect.SingleLINQ();
+
+
+        //linqConect.MultipleInclude();
+       
+       // linqConect.MultipleLINQ();
+
+        //linqConect.SingleChildInclude();
+
+        linqConect.SingleChildLINQ();
 
         //await bulkExecute.BulkInsertAsync();
 
@@ -82,7 +99,7 @@ try
     }
 
     //基准测试
-    var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+    //var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
     //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
     //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
     //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
@@ -95,7 +112,7 @@ catch (Exception e)
 {
     Console.WriteLine(e);
 }
-    Console.ReadKey();
+
 
 
     
