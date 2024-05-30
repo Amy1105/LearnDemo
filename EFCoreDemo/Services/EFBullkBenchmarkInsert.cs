@@ -20,7 +20,7 @@ namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkInsert
     {
-        private const int Count = 10000;
+        private const int Count = 100000;
 
         //private IServiceProvider serviceProvider=null;    
         

@@ -33,7 +33,7 @@ try
     var app = builder.Build();
     using (var scope = app.Services.CreateScope())
     {
-        var services = scope.ServiceProvider;
+        //var services = scope.ServiceProvider;
         //var bulkExecute = services.GetRequiredService<BulkExecute>();
 
         //bulkExecute.InitDB();
@@ -82,10 +82,10 @@ try
     }
 
     //基准测试
-    var sumery = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
-    //BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
-    //BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
-    //BenchmarkRunner.Run<EFBullkBenchmarkRead>();
+    var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+    //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
+    //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
+    //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
 
     Console.WriteLine("Done.");
 

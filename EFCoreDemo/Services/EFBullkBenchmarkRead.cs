@@ -26,7 +26,7 @@ namespace EFCoreDemo.Services
                 var res= context.Courses.Where(x=> ids.Contains(x.CourseID)).Take(100).ToList(); 
                 foreach(var course in res)
                 {
-                    Console.WriteLine($"课程:{course.CourseID},{course.Title}");
+                    //Console.WriteLine($"课程:{course.CourseID},{course.Title}");
                 }
             }               
         }
@@ -42,7 +42,7 @@ namespace EFCoreDemo.Services
                 var res = ids.Take(100).ToList();
                 foreach (var course in res)
                 {
-                    Console.WriteLine($"课程:{course.CourseID},{course.Title}");
+                    //Console.WriteLine($"课程:{course.CourseID},{course.Title}");
                 }
             }               
         }
