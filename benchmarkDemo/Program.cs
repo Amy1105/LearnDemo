@@ -2,5 +2,9 @@
 using benchmarkDemo;
 using BenchmarkDotNet.Running;
 
-var summary = BenchmarkRunner.Run<demo1>();
+//var summary = BenchmarkRunner.Run<demo1>();
 
+//BenchmarkRunner.Run<VerifyDecimalPlaces>();
+
+object?  n = null;
+Console.WriteLine(n.ToString());
