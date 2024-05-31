@@ -1,6 +1,7 @@
 ﻿using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
 
+
 namespace EFCoreDemo.Seed
 {
     public static class DbInitializer
@@ -323,21 +324,26 @@ namespace EFCoreDemo.Seed
                 }
             };
 
-            Order orderInfo =new Order();
-          var address=  new Address() { Name = "小明", Phone = "15996478657", City = "南京", Province = "江苏省", District = "雨花区", Street = "郁金香16号", Postal_code = "21000" };
-
-            var orderdetail = new OrderDetail() { Count = 1, Price = 16.98M, Description = "时尚单品", ProductName = "凉席", Amount = 16.98M, order = orderInfo };
-
-            orderInfo = new Order()
+            List<Order> orderInfos = new List<Order>();
+            foreach (var i in  Enumerable.Range(1,50000))
             {
-                CreateTime = DateTime.Now,
-                IsPay = true,
-                PayTime = DateTime.Now,
-                address = address,
-                AddressID = address.Id,
-                OrderDetails=new List<OrderDetail>() { orderdetail }
-            };
-          
+                Order orderInfo = new Order();
+                var image = new Image() { MainImage = "www.baidu.com"+i.ToString(), Images = new List<string>() { "www.baidu.com1", "www.baidu.com2", "www.baidu.com3" } };
+                var product = new Product() { ProductName = "凉席"+i.ToString(), Description = "2024夏季新款", Price = 19.9M, Count = 3000, Images = image };
+                var address = new Address() { Name = "小明"+i.ToString(), Phone = "15996478657", City = "南京", Province = "江苏省", District = "雨花区", Street = "郁金香16号", Postal_code = "21000" };
+                var orderdetail = new OrderDetail() { product = product, ProductID = product.Id, Count = 1, Price = 16.98M, Description = "时尚单品", ProductName = "凉席" + i.ToString(), Amount = 16.98M, order = orderInfo };
+                orderInfo = new Order()
+                {
+                    CreateTime = DateTime.Now,
+                    IsPay = true,
+                    PayTime = DateTime.Now,
+                    address = address,
+                    AddressID = address.Id,
+                    OrderDetails = new List<OrderDetail>() { orderdetail }
+                };
+                orderInfos.Add(orderInfo);
+            }
+            context.Orders.AddRange(orderInfos);
             context.SaveChanges();
         }
     }

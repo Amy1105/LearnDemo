@@ -24,13 +24,16 @@ namespace EFCoreDemo
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Address> Addresss { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
+        {                   
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlite("Data Source=../../../School.db");
+        {           
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }       

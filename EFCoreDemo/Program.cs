@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EFCoreDemo;
 using Microsoft.EntityFrameworkCore;
+using EFCoreDemo.Services.Example;
 
 
 try
@@ -25,7 +26,7 @@ try
     });
 
     builder.Services.AddTransient<BulkExecute>();
-    builder.Services.AddTransient<LinqConect>();
+    builder.Services.AddTransient<LinqConect>();    
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -36,50 +37,40 @@ try
     {
         var services = scope.ServiceProvider;
         var bulkExecute = services.GetRequiredService<BulkExecute>();
+         //bulkExecute.InitDB();
         var linqConect = services.GetRequiredService<LinqConect>();
 
-      
-
-        //bulkExecute.InitDB();
-
         //linqConect.SingleInclude();
-
-       // linqConect.SingleLINQ();
-
-
+        //linqConect.SingleLINQ();
         //linqConect.MultipleInclude();
-       
-       // linqConect.MultipleLINQ();
-
+        //linqConect.MultipleLINQ();
         //linqConect.SingleChildInclude();
-
-        linqConect.SingleChildLINQ();
-
-        //await bulkExecute.BulkInsertAsync();
-
-        //var context = services.GetRequiredService<SchoolContext>();
-
-        //var courses= context.Courses.Take(100).AsNoTracking().ToList();
+        //linqConect.SingleChildLINQ();
+        //linqConect.MultipleThenIncludes();
+        linqConect.IncludeTree();
+        //linqConect.MultipleLeafIncludes();
+        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
 
 
+        //linqConect.MultipleLeafIncludesFiltered2();
+        //linqConect.LeftOuterJoin();
+        //linqConect.LeftOuterJoinOrderBy();
+        //linqConect.LeftOuterJoinWithLinQ();
+
+
+
+        //await bulkExecute.BulkInsertAsync();        
         //await bulkExecute.BulkUpdateAsync();
-
         //await bulkExecute.BulkReadAsync();
-
         //await bulkExecute.BulkDeleteAsync();
 
         //属性
 
         // await bulkExecute.NotifyAfterAsync();
-
         // bulkExecute.UpdateByProperties();
-
         //// await bulkExecute.CalculateStats();  //?
-
         // await bulkExecute.PropertiesToInclude();
-
         // await bulkExecute.PropertiesToExclude();
-
         //任务：对接sqlserver，测试insertUpdate、insertUpdate、insertUpdateDelete方法，CalculateStats属性
         //to  do ...
 
@@ -94,8 +85,6 @@ try
         //        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
         //    }
         //}
-
-
     }
 
     //基准测试

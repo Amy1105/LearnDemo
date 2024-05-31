@@ -199,55 +199,80 @@ namespace EFCoreDemo.Services
         }
 
 
-        //[Benchmark]
-        //public void MultipleThenIncludes()
-        //{
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Posts)
-        //        .ThenInclude(post => post.Author)
-        //        .ThenInclude(author => author.Photo)
-        //        .ToList();
-        //}
+        [Benchmark]
+        public void MultipleThenIncludes()
+        {
+            var blogs = context.Orders
+                .Include(blog => blog.OrderDetails)
+                .ThenInclude(post => post.product)
+                .ThenInclude(author => author.Images)
+                .ToList();
+        }
 
-        //[Benchmark]
-        //public void IncludeTree()
-        //{
-        //    using var context = new BloggingContext();
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Posts)
-        //        .ThenInclude(post => post.Author)
-        //        .ThenInclude(author => author.Photo)
-        //        .Include(blog => blog.Owner)
-        //        .ThenInclude(owner => owner.Photo)
-        //        .ToList();
-        //}
+        /*
+          SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "a"."Id", "t"."Id", 
+        "t"."Amount", "t"."Count", "t"."Description", "t"."OrderId", "t"."Price", "t"."ProductID", 
+        "t"."ProductName", "t"."Id0", "t"."Count0", "t"."Description0", "t"."ImagesId", "t"."Price0", 
+        "t"."ProductName0", "t"."Id1", "t"."Images", "t"."MainImage", "a"."City", "a"."District", "a"."Name",
+        "a"."Phone", "a"."Postal_code", "a"."Province", "a"."Street"
+      FROM "Orders" AS "o"
+      INNER JOIN "Addresss" AS "a" ON "o"."AddressID" = "a"."Id"
+      LEFT JOIN (
+          SELECT "o0"."Id", "o0"."Amount", "o0"."Count", "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductID", 
+        "o0"."ProductName", "p"."Id" AS "Id0", "p"."Count" AS "Count0", "p"."Description" AS "Description0", "p"."ImagesId",
+        "p"."Price" AS "Price0", "p"."ProductName" AS "ProductName0", "i"."Id" AS "Id1", "i"."Images", "i"."MainImage"
+          FROM "OrderDetails" AS "o0"
+          INNER JOIN "Products" AS "p" ON "o0"."ProductID" = "p"."Id"
+          INNER JOIN "Images" AS "i" ON "p"."ImagesId" = "i"."Id"
+      ) AS "t" ON "o"."Id" = "t"."OrderId"
+      ORDER BY "o"."Id", "a"."Id", "t"."Id", "t"."Id0"
+         * 
+         * 
+         */
+        [Benchmark]
+        public void IncludeTree()
+        {           
+            var blogs = context.Orders
+                .Include(blog => blog.OrderDetails)
+                .ThenInclude(post => post.product)
+                .ThenInclude(author => author.Images)
+                .Include(blog => blog.address)               
+                .ToList();
+        }
 
-        //[Benchmark]
-        //public void MultipleLeafIncludes()
-        //{
-        //    using var context = new BloggingContext();
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Posts)
-        //        .ThenInclude(post => post.Author)
-        //        .Include(blog => blog.Posts)
-        //        .ThenInclude(post => post.Tags)
-        //        .ToList();
-        //}
+        [Benchmark]
+        public void IncludeTree2()
+        {
+            var blogs = context.OrderDetails
+                .Include(blog => blog.product)
+                .Include(post => post.order)                
+                .ThenInclude(post=>post.address)
+                .Include(blog => blog.product.Images)
 
-        //[Benchmark]
-        //public void IncludeMultipleNavigationsWithSingleInclude()
-        //{
-        //    using var context = new BloggingContext();
-        //    var blogs = context.Blogs
-        //        .Include(blog => blog.Owner.AuthoredPosts)
-        //        .ThenInclude(post => post.Blog.Owner.Photo)
-        //        .ToList();
-        //}
+                .ToList();
+        }
+
+        [Benchmark]
+        public void MultipleLeafIncludes()
+        {           
+            var blogs = context.Orders
+                .Include(blog => blog.OrderDetails)
+                .ThenInclude(post => post.product)
+                .Include(blog => blog.address)               
+                .ToList();
+        }
+
+        [Benchmark]
+        public void IncludeMultipleNavigationsWithSingleInclude()
+        {         
+            var blogs = context.Orders
+                .Include(blog => blog.address)               
+                .ToList();
+        }
 
         //[Benchmark]
         //public void MultipleLeafIncludesFiltered2()
-        //{
-        //    using var context = new BloggingContext();
+        //{           
         //    var filteredBlogs = context.Blogs
         //        .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
         //        .ThenInclude(post => post.Author)
