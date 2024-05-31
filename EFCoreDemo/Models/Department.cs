@@ -28,9 +28,10 @@ namespace EFCoreDemo.Models
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
+        [NotMapped]
         [Display(Name = "主任")]
         public int? InstructorID { get; set; }
-
+        [NotMapped]
         public Instructor Administrator { get; set; }
 
         [Display(Name = "所属该部门的老师")]

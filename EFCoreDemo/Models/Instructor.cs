@@ -18,13 +18,13 @@ namespace EFCoreDemo.Models
         [Required]
         [Display(Name = "Last Name")]
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         [Required]
         [Column("FirstName")]
         [Display(Name = "First Name")]
         [StringLength(50)]
-        public string FirstMidName { get; set; }
+        public string FirstMidName { get; set; } = string.Empty;
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -37,9 +37,14 @@ namespace EFCoreDemo.Models
             get { return LastName + ", " + FirstMidName; }
         }
 
-        public ICollection<Course> Courses { get; set; }
+        public int CourseID {  get; set; }
 
-        [Display(Name = "Office")]      
-        public OfficeAssignment OfficeAssignment { get; set; }
+        public Course Course { get; set; } = new Course();
+
+        public int? DeparmenmtID { get; set; }
+
+        public Department? department { get; set; }
+      
+        public OfficeAssignment? officeAssignment { get; set; }
     } 
 }

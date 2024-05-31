@@ -12,26 +12,29 @@ using System.Diagnostics;
 namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkDelete
-    {       
+    {
+        [GlobalSetup]
+        public void Setup()
+        {
+            using SchoolContext context = new SchoolContext();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
         [Benchmark]
         public Task DeletesAsync()
         {
-            using (var context = Helper.GetContext())
-            {
-                var courses = context.Courses.AsNoTracking().ToList();
-                context.Courses.RemoveRange(courses);
-                return context.SaveChangesAsync();
-            }               
+            using SchoolContext context = new SchoolContext();
+            var courses = context.Courses.AsNoTracking().ToList();
+            context.Courses.RemoveRange(courses);
+            return context.SaveChangesAsync();
         }
 
         [Benchmark]
         public Task DeleteWithBullkAsync()
         {
-            using (var context = Helper.GetContext())
-            {
-                var courses = context.Courses.AsNoTracking().ToList();
-                return context.BulkDeleteAsync(courses);
-            }                
+            using SchoolContext context = new SchoolContext();
+            var courses = context.Courses.AsNoTracking().ToList();
+            return context.BulkDeleteAsync(courses);
         }
     }
 }

@@ -40,6 +40,7 @@ namespace EFCoreDemo.Services
             }
             return Courses;
         }
+     
 
         public static void Print(SchoolContext context,int n)
         {

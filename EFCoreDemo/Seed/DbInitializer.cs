@@ -325,7 +325,7 @@ namespace EFCoreDemo.Seed
             };
 
             List<Order> orderInfos = new List<Order>();
-            foreach (var i in  Enumerable.Range(1,50000))
+            foreach (var i in  Enumerable.Range(1,500))
             {
                 Order orderInfo = new Order();
                 var image = new Image() { MainImage = "www.baidu.com"+i.ToString(), Images = new List<string>() { "www.baidu.com1", "www.baidu.com2", "www.baidu.com3" } };

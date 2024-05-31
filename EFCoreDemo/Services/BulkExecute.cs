@@ -21,17 +21,17 @@ namespace EFCoreDemo.Services
         {
             context = _context;
         }
-        private const int Count = 10000;
+        private const int Count = 100000;
 
         public void InitDB()
         {
-           
-                //建库
-                context.Database.EnsureCreated();
-                //初始化数据
-                DbInitializer.Initialize(context);
-                Console.WriteLine("data init.");
-                   
+
+            //建库
+            context.Database.EnsureCreated();
+            //初始化数据
+            //DbInitializer.Initialize(context);
+            Console.WriteLine("data init.");
+
         }
 
 
@@ -43,11 +43,55 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task BulkInsertAsync()
         {
-          
-                Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
-                await context.BulkInsertAsync(Common.GetCourses(Count));
-                Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
-                        
+            Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
+            List<Course> Courses = new List<Course>();
+            List<Instructor> subEntities = new List<Instructor>();
+            foreach (var i in Enumerable.Range(1, Count))
+            {
+                //这门课下的3个老师
+                List<Instructor> instructors = new List<Instructor>();
+                foreach (var j in Enumerable.Range(1, 3))
+                {
+                    instructors.Add(new Instructor
+                    {
+                        FirstMidName = "bulkKim" + i.ToString() + "-" + j.ToString(),
+                        LastName = "Abercrombie" + i.ToString() + "-" + j.ToString(),
+                        HireDate = DateTime.Parse("1995-03-11"),
+                    });
+                }
+                var emodel = new Course
+                {
+                    Title = "bulkLiterature" + i.ToString(),
+                    Credits = 5,
+                };
+                emodel.Instructors = instructors;
+                //这门课
+                Courses.Add(emodel);
+            }
+            var bulkConfig = new BulkConfig() { SetOutputIdentity = true }; //从数据库中返回id
+            context.BulkInsert(Courses, bulkConfig);
+            foreach (var entity in Courses)
+            {
+                foreach (var subEntity in entity.Instructors!)
+                {
+                    subEntity.CourseID = entity.CourseID; // 设置外键
+                }
+                subEntities.AddRange(entity.Instructors);
+            }
+            bulkConfig.SetOutputIdentity = false;
+            context.BulkInsert(subEntities, bulkConfig);
+
+            Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+            //查询
+            var courses = context.Courses.Include(x => x.Instructors).Where(x => x.CourseID < 10000);//.Take(10);
+            foreach (var cource in courses)
+            {
+                Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
+                foreach (var instructor in cource.Instructors)
+                {
+                    Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+                }
+            }
         }
 
         /// <summary>
@@ -58,45 +102,42 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task BulkUpdateAsync()
         {
-           
-                Console.WriteLine($"before update bulk");
-                var sample = context.Courses.AsNoTracking().First();
-                Common.Print(context, sample.CourseID);
-                int counter = 0;
-                var courses = context.Courses.AsNoTracking().ToList();
-                foreach (var course in courses)
-                {
-                    counter++;
-                    course.Title = "Desc .BulkUpdate " + counter.ToString();
-                }
-                await context.BulkUpdateAsync(courses);
-                Console.WriteLine($"after update bulk");
-                Common.Print(context, sample.CourseID);
-                           
+            Console.WriteLine($"before update bulk");
+            var sample = context.Courses.AsNoTracking().First();
+            Common.Print(context, sample.CourseID);
+            int counter = 0;
+            var courses = context.Courses.AsNoTracking().ToList();
+            foreach (var course in courses)
+            {
+                counter++;
+                course.Title = "Desc .BulkUpdate " + counter.ToString();
+            }
+            await context.BulkUpdateAsync(courses);
+            Console.WriteLine($"after update bulk");
+            Common.Print(context, sample.CourseID);
+
         }
-     
+
         /// <summary>
         /// read
         /// </summary>
         /// <param name="context"></param>
-        public  async Task BulkReadAsync()
+        public async Task BulkReadAsync()
         {
-            using (var context = Helper.GetContext())
+            var items = new List<Course>();
+            var sample = context.Courses.Take(10).AsNoTracking();
+            foreach (var course in sample)
             {
-                var items = new List<Course>();
-                var sample = context.Courses.Take(10).AsNoTracking();
-                foreach (var course in sample)
-                {
-                    items.Add(new Course { CourseID = course.CourseID });
-                }
-                await context.BulkReadAsync(items);
-                foreach (var cource in items)
-                {
-                    Console.WriteLine($"课程:{cource.CourseID},{cource.Title},{cource.Credits}");
-                }
-            }                
+                items.Add(new Course { CourseID = course.CourseID });
+            }
+            await context.BulkReadAsync(items);
+            foreach (var cource in items)
+            {
+                Console.WriteLine($"课程:{cource.CourseID},{cource.Title},{cource.Credits}");
+            }
         }
-       
+
+
         /// <summary>
         /// delete
         /// </summary>
@@ -104,13 +145,10 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task BulkDeleteAsync()
         {
-            using (var context = Helper.GetContext())
-            {
-                Console.WriteLine($"before delete bulk 课程:{context.Courses.Count()}条");
-                var courses = context.Courses.AsNoTracking().ToList();
-                await context.BulkDeleteAsync(courses);
-                Console.WriteLine($"after delete bulk 课程:{context.Courses.Count()}条");
-            }               
+            Console.WriteLine($"before delete bulk 课程:{context.Courses.Count()}条");
+            var courses = context.Courses.AsNoTracking().ToList();
+            await context.BulkDeleteAsync(courses);
+            Console.WriteLine($"after delete bulk 课程:{context.Courses.Count()}条");
         }
         #endregion
 
@@ -123,16 +161,13 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public Task NotifyAfterAsync()
         {
-            using (var context = Helper.GetContext())
+            var configUpdateBy = new BulkConfig
             {
-                var configUpdateBy = new BulkConfig
-                {
-                    PreserveInsertOrder = true,
-                    SetOutputIdentity = true,
-                    NotifyAfter = 1,
-                };
-                return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy, a => WriteProgress(a));
-            }
+                PreserveInsertOrder = true,
+                SetOutputIdentity = true,
+                NotifyAfter = 1,
+            };
+            return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy, a => WriteProgress(a));
             //使用BatchSize就不通知了吗  to do
         }
 
@@ -143,40 +178,37 @@ namespace EFCoreDemo.Services
         /// <param name="context"></param>
         public void UpdateByProperties()
         {
-            using (var context = Helper.GetContext())
+
+            var fakhouri = new Instructor
             {
-                var fakhouri = new Instructor
+                FirstMidName = "Fadi",
+                LastName = "Fakhouri",
+                HireDate = DateTime.Parse("2002-07-06")
+            };
+
+            var entities = new List<Department>();
+            for (int i = 1; i < 10; i++)
+            {
+                var mathematics = new Department
                 {
-                    FirstMidName = "Fadi",
-                    LastName = "Fakhouri",
-                    HireDate = DateTime.Parse("2002-07-06")
+                    Name = "Mathematics",
+                    Budget = 100000,
+                    StartDate = DateTime.Parse("2007-09-01"),
                 };
-
-                var entities = new List<Department>();
-                for (int i = 1; i < 10; i++)
+                entities.Add(mathematics);
+            }
+            context.BulkRead(
+                entities,
+                new BulkConfig
                 {
-                    var mathematics = new Department
-                    {
-                        Name = "Mathematics",
-                        Budget = 100000,
-                        StartDate = DateTime.Parse("2007-09-01"),
-                    };
-                    entities.Add(mathematics);
+                    UpdateByProperties = new List<string> { nameof(Department.Name) }
                 }
-                context.BulkRead(
-                    entities,
-                    new BulkConfig
-                    {
-                        UpdateByProperties = new List<string> { nameof(Department.Name) }
-                    }
-                );
-                foreach (var entity in entities)
-                {
-                    Console.WriteLine($"DepartmentID:{entity.DepartmentID},name:{entity.Name}");
-                }
-            }               
+            );
+            foreach (var entity in entities)
+            {
+                Console.WriteLine($"DepartmentID:{entity.DepartmentID},name:{entity.Name}");
+            }
         }
-
 
         /// <summary>
         /// PreserveInsertOrder 
@@ -186,15 +218,12 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public Task PreserveInsertOrder()
         {
-            using (var context = Helper.GetContext())
+            var configUpdateBy = new BulkConfig
             {
-                var configUpdateBy = new BulkConfig
-                {
-                    PreserveInsertOrder = true,
-                    SetOutputIdentity = true,
-                };
-                return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
-            }                
+                PreserveInsertOrder = true,
+                SetOutputIdentity = true,
+            };
+            return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
         }
 
 
@@ -205,15 +234,12 @@ namespace EFCoreDemo.Services
         /// <param name="context"></param>
         public void CustomDestinationTableName()
         {
-            using (var context = Helper.GetContext())
+            var items = new List<Course>() { new Course { CourseID = 4041 }, new Course { CourseID = 4042 }, new Course { CourseID = 4043 }, new Course { CourseID = 4044 } };
+            context.BulkRead(items, b => b.CustomDestinationTableName = nameof(Course));
+            foreach (var cource in items)
             {
-                var items = new List<Course>() { new Course { CourseID = 4041 }, new Course { CourseID = 4042 }, new Course { CourseID = 4043 }, new Course { CourseID = 4044 } };
-                context.BulkRead(items, b => b.CustomDestinationTableName = nameof(Course));
-                foreach (var cource in items)
-                {
-                    Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
-                }
-            }             
+                Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
+            }
         }
 
 
@@ -225,22 +251,19 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task CalculateStats()
         {
-            using (var context = Helper.GetContext())
+            Console.WriteLine($"before insert:{context.Courses.Count()}条");
+            var configUpdateBy = new BulkConfig
             {
-                Console.WriteLine($"before insert:{context.Courses.Count()}条");
-                var configUpdateBy = new BulkConfig
-                {
-                    PreserveInsertOrder = true,
-                    SetOutputIdentity = true,
-                    CalculateStats = true,
-                };
-                await context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
+                PreserveInsertOrder = true,
+                SetOutputIdentity = true,
+                CalculateStats = true,
+            };
+            await context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
 
-                Console.WriteLine($"after insert:{context.Courses.Count()}条");
-                Console.WriteLine("本次执行，新增了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-                Console.WriteLine("本次执行，修改了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-                Console.WriteLine("本次执行，删除了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-            }                
+            Console.WriteLine($"after insert:{context.Courses.Count()}条");
+            Console.WriteLine("本次执行，新增了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
+            Console.WriteLine("本次执行，修改了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
+            Console.WriteLine("本次执行，删除了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
         }
 
 
@@ -254,27 +277,24 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task PropertiesToInclude()
         {
-            using (var context = Helper.GetContext())
+            Console.WriteLine($"before PropertiesToInclude");
+            var sample = context.Courses.AsNoTracking().First();
+            Common.Print(context, sample.CourseID);
+            int counter = 0;
+            var courses = context.Courses.AsNoTracking().ToList();
+            foreach (var course in courses)
             {
-                Console.WriteLine($"before PropertiesToInclude");
-                var sample = context.Courses.AsNoTracking().First();
-                Common.Print(context, sample.CourseID);
-                int counter = 0;
-                var courses = context.Courses.AsNoTracking().ToList();
-                foreach (var course in courses)
-                {
-                    counter++;
-                    course.Title = "Desc .BulkUpdate " + counter.ToString();
-                    course.Credits = 0;
-                }
-                var config = new BulkConfig
-                {
-                    PropertiesToInclude = new List<string> { nameof(Course.Title) }
-                };
-                await context.BulkUpdateAsync(courses, config);
-                Console.WriteLine($"after PropertiesToInclude");
-                Common.Print(context, sample.CourseID);
-            }                
+                counter++;
+                course.Title = "Desc .BulkUpdate " + counter.ToString();
+                course.Credits = 0;
+            }
+            var config = new BulkConfig
+            {
+                PropertiesToInclude = new List<string> { nameof(Course.Title) }
+            };
+            await context.BulkUpdateAsync(courses, config);
+            Console.WriteLine($"after PropertiesToInclude");
+            Common.Print(context, sample.CourseID);
         }
 
 
@@ -286,28 +306,26 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task PropertiesToExclude()
         {
-            using (var context = Helper.GetContext())
+
+            Console.WriteLine($"before PropertiesToExclude");
+            var sample = context.Courses.AsNoTracking().First();
+            Common.Print(context, sample.CourseID);
+            int counter = 0;
+            var courses = context.Courses.AsNoTracking().ToList();
+            foreach (var course in courses)
             {
-                Console.WriteLine($"before PropertiesToExclude");
-                var sample = context.Courses.AsNoTracking().First();
-                Common.Print(context, sample.CourseID);
-                int counter = 0;
-                var courses = context.Courses.AsNoTracking().ToList();
-                foreach (var course in courses)
-                {
-                    counter++;
-                    course.Title = "PropertiesToExclude update " + counter.ToString();
-                    course.Credits = 0;
-                }
-                var config = new BulkConfig
-                {
-                    PropertiesToExclude = new List<string> { nameof(Course.Credits) }
-                };
-                await context.BulkUpdateAsync(courses, config);
-                Console.WriteLine($"after PropertiesToExclude");
-                Common.Print(context, sample.CourseID);
-            }                
-        }      
+                counter++;
+                course.Title = "PropertiesToExclude update " + counter.ToString();
+                course.Credits = 0;
+            }
+            var config = new BulkConfig
+            {
+                PropertiesToExclude = new List<string> { nameof(Course.Credits) }
+            };
+            await context.BulkUpdateAsync(courses, config);
+            Console.WriteLine($"after PropertiesToExclude");
+            Common.Print(context, sample.CourseID);
+        }
 
         #endregion
 
@@ -322,45 +340,38 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public Task insertAndUpdate()
         {
-            using (var context = Helper.GetContext())
+
+            int counter = 0;
+            var courses = context.Courses.ToList();
+            foreach (var course in courses)
             {
-                int counter = 0;
-                var courses = context.Courses.ToList();
-                foreach (var course in courses)
-                {
-                    course.Title = "Desc Add Update .BulkUpdate " + counter++;
-                }
-                courses.AddRange(Common.GetCourses(Count));
-                var configUpdateBy = new BulkConfig
-                {
-                    PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
+                course.Title = "Desc Add Update .BulkUpdate " + counter++;
+            }
+            courses.AddRange(Common.GetCourses(Count));
+            var configUpdateBy = new BulkConfig
+            {
+                PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
 
-                    SetOutputIdentity = false,//Id值将更新为数据库中的新值
+                SetOutputIdentity = false,//Id值将更新为数据库中的新值
 
-                    //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
-                    //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
+                //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
+                //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
 
-                    //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
-                    PropertiesToInclude = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
+                //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
+                PropertiesToInclude = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
 
-                    //用于指定自定义属性，我们希望通过该属性进行更新。当在UpdateByProps中设置多个道具时，然后通过组合的列进行匹配，
-                    //比如基于这些列的唯一约束。在同时具有“标识”列的情况下使用UpdateByProperties要求排除Id属性
-                    UpdateByProperties = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
-                };
-                return context.BulkInsertOrUpdateAsync(courses, configUpdateBy, a => WriteProgress(a));
-            }               
+                //用于指定自定义属性，我们希望通过该属性进行更新。当在UpdateByProps中设置多个道具时，然后通过组合的列进行匹配，
+                //比如基于这些列的唯一约束。在同时具有“标识”列的情况下使用UpdateByProperties要求排除Id属性
+                UpdateByProperties = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
+            };
+            return context.BulkInsertOrUpdateAsync(courses, configUpdateBy, a => WriteProgress(a));
         }
 
 
         public Task insertAndUpdateAndDelete()
         {
-            using (var context = Helper.GetContext())
-            {
-                return Task.CompletedTask;
-            }               
+            return Task.CompletedTask;
         }
-
-
 
         private void WriteProgress(decimal percentage)
         {           

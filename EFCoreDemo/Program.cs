@@ -20,10 +20,7 @@ try
 
     var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
 
-    builder.Services.AddDbContext<SchoolContext>(opt =>
-    {
-        opt.UseSqlite(str);
-    });
+    builder.Services.AddDbContext<SchoolContext>();
 
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();    
@@ -37,8 +34,11 @@ try
     {
         var services = scope.ServiceProvider;
         var bulkExecute = services.GetRequiredService<BulkExecute>();
-         //bulkExecute.InitDB();
-        var linqConect = services.GetRequiredService<LinqConect>();
+        //bulkExecute.InitDB();
+
+        //await bulkExecute.BulkInsertAsync();
+
+        //var linqConect = services.GetRequiredService<LinqConect>();
 
         //linqConect.SingleInclude();
         //linqConect.SingleLINQ();
@@ -47,7 +47,7 @@ try
         //linqConect.SingleChildInclude();
         //linqConect.SingleChildLINQ();
         //linqConect.MultipleThenIncludes();
-        linqConect.IncludeTree();
+        //linqConect.IncludeTree();
         //linqConect.MultipleLeafIncludes();
         //linqConect.IncludeMultipleNavigationsWithSingleInclude();
 
@@ -74,27 +74,16 @@ try
         //任务：对接sqlserver，测试insertUpdate、insertUpdate、insertUpdateDelete方法，CalculateStats属性
         //to  do ...
 
-        //查询
-        //var courses = context.Courses.Include(x => x.Instructors).Where(x => x.CourseID < 10000);//.Take(10);
-        //foreach (var cource in courses)
-        //{
-        //    Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
-
-        //    foreach (var instructor in cource.Instructors)
-        //    {
-        //        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
-        //    }
-        //}
+      
     }
 
     //基准测试
     //var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
     //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
     //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
-    //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
+     var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
 
-    Console.WriteLine("Done.");
-
+    Console.WriteLine("Done.");    
     app.Run();
 }
 catch (Exception e)
