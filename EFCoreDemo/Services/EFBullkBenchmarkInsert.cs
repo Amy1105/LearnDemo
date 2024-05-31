@@ -19,8 +19,9 @@ using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkInsert
-    {
-        private const int Count = 10000;
+    {       
+        [Params(100000, 1000000)]
+        public int Count { get; set; }
 
         [GlobalSetup]
         public void Setup()

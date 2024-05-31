@@ -21,11 +21,11 @@ namespace EFCoreDemo.Services
         {
             context = _context;
         }
-        private const int Count = 100000;
+    
+        private const int Count = 1000000;
 
         public void InitDB()
         {
-
             //建库
             context.Database.EnsureCreated();
             //初始化数据
