@@ -19,23 +19,16 @@ using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkInsert
-    {
-        private const int Count = 100000;
+    {       
+        [Params(100000, 1000000)]
+        public int Count { get; set; }
 
-        //private IServiceProvider serviceProvider=null;    
-        
         [GlobalSetup]
-        public  void Setup()
+        public void Setup()
         {
-            //var services = new ServiceCollection();            
-            //services.AddDbContext<SchoolContext>();          
-            //serviceProvider = services.BuildServiceProvider();
-            //var context = serviceProvider.GetRequiredService<SchoolContext>();
-            //var builder = new DbContextOptionsBuilder(new DbContextOptions<SchoolContext>());
-            //var context=new SchoolContext(builder.Options as DbContextOptions<SchoolContext>);           
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
-            //DbInitializer.Initialize(context);
+            using SchoolContext context = new SchoolContext();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
         }
 
@@ -43,20 +36,54 @@ namespace EFCoreDemo.Services
         [Benchmark]
         public Task AddConectTablesAsync()
         {
-            using (var context = Helper.GetContext())
-            {
-                context.Courses.AddRange(Common.GetCourses(Count));
-                return context.SaveChangesAsync();
-            }
+            using SchoolContext context = new SchoolContext();
+
+            context.Courses.AddRange(Common.GetCourses(Count));
+            return context.SaveChangesAsync();
+
         }
 
         [Benchmark]
         public Task AddConectTablesWithBullkAsync()
         {
-            using (var context = Helper.GetContext())
+            using SchoolContext context = new SchoolContext();
+            List<Course> Courses = new List<Course>();
+            List<Instructor> subEntities = new List<Instructor>();
+            foreach (var i in Enumerable.Range(1, Count))
             {
-                return context.BulkInsertAsync(Common.GetCourses(Count));
+                //这门课下的3个老师
+                List<Instructor> instructors = new List<Instructor>();
+                foreach (var j in Enumerable.Range(1, 3))
+                {
+                    instructors.Add(new Instructor
+                    {
+                        FirstMidName = "bulkKim" + i.ToString() + "-" + j.ToString(),
+                        LastName = "Abercrombie" + i.ToString() + "-" + j.ToString(),
+                        HireDate = DateTime.Parse("1995-03-11"),
+                    });
+                }
+                var emodel = new Course
+                {
+                    Title = "bulkLiterature" + i.ToString(),
+                    Credits = 5,
+                    Instructors = instructors,
+                };
+                //这门课
+                Courses.Add(emodel);
             }
+            var bulkConfig = new BulkConfig() { SetOutputIdentity = true };
+            context.BulkInsert(Courses, bulkConfig);
+            foreach (var entity in Courses)
+            {
+                foreach (var subEntity in entity.Instructors!)
+                {
+                    subEntity.CourseID = entity.CourseID; // 设置外键
+                }
+                subEntities.AddRange(entity.Instructors);
+            }
+            bulkConfig.SetOutputIdentity = false;
+            context.BulkInsert(subEntities, bulkConfig);
+            return Task.CompletedTask;
         }
 
         #endregion

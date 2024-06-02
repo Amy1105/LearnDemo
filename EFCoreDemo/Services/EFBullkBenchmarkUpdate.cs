@@ -13,39 +13,43 @@ namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkUpdate
     {
-        private const int Count = 10000;                    
+        private const int Count = 10000;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            using SchoolContext context = new SchoolContext();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
 
         [Benchmark]
         public async Task UpdatesAsync()
         {
-            using (var context = Helper.GetContext())
+            using SchoolContext context = new SchoolContext();
+            int counter = 0;
+            var courses = context.Courses.AsNoTracking().ToList();
+            foreach (var course in courses)
             {
-                int counter = 0;
-                var courses = context.Courses.Take(Count).AsNoTracking().ToList();
-                foreach (var course in courses)
-                {
-                    counter++;
-                    course.Title = "Desc Update " + counter.ToString();
-                }
-                context.Courses.UpdateRange(courses);
-                await context.SaveChangesAsync();
-            }               
+                counter++;
+                course.Title = "Desc Update " + counter.ToString();
+            }
+            context.Courses.UpdateRange(courses);
+            await context.SaveChangesAsync();
         }
 
         [Benchmark]
         public Task UpdateWithBullkAsync()
         {
-            using (var context = Helper.GetContext())
+            using SchoolContext context = new SchoolContext();
+            int counter = 0;
+            var courses = context.Courses.AsNoTracking().ToList();
+            foreach (var course in courses)
             {
-                int counter = 0;
-                var courses = context.Courses.Take(Count).AsNoTracking().ToList();
-                foreach (var course in courses)
-                {
-                    counter++;
-                    course.Title = "Desc .Bulk Update " + counter.ToString();
-                }               
-                return context.BulkUpdateAsync(courses);
-            }               
+                counter++;
+                course.Title = "Desc .Bulk Update " + counter.ToString();
+            }
+            return context.BulkUpdateAsync(courses);
         }
     }
 }

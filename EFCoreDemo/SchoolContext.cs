@@ -8,10 +8,7 @@ using System.Reflection.Metadata;
 namespace EFCoreDemo
 {
     public class SchoolContext : DbContext
-    {        
-        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
-        {            
-        }
+    {             
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
@@ -24,13 +21,17 @@ namespace EFCoreDemo
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Address> Addresss { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
+        {                   
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite("Data Source=../../../School.db");
+            optionsBuilder.UseSqlite("Data Source=../../../School.db");
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }       

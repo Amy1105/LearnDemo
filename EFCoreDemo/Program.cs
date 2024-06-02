@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EFCoreDemo;
 using Microsoft.EntityFrameworkCore;
+using EFCoreDemo.Services.Example;
 
 
 try
@@ -19,13 +20,10 @@ try
 
     var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
 
-    builder.Services.AddDbContext<SchoolContext>(opt =>
-    {
-        opt.UseSqlite(str);
-    });
+    builder.Services.AddDbContext<SchoolContext>();
 
     builder.Services.AddTransient<BulkExecute>();
-    builder.Services.AddTransient<LinqConect>();
+    builder.Services.AddTransient<LinqConect>();    
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -35,77 +33,57 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        var bulkExecute = services.GetRequiredService<BulkExecute>();
-        var linqConect = services.GetRequiredService<LinqConect>();
-
-      
-
+        //var bulkExecute = services.GetRequiredService<BulkExecute>();
         //bulkExecute.InitDB();
-
-        //linqConect.SingleInclude();
-
-       // linqConect.SingleLINQ();
-
-
-        //linqConect.MultipleInclude();
-       
-       // linqConect.MultipleLINQ();
-
-        //linqConect.SingleChildInclude();
-
-        linqConect.SingleChildLINQ();
 
         //await bulkExecute.BulkInsertAsync();
 
-        //var context = services.GetRequiredService<SchoolContext>();
+        //var linqConect = services.GetRequiredService<LinqConect>();
 
-        //var courses= context.Courses.Take(100).AsNoTracking().ToList();
+        //linqConect.SingleInclude();
+        //linqConect.SingleLINQ();
+        //linqConect.MultipleInclude();
+        //linqConect.MultipleLINQ();
+        //linqConect.SingleChildInclude();
+        //linqConect.SingleChildLINQ();
+        //linqConect.MultipleThenIncludes();
+        //linqConect.IncludeTree();
+        //linqConect.MultipleLeafIncludes();
+        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
 
 
+        //linqConect.MultipleLeafIncludesFiltered2();
+        //linqConect.LeftOuterJoin();
+        //linqConect.LeftOuterJoinOrderBy();
+        //linqConect.LeftOuterJoinWithLinQ();
+
+
+
+        //await bulkExecute.BulkInsertAsync();        
         //await bulkExecute.BulkUpdateAsync();
-
         //await bulkExecute.BulkReadAsync();
-
         //await bulkExecute.BulkDeleteAsync();
 
         //属性
 
         // await bulkExecute.NotifyAfterAsync();
-
         // bulkExecute.UpdateByProperties();
-
         //// await bulkExecute.CalculateStats();  //?
-
         // await bulkExecute.PropertiesToInclude();
-
         // await bulkExecute.PropertiesToExclude();
-
         //任务：对接sqlserver，测试insertUpdate、insertUpdate、insertUpdateDelete方法，CalculateStats属性
         //to  do ...
 
-        //查询
-        //var courses = context.Courses.Include(x => x.Instructors).Where(x => x.CourseID < 10000);//.Take(10);
-        //foreach (var cource in courses)
-        //{
-        //    Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
-
-        //    foreach (var instructor in cource.Instructors)
-        //    {
-        //        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
-        //    }
-        //}
-
-
+      
     }
 
     //基准测试
-    //var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
-    //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
+    var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+     //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
     //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
-    //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
+     //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
 
-    Console.WriteLine("Done.");
-
+    Console.WriteLine("Done.");    
     app.Run();
 }
 catch (Exception e)

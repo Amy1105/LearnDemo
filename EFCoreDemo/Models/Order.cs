@@ -36,13 +36,41 @@ namespace EFCoreDemo.Models
         public Order order { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
-       
 
         public int Count { get; set; }
         public decimal Price { get; set; }
 
         public decimal Amount { get; set; }
-        
+
+        public int ProductID { get; set; }
+
+        public Product product {get;set;}
+    }
+
+    public class Product
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public string ProductName { get; set; }
+
+        public string Description { get; set; } 
+
+        public int Count { get; set; }  
+
+        public decimal Price { get; set; }  
+
+        public Image Images {  get; set; }
+    }
+
+    public class Image
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public string MainImage { get; set; }
+
+        public List<string> Images { get; set; }
     }
 
     public class Address
