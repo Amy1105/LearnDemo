@@ -8,8 +8,8 @@ using System.Reflection.Metadata;
 namespace EFCoreDemo
 {
     public class SchoolContext : DbContext
-    {             
-
+    {
+    
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
@@ -31,7 +31,8 @@ namespace EFCoreDemo
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=../../../School.db");
+            //optionsBuilder.UseSqlite("Data Source=../../../School.db");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=School;ConnectRetryCount=0");
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }       

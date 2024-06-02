@@ -33,13 +33,14 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        //var bulkExecute = services.GetRequiredService<BulkExecute>();
-        //bulkExecute.InitDB();
+        var bulkExecute = services.GetRequiredService<BulkExecute>();
+        bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();
 
-        //var linqConect = services.GetRequiredService<LinqConect>();
+         bulkExecute.insertorUpdateorDelete();
 
+        //var linqConect = services.GetRequiredService<LinqConect>();
         //linqConect.SingleInclude();
         //linqConect.SingleLINQ();
         //linqConect.MultipleInclude();
@@ -57,28 +58,28 @@ try
         //linqConect.LeftOuterJoinOrderBy();
         //linqConect.LeftOuterJoinWithLinQ();
 
-
-
         //await bulkExecute.BulkInsertAsync();        
         //await bulkExecute.BulkUpdateAsync();
         //await bulkExecute.BulkReadAsync();
         //await bulkExecute.BulkDeleteAsync();
 
         //属性
-
         // await bulkExecute.NotifyAfterAsync();
         // bulkExecute.UpdateByProperties();
         //// await bulkExecute.CalculateStats();  //?
         // await bulkExecute.PropertiesToInclude();
         // await bulkExecute.PropertiesToExclude();
-        //任务：对接sqlserver，测试insertUpdate、insertUpdate、insertUpdateDelete方法，CalculateStats属性
+
+
+
+        //任务：对接sqlserver，测试insertUpdate、insertUpdateDelete方法，CalculateStats属性
         //to  do ...
 
-      
+
     }
 
     //基准测试
-    var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+    //var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
      //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
     //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
      //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
