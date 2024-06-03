@@ -23,7 +23,7 @@ try
     builder.Services.AddDbContext<SchoolContext>();
 
     builder.Services.AddTransient<BulkExecute>();
-    builder.Services.AddTransient<LinqConect>();    
+    builder.Services.AddTransient<LinqConect>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -37,53 +37,38 @@ try
         //bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();
-
-        //var linqConect = services.GetRequiredService<LinqConect>();
-
-        //linqConect.SingleInclude();
-        //linqConect.SingleLINQ();
-        //linqConect.MultipleInclude();
-        //linqConect.MultipleLINQ();
-        //linqConect.SingleChildInclude();
-        //linqConect.SingleChildLINQ();
-        //linqConect.MultipleThenIncludes();
-        //linqConect.IncludeTree();
-        //linqConect.MultipleLeafIncludes();
-        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
-
-
-        //linqConect.MultipleLeafIncludesFiltered2();
-        //linqConect.LeftOuterJoin();
-        //linqConect.LeftOuterJoinOrderBy();
-        //linqConect.LeftOuterJoinWithLinQ();
-
-
-
         //await bulkExecute.BulkInsertAsync();        
         //await bulkExecute.BulkUpdateAsync();
         //await bulkExecute.BulkReadAsync();
         //await bulkExecute.BulkDeleteAsync();
 
         //属性
-
         // await bulkExecute.NotifyAfterAsync();
         // bulkExecute.UpdateByProperties();
-        //// await bulkExecute.CalculateStats();  //?
+        // await bulkExecute.CalculateStats(); 
         // await bulkExecute.PropertiesToInclude();
-        // await bulkExecute.PropertiesToExclude();
-        //任务：对接sqlserver，测试insertUpdate、insertUpdate、insertUpdateDelete方法，CalculateStats属性
-        //to  do ...
+        // await bulkExecute.PropertiesToExclude();   
 
-      
+        var linqConect = services.GetRequiredService<LinqConect>();
+        linqConect.SingleInclude();
+        linqConect.SingleLINQ();
+        linqConect.MultipleInclude();
+        linqConect.MultipleLINQ();
+        linqConect.SingleChildInclude();
+        linqConect.SingleChildLINQ();
+        linqConect.MultipleThenIncludes();
+        linqConect.IncludeTree();
+        linqConect.MultipleLeafIncludes();
+        linqConect.IncludeMultipleNavigationsWithSingleInclude();            
     }
 
     //基准测试
-    var sumeryInert = BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
-     //var sumeryUpdate = BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
-    //var sumeryDelete=BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
-     //var sumeryRead=BenchmarkRunner.Run<EFBullkBenchmarkRead>();
+    //BenchmarkRunner.Run<EFBullkBenchmarkInsert>();
+    //BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
+    //BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
+    //BenchmarkRunner.Run<EFBullkBenchmarkRead>();
 
-    Console.WriteLine("Done.");    
+    Console.WriteLine("Done.");
     app.Run();
 }
 catch (Exception e)
