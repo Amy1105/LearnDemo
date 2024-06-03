@@ -16,8 +16,10 @@ namespace EFCoreDemo.Models
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; } = string.Empty;
 
-        [Range(0, 5)]
-        public int? Credits { get; set; }    
+        [Range(0, 10)]
+        public int? Credits { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
 
         public ICollection<Enrollment> Enrollments { get; set; }
         public ICollection<Instructor> Instructors { get; set; }

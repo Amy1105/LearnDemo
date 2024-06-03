@@ -4,6 +4,7 @@ using EFCoreDemo.Models;
 using EFCoreDemo.Seed;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Index.HPRtree;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,10 +23,11 @@ namespace EFCoreDemo.Services
             context = _context;
         }
     
-        private const int Count = 1000000;
+        private const int Count = 10000;
 
         public void InitDB()
         {
+            context.Database.EnsureDeleted();         
             //建库
             context.Database.EnsureCreated();
             //初始化数据
@@ -338,39 +340,112 @@ namespace EFCoreDemo.Services
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public Task insertAndUpdate()
+        public void insertAndUpdate()
         {
-
+           var count = context.Courses.Count();
+            List<Course> Courses = new List<Course>();
             int counter = 0;
-            var courses = context.Courses.ToList();
-            foreach (var course in courses)
-            {
-                course.Title = "Desc Add Update .BulkUpdate " + counter++;
+            foreach (var i in Enumerable.Range(1, 10))
+            {                
+                var emodel = new Course
+                {
+                    Title = "bulkLiterature" + i.ToString(),
+                    Credits = 5,
+                };              
+                //这门课
+                Courses.Add(emodel);
             }
-            courses.AddRange(Common.GetCourses(Count));
+            var bulkConfig = new BulkConfig() { SetOutputIdentity = true }; //从数据库中返回id
+            context.BulkInsert(Courses, bulkConfig);
+
+            List<Course> newCourses = context.Courses.ToList();
+
+            foreach (var c in newCourses)
+            {
+                c.Title = "update new bulkLiterature";
+            }
+
+            foreach (var i in Enumerable.Range(1, 10))
+            {
+                //这门课
+                newCourses.Add(new Course
+                {                   
+                    Title = "add new bulkLiterature" + i.ToString(),
+                    Credits = 4,
+                });
+            }          
             var configUpdateBy = new BulkConfig
             {
-                PreserveInsertOrder = true,//确保实体按照entities List中的顺序插入到Db中
-
-                SetOutputIdentity = false,//Id值将更新为数据库中的新值
-
-                //Sql Server上的BulkInsertOrUpdate对于那些将要更新的列，它必须与Id列匹配，
-                //或者如果使用UpdateByProperties，则必须与其他唯一列匹配，在这种情况下，orderBy使用这些道具而不是Id，这是由于Sql MERGE的工作方式
-
-                //在执行“插入/更新”操作时，可以通过将要影响的属性的名称添加到“要包含的属性”中来显式选择要影响的特性
-                PropertiesToInclude = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
-
-                //用于指定自定义属性，我们希望通过该属性进行更新。当在UpdateByProps中设置多个道具时，然后通过组合的列进行匹配，
-                //比如基于这些列的唯一约束。在同时具有“标识”列的情况下使用UpdateByProperties要求排除Id属性
-                UpdateByProperties = new List<string> { nameof(Course.Title), nameof(Course.Credits) },
+                SetOutputIdentity = true,
+                CalculateStats = true,
             };
-            return context.BulkInsertOrUpdateAsync(courses, configUpdateBy, a => WriteProgress(a));
+            context.BulkInsertOrUpdate(newCourses, configUpdateBy);
+            Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+            //查询
+            var list = context.Courses.ToList();//.Take(10);
+            foreach (var cource in list)
+            {
+                Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
+                foreach (var instructor in cource.Instructors)
+                {
+                    Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+                }
+            }
+            Console.WriteLine(configUpdateBy.StatsInfo?.StatsNumberInserted);
+            Console.WriteLine(configUpdateBy.StatsInfo?.StatsNumberUpdated);
+            Console.WriteLine(configUpdateBy.StatsInfo?.StatsNumberDeleted);
         }
 
 
-        public Task insertAndUpdateAndDelete()
+        public void insertorUpdateorDelete()
         {
-            return Task.CompletedTask;
+            var count = context.Courses.Count();
+            List<Course> Courses = new List<Course>();
+            int counter = 0;
+            foreach (var i in Enumerable.Range(1, 10))
+            {
+                var emodel = new Course
+                {
+                    Title = "bulkLiterature" + i.ToString(),
+                    Credits = i,
+                };
+                //这门课
+                Courses.Add(emodel);
+            }
+            var bulkConfig = new BulkConfig() { SetOutputIdentity = true }; //从数据库中返回id
+            context.BulkInsert(Courses, bulkConfig);
+
+            List<Course> newCourses = context.Courses.ToList();
+
+            foreach (var c in newCourses)
+            {
+                c.Title = "update new bulkLiterature";
+            }
+
+            foreach (var i in Enumerable.Range(1, 10))
+            {
+                //这门课
+                newCourses.Add(new Course
+                {
+                    Title = "add new bulkLiterature" + i.ToString(),
+                    Credits = 4,
+                });
+            }           
+            var bulkConfigSoftDel = new BulkConfig();
+            bulkConfigSoftDel.SetOutputIdentity = true;
+            bulkConfigSoftDel.CalculateStats = true;
+            bulkConfigSoftDel.SetSynchronizeSoftDelete<Course>(a => new Course { Credits = 1 }); // 它没有从数据库中删除，而是将Quantity更新为0（通常的用例是：IsDeleted为True）
+            context.BulkInsertOrUpdateOrDelete(newCourses, bulkConfigSoftDel);
+            Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+            //查询
+            var list = context.Courses.ToList();//.Take(10);
+            foreach (var cource in list)
+            {
+                Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");                
+            }
+            Console.WriteLine(bulkConfigSoftDel.StatsInfo?.StatsNumberInserted);
+            Console.WriteLine(bulkConfigSoftDel.StatsInfo?.StatsNumberUpdated);
+            Console.WriteLine(bulkConfigSoftDel.StatsInfo?.StatsNumberDeleted);          
         }
 
         private void WriteProgress(decimal percentage)

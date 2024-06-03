@@ -33,10 +33,31 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        //var bulkExecute = services.GetRequiredService<BulkExecute>();
-        //bulkExecute.InitDB();
+        var bulkExecute = services.GetRequiredService<BulkExecute>();
+        bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();
+
+         bulkExecute.insertorUpdateorDelete();
+
+        //var linqConect = services.GetRequiredService<LinqConect>();
+        //linqConect.SingleInclude();
+        //linqConect.SingleLINQ();
+        //linqConect.MultipleInclude();
+        //linqConect.MultipleLINQ();
+        //linqConect.SingleChildInclude();
+        //linqConect.SingleChildLINQ();
+        //linqConect.MultipleThenIncludes();
+        //linqConect.IncludeTree();
+        //linqConect.MultipleLeafIncludes();
+        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
+
+
+        //linqConect.MultipleLeafIncludesFiltered2();
+        //linqConect.LeftOuterJoin();
+        //linqConect.LeftOuterJoinOrderBy();
+        //linqConect.LeftOuterJoinWithLinQ();
+
         //await bulkExecute.BulkInsertAsync();        
         //await bulkExecute.BulkUpdateAsync();
         //await bulkExecute.BulkReadAsync();
@@ -47,19 +68,14 @@ try
         // bulkExecute.UpdateByProperties();
         // await bulkExecute.CalculateStats(); 
         // await bulkExecute.PropertiesToInclude();
-        // await bulkExecute.PropertiesToExclude();   
+        // await bulkExecute.PropertiesToExclude();
 
-        var linqConect = services.GetRequiredService<LinqConect>();
-        linqConect.SingleInclude();
-        linqConect.SingleLINQ();
-        linqConect.MultipleInclude();
-        linqConect.MultipleLINQ();
-        linqConect.SingleChildInclude();
-        linqConect.SingleChildLINQ();
-        linqConect.MultipleThenIncludes();
-        linqConect.IncludeTree();
-        linqConect.MultipleLeafIncludes();
-        linqConect.IncludeMultipleNavigationsWithSingleInclude();            
+
+
+        //任务：对接sqlserver，测试insertUpdate、insertUpdateDelete方法，CalculateStats属性
+        //to  do ...
+
+
     }
 
     //基准测试
