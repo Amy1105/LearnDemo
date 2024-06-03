@@ -14,14 +14,9 @@ try
     builder.Configuration.AddCommandLine(args);
     builder.Configuration.AddEnvironmentVariables(prefix: "PREFIX_");
     builder.Environment.ContentRootPath = Directory.GetCurrentDirectory();
-
     builder.Configuration.AddJsonFile("appsetting.json", optional: true);
-
-
-    var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
-
+    //var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
     builder.Services.AddDbContext<SchoolContext>();
-
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
@@ -36,9 +31,19 @@ try
         var bulkExecute = services.GetRequiredService<BulkExecute>();
         bulkExecute.InitDB();
 
-        //await bulkExecute.BulkInsertAsync();
+        //await bulkExecute.BulkInsertAsync();       
+        //await bulkExecute.BulkInsertAsync();        
+        //await bulkExecute.BulkUpdateAsync();
+        //await bulkExecute.BulkReadAsync();
+        //await bulkExecute.BulkDeleteAsync();
 
-         bulkExecute.insertorUpdateorDelete();
+        //属性
+        //await bulkExecute.NotifyAfterAsync();
+        //bulkExecute.UpdateByProperties();       
+        //await bulkExecute.PropertiesToInclude();
+        //await bulkExecute.PropertiesToExclude();
+        //bulkExecute.InsertorUpdate();
+        //bulkExecute.InsertorUpdateorDelete();
 
         //var linqConect = services.GetRequiredService<LinqConect>();
         //linqConect.SingleInclude();
@@ -50,32 +55,7 @@ try
         //linqConect.MultipleThenIncludes();
         //linqConect.IncludeTree();
         //linqConect.MultipleLeafIncludes();
-        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
-
-
-        //linqConect.MultipleLeafIncludesFiltered2();
-        //linqConect.LeftOuterJoin();
-        //linqConect.LeftOuterJoinOrderBy();
-        //linqConect.LeftOuterJoinWithLinQ();
-
-        //await bulkExecute.BulkInsertAsync();        
-        //await bulkExecute.BulkUpdateAsync();
-        //await bulkExecute.BulkReadAsync();
-        //await bulkExecute.BulkDeleteAsync();
-
-        //属性
-        // await bulkExecute.NotifyAfterAsync();
-        // bulkExecute.UpdateByProperties();
-        // await bulkExecute.CalculateStats(); 
-        // await bulkExecute.PropertiesToInclude();
-        // await bulkExecute.PropertiesToExclude();
-
-
-
-        //任务：对接sqlserver，测试insertUpdate、insertUpdateDelete方法，CalculateStats属性
-        //to  do ...
-
-
+        //linqConect.IncludeMultipleNavigationsWithSingleInclude();          
     }
 
     //基准测试

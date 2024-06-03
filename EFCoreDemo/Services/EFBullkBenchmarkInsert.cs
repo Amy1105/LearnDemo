@@ -1,26 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using BenchmarkDotNet.Toolchains;
 using EFCore.BulkExtensions;
 using EFCoreDemo.Models;
-using EFCoreDemo.Seed;
-using Microsoft.Data.SqlClient;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace EFCoreDemo.Services
 {
     public class EFBullkBenchmarkInsert
     {       
-        [Params(100000, 1000000)]
+        [Params(10000, 100000)]
         public int Count { get; set; }
 
         [GlobalSetup]
@@ -37,7 +23,6 @@ namespace EFCoreDemo.Services
         public Task AddConectTablesAsync()
         {
             using SchoolContext context = new SchoolContext();
-
             context.Courses.AddRange(Common.GetCourses(Count));
             return context.SaveChangesAsync();
 

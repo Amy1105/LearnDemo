@@ -43,7 +43,7 @@ namespace EFCoreDemo.Services
         /// </summary>
         /// <param name="_context"></param>
         /// <returns></returns>
-        public async Task BulkInsertAsync()
+        public  void BulkInsert()
         {
             Console.WriteLine($"before insert bulk 课程:{context.Courses.Count()}条");
             List<Course> Courses = new List<Course>();
@@ -117,7 +117,6 @@ namespace EFCoreDemo.Services
             await context.BulkUpdateAsync(courses);
             Console.WriteLine($"after update bulk");
             Common.Print(context, sample.CourseID);
-
         }
 
         /// <summary>
@@ -155,7 +154,6 @@ namespace EFCoreDemo.Services
         #endregion
 
         #region bulkConfig 属性
-
         /// <summary>
         /// 如果未设置，则将具有相同的BatchSize值,默认2000，如果非零，则指定在生成通知事件之前要处理的行数。
         /// </summary>
@@ -169,10 +167,8 @@ namespace EFCoreDemo.Services
                 SetOutputIdentity = true,
                 NotifyAfter = 1,
             };
-            return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy, a => WriteProgress(a));
-            //使用BatchSize就不通知了吗  to do
+            return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy, a => WriteProgress(a));            
         }
-
 
         /// <summary>
         /// UpdateByProperties 支持唯一索引
@@ -180,35 +176,42 @@ namespace EFCoreDemo.Services
         /// <param name="context"></param>
         public void UpdateByProperties()
         {
-
-            var fakhouri = new Instructor
-            {
-                FirstMidName = "Fadi",
-                LastName = "Fakhouri",
-                HireDate = DateTime.Parse("2002-07-06")
-            };
-
-            var entities = new List<Department>();
+            var entities = new List<Course>();
             for (int i = 1; i < 10; i++)
             {
-                var mathematics = new Department
+                var emodel = new Course
                 {
-                    Name = "Mathematics",
-                    Budget = 100000,
-                    StartDate = DateTime.Parse("2007-09-01"),
+                    Title = "bulkLiterature" + i,
+                    Credits = 5,
                 };
-                entities.Add(mathematics);
+                entities.Add(emodel);
             }
-            context.BulkRead(
-                entities,
+            context.BulkInsert(entities);
+            var dbEntities = context.Courses.AsNoTracking().ToList();
+            foreach (var entity in dbEntities)
+            {
+                Console.WriteLine($"Course:{entity.CourseID},Title:{entity.Title}");
+            }
+            var updateEntities = new List<Course>();
+            for (int i = 1; i < 6; i++)
+            {
+                var emodel = new Course
+                {
+                    Title = "bulkLiterature" + i,
+                    Credits = 4,
+                };
+                updateEntities.Add(emodel);
+            }
+            context.BulkInsertOrUpdate(updateEntities,
                 new BulkConfig
                 {
-                    UpdateByProperties = new List<string> { nameof(Department.Name) }
+                    UpdateByProperties = new List<string> { nameof(Course.Title) }
                 }
             );
-            foreach (var entity in entities)
+            var dbEntities2 = context.Courses.AsNoTracking().ToList();
+            foreach (var entity in dbEntities2)
             {
-                Console.WriteLine($"DepartmentID:{entity.DepartmentID},name:{entity.Name}");
+                Console.WriteLine($"Course:{entity.CourseID},Title:{entity.Title}");
             }
         }
 
@@ -227,48 +230,6 @@ namespace EFCoreDemo.Services
             };
             return context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
         }
-
-
-
-        /// <summary>
-        /// 允许指定Db中不必映射到实体的表的自定义名称。允许指定Db中不必映射到实体的表的自定义名称。
-        /// </summary>
-        /// <param name="context"></param>
-        public void CustomDestinationTableName()
-        {
-            var items = new List<Course>() { new Course { CourseID = 4041 }, new Course { CourseID = 4042 }, new Course { CourseID = 4043 }, new Course { CourseID = 4044 } };
-            context.BulkRead(items, b => b.CustomDestinationTableName = nameof(Course));
-            foreach (var cource in items)
-            {
-                Console.WriteLine($"课程:{cource.CourseID},{cource.Title}");
-            }
-        }
-
-
-
-        /// <summary>
-        /// CalculateStats
-        /// </summary>
-        /// <param name="_context"></param>
-        /// <returns></returns>
-        public async Task CalculateStats()
-        {
-            Console.WriteLine($"before insert:{context.Courses.Count()}条");
-            var configUpdateBy = new BulkConfig
-            {
-                PreserveInsertOrder = true,
-                SetOutputIdentity = true,
-                CalculateStats = true,
-            };
-            await context.BulkInsertAsync(Common.GetCourses(Count), configUpdateBy);
-
-            Console.WriteLine($"after insert:{context.Courses.Count()}条");
-            Console.WriteLine("本次执行，新增了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-            Console.WriteLine("本次执行，修改了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-            Console.WriteLine("本次执行，删除了：" + configUpdateBy.StatsInfo?.StatsNumberInserted);
-        }
-
-
 
         /// <summary>
         /// PropertiesToInclude 
@@ -308,7 +269,6 @@ namespace EFCoreDemo.Services
         /// <returns></returns>
         public async Task PropertiesToExclude()
         {
-
             Console.WriteLine($"before PropertiesToExclude");
             var sample = context.Courses.AsNoTracking().First();
             Common.Print(context, sample.CourseID);
@@ -340,11 +300,10 @@ namespace EFCoreDemo.Services
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public void insertAndUpdate()
+        public void InsertorUpdate()
         {
            var count = context.Courses.Count();
-            List<Course> Courses = new List<Course>();
-            int counter = 0;
+            List<Course> Courses = new List<Course>();          
             foreach (var i in Enumerable.Range(1, 10))
             {                
                 var emodel = new Course
@@ -357,14 +316,11 @@ namespace EFCoreDemo.Services
             }
             var bulkConfig = new BulkConfig() { SetOutputIdentity = true }; //从数据库中返回id
             context.BulkInsert(Courses, bulkConfig);
-
             List<Course> newCourses = context.Courses.ToList();
-
             foreach (var c in newCourses)
             {
                 c.Title = "update new bulkLiterature";
             }
-
             foreach (var i in Enumerable.Range(1, 10))
             {
                 //这门课
@@ -397,11 +353,10 @@ namespace EFCoreDemo.Services
         }
 
 
-        public void insertorUpdateorDelete()
+        public void InsertorUpdateorDelete()
         {
             var count = context.Courses.Count();
-            List<Course> Courses = new List<Course>();
-            int counter = 0;
+            List<Course> Courses = new List<Course>();           
             foreach (var i in Enumerable.Range(1, 10))
             {
                 var emodel = new Course
@@ -414,14 +369,11 @@ namespace EFCoreDemo.Services
             }
             var bulkConfig = new BulkConfig() { SetOutputIdentity = true }; //从数据库中返回id
             context.BulkInsert(Courses, bulkConfig);
-
             List<Course> newCourses = context.Courses.ToList();
-
             foreach (var c in newCourses)
             {
                 c.Title = "update new bulkLiterature";
             }
-
             foreach (var i in Enumerable.Range(1, 10))
             {
                 //这门课

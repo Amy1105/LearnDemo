@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace EFCoreDemo.Services
 {
@@ -14,7 +15,7 @@ namespace EFCoreDemo.Services
         /// 构建课程实体（联表）
         /// </summary>
         /// <returns></returns>
-        public static List<Course> GetCourses(int Count)
+        public  static List<Course> GetCourses(int Count)
         {
             List<Course> Courses = new List<Course>();
             foreach (var i in Enumerable.Range(1, Count))
