@@ -45,7 +45,8 @@ try
         //bulkExecute.InsertorUpdate();
         //bulkExecute.InsertorUpdateorDelete();
 
-        //var linqConect = services.GetRequiredService<LinqConect>();
+        var linqConect = services.GetRequiredService<LinqConect>();
+        linqConect.Check();
         //linqConect.SingleInclude();
         //linqConect.SingleLINQ();
         //linqConect.MultipleInclude();

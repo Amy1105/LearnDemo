@@ -25,6 +25,10 @@ namespace EFCoreDemo
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<SampleReceiptHeader> SampleReceiptHeaders {  get; set; }
+
+        public DbSet<SampleReceiptDetail> SampleReceiptDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {                   
         }
@@ -33,7 +37,7 @@ namespace EFCoreDemo
         {
             //optionsBuilder.UseSqlite("Data Source=../../../School.db");
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=School;ConnectRetryCount=0");
-            //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }       
     }

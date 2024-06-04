@@ -18,6 +18,17 @@ namespace EFCoreDemo.Services
             context= _context;
         }
 
+
+        public  void Check()
+        {
+            var arrSampleReceiptHeaderIDList = new List<int>() { 23231};
+            var SampleReceiptHeaderLst = context.SampleReceiptHeaders.Include(r => r.SampleReceiptDetails)
+                .Where(p => arrSampleReceiptHeaderIDList.Contains(p.SampleReceiptHeaderId))         
+           .ToList();
+        }
+
+
+
         /*
          * SELECT "o"."Id", "o"."AddressID", "o"."CreateTime", "o"."IsPay", "o"."PayTime", "o0"."Id", "o0"."Amount", "o0"."Count", "o0"."Description", "o0"."OrderId", "o0"."Price", "o0"."ProductName"
       FROM "Orders" AS "o"
