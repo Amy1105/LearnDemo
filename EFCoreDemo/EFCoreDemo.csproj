@@ -7,6 +7,8 @@
 	<ConsoleOutputCodePage>65001</ConsoleOutputCodePage>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<CharacterSet>utf-8</CharacterSet>
+    <UserSecretsId>be9397bf-4e14-4c95-8ee3-37e82ddb8bfe</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -100,20 +100,24 @@ using DoNetVersionUpdate.DoNet5Update;
 
 //initDemo.Method();
 
-modeDemo.Method();
+//modeDemo.Method();
 
-modeDemo.Method2();
-modeDemo.Method3();
-modeDemo.GetGroupTicketPrice(4);
-modeDemo.Method4();
+//modeDemo.Method2();
+//modeDemo.Method3();
+//modeDemo.GetGroupTicketPrice(4);
+//modeDemo.Method4();
 
 
-modeDemo.Method5();
-modeDemo.Method6();
-modeDemo.Method7();
-modeDemo.Method8();
-modeDemo.Method9();
-modeDemo.Method();
-modeDemo.Method();
+//modeDemo.Method5();
+//modeDemo.Method6();
+//modeDemo.Method7();
+//modeDemo.Method8();
+//modeDemo.Method9();
+//modeDemo.Method();
+//modeDemo.Method();
+
+D d=new D();
+d.M2();
+d.M3();
 
 Console.WriteLine("Done.");

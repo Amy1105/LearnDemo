@@ -17,8 +17,10 @@ try
     builder.Configuration.AddJsonFile("appsetting.json", optional: true);
     //var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
     builder.Services.AddDbContext<SchoolContext>();
+    builder.Services.AddDbContext<TVCContext>();
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();
+    builder.Services.AddTransient<searchDemo>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -29,7 +31,7 @@ try
     {
         var services = scope.ServiceProvider;
         var bulkExecute = services.GetRequiredService<BulkExecute>();
-        bulkExecute.InitDB();
+        //bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();       
         //await bulkExecute.BulkInsertAsync();        
@@ -46,17 +48,20 @@ try
         //bulkExecute.InsertorUpdateorDelete();
 
         var linqConect = services.GetRequiredService<LinqConect>();
-        linqConect.Check();
+        //linqConect.Check();
         //linqConect.SingleInclude();
         //linqConect.SingleLINQ();
-        //linqConect.MultipleInclude();
+        //linqConect.MultipleInclude(); 
         //linqConect.MultipleLINQ();
         //linqConect.SingleChildInclude();
         //linqConect.SingleChildLINQ();
         //linqConect.MultipleThenIncludes();
         //linqConect.IncludeTree();
         //linqConect.MultipleLeafIncludes();
-        //linqConect.IncludeMultipleNavigationsWithSingleInclude();          
+        //linqConect.IncludeMultipleNavigationsWithSingleInclude();
+       
+        var searchExecute = services.GetRequiredService<searchDemo>();
+        searchExecute.GetCourseTableInfo();
     }
 
     //基准测试
@@ -64,6 +69,23 @@ try
     //BenchmarkRunner.Run<EFBullkBenchmarkUpdate>();
     //BenchmarkRunner.Run<EFBullkBenchmarkDelete>();
     //BenchmarkRunner.Run<EFBullkBenchmarkRead>();
+
+
+    //to do...
+
+    //.net cli 乱码
+
+    //efcore 反向工程
+
+    //efcore 可以读取表结构信息么
+
+    //efcore 读操作
+
+    //efcore 删改操作
+
+    //efcore 增操作
+
+
 
     Console.WriteLine("Done.");
     app.Run();
