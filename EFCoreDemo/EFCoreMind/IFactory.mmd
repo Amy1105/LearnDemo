@@ -1,0 +1,180 @@
+IRowKeyValueFactoryFactory
+    RowKeyValueFactoryFactory
+
+IRowForeignKeyValueFactoryFactory
+    RowForeignKeyValueFactoryFactory
+
+IRowIndexValueFactoryFactory
+    RowIndexValueFactoryFactory
+
+IRowIdentityMapFactory
+    RowIdentityMapFactory
+
+IParameterNameGeneratorFactory
+    ParameterNameGeneratorFactory
+
+IReadOnlyModificationCommand
+    IModificationCommand
+        ModificationCommand
+    INonTrackedModificationCommand
+        ModificationCommand
+IMigrationsIdGenerator
+    MigrationsIdGenerator
+
+ISqlGenerationHelper
+    RelationalSqlGenerationHelper
+        SqliteSqlGenerationHelper
+        SqlServerSqlGenerationHelper
+
+IRelationalAnnotationProvider
+    RelationalAnnotationProvider
+        SqliteAnnotationProvider
+        SqlServerAnnotationProvider
+
+IMigrationsAnnotationProvider
+    MigrationsAnnotationProvider
+        SqlServerMigrationsAnnotationProvider
+
+IMigrationCommandExecutor
+    MigrationCommandExecutor
+
+ITypeMappingSource
+    IRelationalTypeMappingSource
+        RelationalTypeMappingSource
+IUpdateSqlGenerator
+    UpdateSqlGenerator
+    ISqlServerUpdateSqlGenerator
+        SqlServerUpdateSqlGenerator
+
+IRelationalTransactionFactory
+    RelationalTransactionFactory
+    SqlServerTransactionFactory
+
+IRelationalCommandBuilderFactory
+    RelationalCommandBuilderFactory
+
+IRawSqlCommandBuilder
+    RawSqlCommandBuilder
+
+IQuerySqlGeneratorFactory
+    QuerySqlGeneratorFactory
+    SqliteQuerySqlGeneratorFactory
+    SqlServerQuerySqlGeneratorFactory
+
+IModificationCommandFactory
+    ModificationCommandFactory
+        SqliteModificationCommandFactory
+        SqlServerModificationCommandFactory
+
+ICommandBatchPreparer
+    CommandBatchPreparer
+
+IModificationCommandBatchFactory
+    SqliteModificationCommandBatchFactory
+    SqlServerModificationCommandBatchFactory
+
+IRelationalSqlTranslatingExpressionVisitorFactory
+    RelationalSqlTranslatingExpressionVisitorFactory
+    SqlServerModificationCommandBatchFactory
+    SqliteSqlTranslatingExpressionVisitorFactory
+
+IMethodCallTranslatorProvider
+    RelationalMethodCallTranslatorProvider
+        SqliteMethodCallTranslatorProvider
+        SqlServerMethodCallTranslatorProvider
+
+IAggregateMethodCallTranslatorProvider
+    RelationalAggregateMethodCallTranslatorProvider
+        SqliteAggregateMethodCallTranslatorProvider
+        SqlServerAggregateMethodCallTranslatorProvider
+
+IMemberTranslatorProvider
+    RelationalMemberTranslatorProvider
+        SqliteMemberTranslatorProvider
+        SqlServerMemberTranslatorProvider
+
+ISqlExpressionFactory
+    SqlExpressionFactory 
+
+IRelationalQueryStringFactory
+    RelationalQueryStringFactory
+    SqliteQueryStringFactory
+    SqlServerQueryStringFactory
+
+IRelationalQueryStringFactory
+    RelationalQueryStringFactory
+    SqliteQueryStringFactory
+    SqlServerQueryStringFactory
+
+IRelationalParameterBasedSqlProcessorFactory
+    RelationalParameterBasedSqlProcessorFactory
+    SqliteParameterBasedSqlProcessorFactory
+    SqlServerParameterBasedSqlProcessorFactory
+
+IMigrationsModelDiffer
+    MigrationsModelDiffer 
+
+IMigrationsSqlGenerator
+    MigrationsSqlGenerator
+        SqliteMigrationsSqlGenerator
+        SqlServerMigrationsSqlGenerator
+
+IMigrator
+    Migrator
+
+IMigrationsAssembly
+    MigrationsAssembly
+
+IBatchExecutor
+    BatchExecutor
+
+IResettableService
+    IDbContextTransactionManager
+        IRelationalTransactionManager
+            IRelationalConnection
+                RelationalConnection
+                    SqliteRelationalConnection
+                    SqlServerConnection
+                ISqlServerConnection
+                    SqlServerConnection
+                ISqliteRelationalConnection
+                    SqliteRelationalConnection
+
+IDatabaseFacadeDependencies
+    IRelationalDatabaseFacadeDependencies
+        RelationalDatabaseFacadeDependencies
+
+IDatabaseCreator
+    IRelationalDatabaseCreator
+        RelationalDatabaseCreator
+            SqliteDatabaseCreator
+            SqlServerDatabaseCreator
+
+IHistoryRepository
+    ExtensionHistoryRepository
+    ContextHistoryRepository
+
+INamedConnectionStringResolver
+    IDesignTimeConnectionStringResolver
+        DesignTimeConnectionStringResolver
+    NamedConnectionStringResolver
+
+ IDiagnosticsLogger<DbLoggerCategory.Database.Command>
+    IRelationalCommandDiagnosticsLogger
+    IRelationalConnectionDiagnosticsLogger
+
+IRelationalTypeMappingSourcePlugin
+    SqliteNetTopologySuiteTypeMappingSourcePlugin
+    SqlServerHierarchyIdTypeMappingSourcePlugin
+
+IMethodCallTranslatorPlugin
+    SqliteNetTopologySuiteMethodCallTranslatorPlugin
+    SqlServerHierarchyIdMethodCallTranslatorPlugin
+
+IAggregateMethodCallTranslatorPlugin
+    SqliteNetTopologySuiteAggregateMethodCallTranslatorPlugin
+    SqlServerNetTopologySuiteAggregateMethodCallTranslatorPlugin
+
+IMemberTranslatorPlugin
+    SqliteNetTopologySuiteMemberTranslatorPlugin
+    SqlServerNetTopologySuiteMemberTranslatorPlugin

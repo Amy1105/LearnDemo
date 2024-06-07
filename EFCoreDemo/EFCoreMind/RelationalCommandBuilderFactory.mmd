@@ -1,0 +1,26 @@
+classDiagram
+RelationalCommandBuilder <|--  RelationalCommandBuilderFactory 
+    RelationalCommandBuilder   <|-- IRelationalCommandBuilder
+    RelationalCommand <|-- RelationalCommandBuilder
+    class RelationalCommandBuilderFactory{
+        +RelationalCommandBuilderDependencies Dependencies
+        +create()
+    }
+    class RelationalCommandBuilder{
+        +RelationalCommandBuilderDependencies Dependencies
+        +Build()
+    }
+
+    class IRelationalCommandBuilder{
+        +Build()
+    }
+
+    class RelationalCommand{
+        String CommandText
+        IReadOnlyList<IRelationalParameter> Parameters
+        RelationalCommandBuilderDependencies Dependencies
+        +int ExecuteNonQuery()
+        +object? ExecuteScalar()
+        +RelationalDataReader ExecuteReader()
+        +CreateDbCommand()
+    }
