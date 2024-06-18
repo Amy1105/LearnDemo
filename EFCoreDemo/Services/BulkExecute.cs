@@ -27,11 +27,11 @@ namespace EFCoreDemo.Services
 
         public void InitDB()
         {
-            //context.Database.EnsureDeleted();         
-            ////建库
-            //context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
+            //建库
+            context.Database.EnsureCreated();
             //初始化数据
-            //DbInitializer.Initialize(context);
+            DbInitializer.Initialize(context);
             Console.WriteLine("data init.");
 
         }

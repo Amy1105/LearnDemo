@@ -1,6 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DoNetVersionUpdate;
 using DoNetVersionUpdate.DoNet5Update;
+using DoNetVersionUpdate.enums;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 /*
  C#13 
@@ -116,8 +120,32 @@ using DoNetVersionUpdate.DoNet5Update;
 //modeDemo.Method();
 //modeDemo.Method();
 
-D d=new D();
-d.M2();
-d.M3();
+//D d=new D();
+//d.M2();
+//d.M3();
+
+
+var values=Enum.GetValues(typeof(OUT_ORDER_STATUS));
+
+
+var names = Enum.GetNames(typeof(OUT_ORDER_STATUS));
+foreach (var item in names)
+{
+    Console.WriteLine(item);
+}
+
+Dictionary<int, string> pairs = new Dictionary<int, string>();
+foreach (OUT_ORDER_STATUS item in values)
+{
+    pairs.Add(item.GetValue(), item.GetDescription());
+}
+
+// 遍历只读集合
+foreach (var pair in pairs)
+{
+    Console.WriteLine($"Key: {pair.Key}, Value: {pair.Value}");
+}
+
+
 
 Console.WriteLine("Done.");

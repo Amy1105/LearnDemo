@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
     "SchoolDB": "Data Source=../../../School.db",
-    "Chinook": "Data Source= 10.201.16.11 ;Initial Catalog=tvc_test3;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;"
+    "Chinook": "Data Source= 10.201.16.11 ;Initial Catalog=tvc_test3;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;"
   }
 }

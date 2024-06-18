@@ -191,8 +191,7 @@ namespace EFCoreDemo.Seed
             context.AddRange(departments);
 
             var chemistry = new Course
-            {
-                CourseID = 1050,
+            {               
                 Title = "Chemistry",
                 Credits = 3,
               
@@ -200,8 +199,7 @@ namespace EFCoreDemo.Seed
             };
 
             var microeconomics = new Course
-            {
-                CourseID = 4022,
+            {              
                 Title = "Microeconomics",
                 Credits = 3,
                
@@ -209,8 +207,7 @@ namespace EFCoreDemo.Seed
             };
 
             var macroeconmics = new Course
-            {
-                CourseID = 4041,
+            {               
                 Title = "Macroeconomics",
                 Credits = 3,
               
@@ -218,8 +215,7 @@ namespace EFCoreDemo.Seed
             };
 
             var calculus = new Course
-            {
-                CourseID = 1045,
+            {               
                 Title = "Calculus",
                 Credits = 4,
               
@@ -227,8 +223,7 @@ namespace EFCoreDemo.Seed
             };
 
             var trigonometry = new Course
-            {
-                CourseID = 3141,
+            {               
                 Title = "Trigonometry",
                 Credits = 4,
               
@@ -236,8 +231,7 @@ namespace EFCoreDemo.Seed
             };
 
             var composition = new Course
-            {
-                CourseID = 2021,
+            {               
                 Title = "Composition",
                 Credits = 3,
               
@@ -245,8 +239,7 @@ namespace EFCoreDemo.Seed
             };
 
             var literature = new Course
-            {
-                CourseID = 2042,
+            {              
                 Title = "Literature",
                 Credits = 4,
              
@@ -343,7 +336,7 @@ namespace EFCoreDemo.Seed
                 };
                 orderInfos.Add(orderInfo);
             }
-            context.Orders.AddRange(orderInfos);
+            //context.Orders.AddRange(orderInfos);
             context.SaveChanges();
         }
     }

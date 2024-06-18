@@ -21,6 +21,7 @@ try
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();
     builder.Services.AddTransient<searchDemo>();
+    builder.Services.AddTransient<AttachMethod>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
@@ -31,6 +32,7 @@ try
     {
         var services = scope.ServiceProvider;
         var bulkExecute = services.GetRequiredService<BulkExecute>();
+        AttachMethod attachMethod = services.GetRequiredService<AttachMethod>();
         //bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();       
@@ -47,7 +49,7 @@ try
         //bulkExecute.InsertorUpdate();
         //bulkExecute.InsertorUpdateorDelete();
 
-        var linqConect = services.GetRequiredService<LinqConect>();
+        //var linqConect = services.GetRequiredService<LinqConect>();
         //linqConect.Check();
         //linqConect.SingleInclude();
         //linqConect.SingleLINQ();
@@ -59,9 +61,15 @@ try
         //linqConect.IncludeTree();
         //linqConect.MultipleLeafIncludes();
         //linqConect.IncludeMultipleNavigationsWithSingleInclude();
-       
-        var searchExecute = services.GetRequiredService<searchDemo>();
-        searchExecute.GetCourseTableInfo();
+
+        //var searchExecute = services.GetRequiredService<searchDemo>();
+        //searchExecute.GetCourseTableInfo();
+
+        attachMethod.Method2();
+
+        attachMethod.Method1();
+        
+
     }
 
     //基准测试

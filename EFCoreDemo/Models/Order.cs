@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -38,8 +39,11 @@ namespace EFCoreDemo.Models
         public string Description { get; set; }
 
         public int Count { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        [Column(TypeName = "numeric")]
         public decimal Amount { get; set; }
 
         public int ProductID { get; set; }
@@ -56,8 +60,9 @@ namespace EFCoreDemo.Models
 
         public string Description { get; set; } 
 
-        public int Count { get; set; }  
+        public int Count { get; set; }
 
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }  
 
         public Image Images {  get; set; }
