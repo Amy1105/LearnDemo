@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using EFCoreDemo.AutoMapperModels;
 using EFCoreDemo.Dto;
 using EFCoreDemo.Models;
@@ -15,8 +16,10 @@ namespace EFCoreDemo.Profiles
     {
         public CourseProfile()
         {
-            CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<Course, CourseDto>().ReverseMap().EqualityComparison((odto, o) => odto.CourseID == o.CourseID);
 
+
+     
             // CreateMap<CourseDto,Course>();
 
             CreateMap<Instructor, InstructorDto>().ReverseMap();

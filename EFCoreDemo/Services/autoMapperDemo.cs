@@ -195,5 +195,22 @@ namespace EFCoreDemo.Services
             await _schoolContext.SaveChangesAsync();
         }
 
+        /*
+         * 
+         如果 ID 匹配，则 AutoMapper 将把 OrderDTO 映射到 Order
+
+如果 OrderDTO 存在而 Order 不存在，则 AutoMapper 将从 OrderDTO 映射的新 Order 添加到集合中
+
+如果 Order 存在而 OrderDTO 不存在，则 AutoMapper 将从集合中删除 Order
+         * 
+         */
+
+        //db 3
+
+        //dto  2 new
+
+
+
+
     }
 }
