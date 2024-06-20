@@ -4,24 +4,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace EFCoreDemo
+namespace EFCoreDemo.Services
 {
     internal class AttachMethod
     {
-        private readonly SchoolContext  _schoolContext ;
+        private readonly SchoolContext _schoolContext;
 
         public AttachMethod(SchoolContext schoolContext)
         {
             _schoolContext = schoolContext;
         }
 
+        public void AddData()
+        {
+            Common.GetCourses(2000);
+            _schoolContext.SaveChanges();
+        }
+
         public void Method1()
         {
-            var course = _schoolContext.Courses.FirstOrDefault();
-            string json= System.Text.Json.JsonSerializer.Serialize(course);
-            
+            //var courseList = _schoolContext.Courses.Include(x=>x.Instructors).Take(100).ToList();
+            //Common.Print(courseList);
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            var course = _schoolContext.Courses.Include(x => x.Instructors).First(x => x.CourseID == 6);
+            string json = JsonSerializer.Serialize(course, options);                      
         }
 
         public void Method2()

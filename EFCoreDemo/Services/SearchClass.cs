@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCoreDemo.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,19 @@ namespace EFCoreDemo.Services
     /// <summary>
     /// EFCORE 查询
     /// </summary>
-    internal class searchDemo
+    internal class SearchClass
     {
         private readonly SchoolContext context;
-        public searchDemo(SchoolContext _context)
+        public SearchClass(SchoolContext _context)
         {
             context = _context;
         }
 
 
-
-        public void GetCourseTableInfo()
+        /// <summary>
+        /// 【字段类型】，【字段名称】，【主外键】，【注释，是否为null，默认值】
+        /// </summary>
+        public void GetTableInfoForMermaid()
         {
             var model = context.Model;
             // 获取所有实体类型
@@ -29,7 +32,10 @@ namespace EFCoreDemo.Services
             {
                 // 打印表名
                 Console.WriteLine("Table Name: " + entityType.GetTableName());
-
+                if(!"OutOrderHeaders".Equals(entityType.GetTableName()))
+                {
+                    continue;
+                }
                 // 获取所有属性
                 foreach (var property in entityType.GetProperties())
                 {
@@ -49,6 +55,10 @@ namespace EFCoreDemo.Services
                     var storeTypeStr = property.FindAnnotation(storeType);
 
                     var storeTypeStr2 = property.FindRelationalTypeMapping()?.StoreType;
+
+                    IEntityType entityType2 = model.FindEntityType(typeof(OutOrderHeader));
+                    var property2 = entityType2.FindProperty("ID");
+                   // var columnComment = property2.GetColumnComment();
 
                     Console.WriteLine($"Column Name: {property.Name}, Data Type: {property.ClrType},sqlserver:{property.GetColumnType()},isBullable:{property.IsColumnNullable()},default:{defaultVal},comment:");
                 }

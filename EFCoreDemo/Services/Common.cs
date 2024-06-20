@@ -15,7 +15,7 @@ namespace EFCoreDemo.Services
         /// 构建课程实体（联表）
         /// </summary>
         /// <returns></returns>
-        public  static List<Course> GetCourses(int Count)
+        public static List<Course> GetCourses(int Count)
         {
             List<Course> Courses = new List<Course>();
             foreach (var i in Enumerable.Range(1, Count))
@@ -41,16 +41,28 @@ namespace EFCoreDemo.Services
             }
             return Courses;
         }
-     
 
-        public static void Print(SchoolContext context,int n)
+
+        public static void Print(SchoolContext context, int n)
         {
-            var acource = context.Courses.Include(x => x.Instructors).First(x => x.CourseID==n);
+            var acource = context.Courses.Include(x => x.Instructors).First(x => x.CourseID == n);
             Console.WriteLine($"课程:{acource.CourseID},{acource.Title}");
 
             foreach (var instructor in acource.Instructors)
             {
                 Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+            }
+        }
+
+        public static void Print(List<Course> list)
+        {
+            foreach (var course in list)
+            {
+                Console.WriteLine($"课程:{course.CourseID},{course.Title}");
+                foreach (var instructor in course.Instructors)
+                {
+                    Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+                }
             }
         }
     }

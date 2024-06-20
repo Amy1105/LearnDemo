@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using EFCoreDemo;
 using Microsoft.EntityFrameworkCore;
 using EFCoreDemo.Services.Example;
+using System.Reflection;
 
 
 try
@@ -18,21 +19,29 @@ try
     //var str = builder.Configuration.GetSection("ConnectionStrings")["SchoolDB"];
     builder.Services.AddDbContext<SchoolContext>();
     builder.Services.AddDbContext<TVCContext>();
+
+    var assambly= Assembly.LoadFrom($"{AppDomain.CurrentDomain.BaseDirectory}\\EFCoreDemo.dll");
+    builder.Services.AddAutoMapper(assambly);
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();
-    builder.Services.AddTransient<searchDemo>();
+    builder.Services.AddTransient<SearchClass>();
     builder.Services.AddTransient<AttachMethod>();
     builder.Services.AddTransient<EFBullkBenchmarkInsert>();
     builder.Services.AddTransient<EFBullkBenchmarkUpdate>();
     builder.Services.AddTransient<EFBullkBenchmarkDelete>();
     builder.Services.AddTransient<EFBullkBenchmarkRead>();
 
+    builder.Services.AddTransient<autoMapperDemo>();
+
     var app = builder.Build();
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
         var bulkExecute = services.GetRequiredService<BulkExecute>();
+
         AttachMethod attachMethod = services.GetRequiredService<AttachMethod>();
+        autoMapperDemo attachMethodService = services.GetRequiredService<autoMapperDemo>();
+
         //bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();       
@@ -62,14 +71,17 @@ try
         //linqConect.MultipleLeafIncludes();
         //linqConect.IncludeMultipleNavigationsWithSingleInclude();
 
-        //var searchExecute = services.GetRequiredService<searchDemo>();
-        //searchExecute.GetCourseTableInfo();
+        //var searchExecute = services.GetRequiredService<SearchClass>();
+        //searchExecute.GetTableInfoForMermaid();
 
-        attachMethod.Method2();
+        //attachMethod.Method2();
 
-        attachMethod.Method1();
-        
+        //attachMethod.AddData();
+        //attachMethod.Method1();
+       
+       //await  attachMethodService.Method1();
 
+        attachMethodService.Flattening();
     }
 
     //基准测试

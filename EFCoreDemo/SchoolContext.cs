@@ -29,6 +29,15 @@ namespace EFCoreDemo
 
         public DbSet<SampleReceiptDetail> SampleReceiptDetails { get; set; }
 
+        public DbSet<OutOrderHeader> OutOrderHeaders { get; set; }
+
+        public DbSet<OutOrderDetail> OutOrderDetails { get; set; }
+
+        public DbSet<OutOrderSample> OutOrderSamples { get; set; }
+
+        public DbSet<OutWipOrder> OutWipOrders { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {                   
         }
