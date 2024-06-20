@@ -108,7 +108,7 @@ namespace EFCoreDemo.Services
         }
 
         /// <summary>
-        /// 
+        /// 多个 dto   映射 少的db
         /// </summary>
         public async Task Method1()
         {
@@ -123,10 +123,9 @@ namespace EFCoreDemo.Services
             //}
 
             List<InstructorDto> instructorDtos= new List<InstructorDto>() 
-            { new InstructorDto(){ID=4,LastName="Kapoor444",FirstMidName="Candace444"},
-                new InstructorDto(){ ID=5,LastName="Kapoor555",FirstMidName="Candace555"}};
-
-
+            { 
+              new InstructorDto(){ID=4,LastName="Kapoor444",FirstMidName="Candace444"},
+              new InstructorDto(){ID=null,LastName="Kapoor555",FirstMidName="Candace555"}};
 
             CourseDto courseDto = new CourseDto() {CourseID=6,Title="Chemistry666",Credits=4 };  //instructorDtos
             //AddAutoMapper           
@@ -147,6 +146,10 @@ namespace EFCoreDemo.Services
                     course.Instructors= instructors;
                     Console.WriteLine("---mapper转换后---");
                     Common.Print(new List<Course>() { course });
+
+                    Console.WriteLine("---mapper转换后-dbCourse的情况---");
+                    Common.Print(new List<Course>() { dbCourse });
+
                 }                               
             }
             else
@@ -156,5 +159,41 @@ namespace EFCoreDemo.Services
 
            await  _schoolContext.SaveChangesAsync();
         }
+
+
+
+        /// <summary>
+        /// 少的 dto   映射 多的db  ，会修改掉db的未映射的数据吗
+        /// </summary>
+        public async Task Method2()
+        {           
+            CourseDto courseDto = new CourseDto() { CourseID = 6, Title = "Chemistry666", Credits = 4 };  //instructorDtos
+            //AddAutoMapper           
+            if (courseDto.CourseID > 0)
+            {
+                var dbCourse = _schoolContext.Courses.Where(x => x.CourseID >= courseDto.CourseID).Take(5).ToList();
+                if (dbCourse == null)
+                {
+                    return;
+                }
+                Console.WriteLine("---db修改前---");
+                Common.Print(dbCourse);
+
+                if (dbCourse != null)
+                {
+                    var course = _mapper.Map<List<CourseDto>, List<Course>> (new List<CourseDto>() { courseDto }, dbCourse);                  
+                    Console.WriteLine("---mapper转换后---");
+                    Common.Print(course);
+                    Console.WriteLine("---mapper转换后-dbCourse的情况---");
+                    Common.Print(dbCourse);
+                }
+            }
+            else
+            {
+                var course = _mapper.Map<CourseDto>(courseDto);
+            }
+            await _schoolContext.SaveChangesAsync();
+        }
+
     }
 }

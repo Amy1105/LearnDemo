@@ -59,10 +59,13 @@ namespace EFCoreDemo.Services
             foreach (var course in list)
             {
                 Console.WriteLine($"课程:{course.CourseID},{course.Title}");
-                foreach (var instructor in course.Instructors)
+                if(course.Instructors !=null && course.Instructors.Count>0)
                 {
-                    Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
-                }
+                    foreach (var instructor in course.Instructors)
+                    {
+                        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+                    }
+                }                
             }
         }
     }

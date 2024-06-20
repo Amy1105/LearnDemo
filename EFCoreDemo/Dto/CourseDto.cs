@@ -23,7 +23,7 @@ namespace EFCoreDemo.Dto
 
     public class InstructorDto
     {
-        public int ID { get; set; }
+        public int?  ID { get; set; }
 
         public string LastName { get; set; } 
 

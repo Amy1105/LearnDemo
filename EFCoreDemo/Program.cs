@@ -78,10 +78,11 @@ try
 
         //attachMethod.AddData();
         //attachMethod.Method1();
-       
-       //await  attachMethodService.Method1();
 
-        attachMethodService.Flattening();
+        //await  attachMethodService.Method1();
+
+        await  attachMethodService.Method2();
+        //attachMethodService.Flattening();
     }
 
     //基准测试
