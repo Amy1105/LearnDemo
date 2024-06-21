@@ -22,6 +22,15 @@ try
 
     var assambly= Assembly.LoadFrom($"{AppDomain.CurrentDomain.BaseDirectory}\\EFCoreDemo.dll");
     builder.Services.AddAutoMapper(assambly);
+
+
+    //Mapper.Initialize(cfg =>
+    //{
+    //    cfg.AddCollectionMappers();
+    //    // Configuration code
+    //});
+
+
     builder.Services.AddTransient<BulkExecute>();
     builder.Services.AddTransient<LinqConect>();
     builder.Services.AddTransient<SearchClass>();

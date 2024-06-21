@@ -16,7 +16,9 @@ namespace EFCoreDemo.Profiles
     {
         public CourseProfile()
         {
-            CreateMap<Course, CourseDto>().ReverseMap().EqualityComparison((odto, o) => odto.CourseID == o.CourseID);
+
+
+            CreateMap<Course, CourseDto>().ReverseMap();//.EqualityComparison((odto, o) => odto.CourseID == o.CourseID);
 
 
      

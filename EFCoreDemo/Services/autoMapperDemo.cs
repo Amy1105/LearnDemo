@@ -167,7 +167,7 @@ namespace EFCoreDemo.Services
         /// </summary>
         public async Task Method2()
         {           
-            CourseDto courseDto = new CourseDto() { CourseID = 6, Title = "Chemistry666", Credits = 4 };  //instructorDtos
+            CourseDto courseDto = new CourseDto() { CourseID = 6, Title = "Chemistry666" };  //instructorDtos
             //AddAutoMapper           
             if (courseDto.CourseID > 0)
             {
@@ -177,7 +177,7 @@ namespace EFCoreDemo.Services
                     return;
                 }
                 Console.WriteLine("---db修改前---");
-                Common.Print(dbCourse);
+                Common.Print(dbCourse);               
 
                 if (dbCourse != null)
                 {
