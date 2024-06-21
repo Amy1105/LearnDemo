@@ -153,7 +153,7 @@ namespace EFCoreDemo.Seed
                 Name = "English",
                 Budget = 350000,
                 StartDate = DateTime.Parse("2007-09-01"),
-                Administrator = abercrombie
+                //Administrator = abercrombie
             };
 
             var mathematics = new Department
@@ -161,7 +161,7 @@ namespace EFCoreDemo.Seed
                 Name = "Mathematics",
                 Budget = 100000,
                 StartDate = DateTime.Parse("2007-09-01"),
-                Administrator = fakhouri
+                //Administrator = fakhouri
             };
 
             var engineering = new Department
@@ -169,7 +169,7 @@ namespace EFCoreDemo.Seed
                 Name = "Engineering",
                 Budget = 350000,
                 StartDate = DateTime.Parse("2007-09-01"),
-                Administrator = harui
+                //Administrator = harui
             };
 
             var economics = new Department
@@ -177,7 +177,7 @@ namespace EFCoreDemo.Seed
                 Name = "Economics",
                 Budget = 100000,
                 StartDate = DateTime.Parse("2007-09-01"),
-                Administrator = kapoor
+                //Administrator = kapoor
             };
 
             var departments = new Department[]

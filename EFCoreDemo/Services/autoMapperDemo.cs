@@ -2,6 +2,7 @@
 using EFCoreDemo.AutoMapperModels;
 using EFCoreDemo.Dto;
 using EFCoreDemo.Models;
+using EFCoreDemo.Profiles;
 using Microsoft.Diagnostics.Tracing.StackSources;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -75,7 +76,7 @@ namespace EFCoreDemo.Services
         /// <summary>
         /// 建造，使用构造函数映射
         /// </summary>
-        public void  BuildMethod()
+        public void BuildMethod()
         {
 
         }
@@ -101,7 +102,7 @@ namespace EFCoreDemo.Services
                 Price = 4.99m
             };
             order.AddOrderLineItem(bosco, 15);
-        
+
             OrderDto dto = _mapper.Map<Mapper_Order, OrderDto>(order);  //  异常  缺少类型映射配置或不支持的映射   to  do  ...
             Console.WriteLine($" dto.CustomerName:{dto.CustomerName} ShouldEqual George Costanza");
             Console.WriteLine($" dto.Total:{dto.Total} ShouldEqual 74.85m");
@@ -122,42 +123,42 @@ namespace EFCoreDemo.Services
             //    return;
             //}
 
-            List<InstructorDto> instructorDtos= new List<InstructorDto>() 
-            { 
-              new InstructorDto(){ID=4,LastName="Kapoor444",FirstMidName="Candace444"},
-              new InstructorDto(){ID=null,LastName="Kapoor555",FirstMidName="Candace555"}};
-
-            CourseDto courseDto = new CourseDto() {CourseID=6,Title="Chemistry666",Credits=4 };  //instructorDtos
-            //AddAutoMapper           
-            if (courseDto.CourseID>0)
+            List<InstructorDto> instructorDtos = new List<InstructorDto>()
             {
-                var dbCourse= _schoolContext.Courses.Where(x=>x.CourseID==courseDto.CourseID).Include(x=>x.Instructors).FirstOrDefault();
-                if (dbCourse==null)
+              new InstructorDto(){LastName="Kapoor444",FirstMidName="Candace444"},
+              new InstructorDto(){LastName="Kapoor555",FirstMidName="Candace555"}};
+
+            CourseDto courseDto = new CourseDto() { Title = "Chemistry666", Credits = 4 };  //instructorDtos
+            //AddAutoMapper           
+            if (courseDto.CourseID > 0)
+            {
+                var dbCourse = _schoolContext.Courses.Where(x => x.CourseID == courseDto.CourseID).Include(x => x.Instructors).FirstOrDefault();
+                if (dbCourse == null)
                 {
                     return;
                 }
                 Console.WriteLine("---db修改前---");
                 Common.Print(new List<Course>() { dbCourse });
 
-                if(dbCourse!=null)
+                if (dbCourse != null)
                 {
                     var course = _mapper.Map<CourseDto, Course>(courseDto, dbCourse);
                     List<Instructor> instructors = _mapper.Map<List<InstructorDto>, List<Instructor>>(courseDto.InstructorDtos);
-                    course.Instructors= instructors;
+                    course.Instructors = instructors;
                     Console.WriteLine("---mapper转换后---");
                     Common.Print(new List<Course>() { course });
 
                     Console.WriteLine("---mapper转换后-dbCourse的情况---");
                     Common.Print(new List<Course>() { dbCourse });
 
-                }                               
+                }
             }
             else
             {
                 var course = _mapper.Map<CourseDto>(courseDto);
             }
 
-           await  _schoolContext.SaveChangesAsync();
+            await _schoolContext.SaveChangesAsync();
         }
 
 
@@ -166,7 +167,7 @@ namespace EFCoreDemo.Services
         /// 少的 dto   映射 多的db  ，会修改掉db的未映射的数据吗
         /// </summary>
         public async Task Method2()
-        {           
+        {
             CourseDto courseDto = new CourseDto() { CourseID = 6, Title = "Chemistry666" };  //instructorDtos
             //AddAutoMapper           
             if (courseDto.CourseID > 0)
@@ -177,11 +178,11 @@ namespace EFCoreDemo.Services
                     return;
                 }
                 Console.WriteLine("---db修改前---");
-                Common.Print(dbCourse);               
+                Common.Print(dbCourse);
 
                 if (dbCourse != null)
                 {
-                    var course = _mapper.Map<List<CourseDto>, List<Course>> (new List<CourseDto>() { courseDto }, dbCourse);                  
+                    var course = _mapper.Map<List<CourseDto>, List<Course>>(new List<CourseDto>() { courseDto }, dbCourse);
                     Console.WriteLine("---mapper转换后---");
                     Common.Print(course);
                     Console.WriteLine("---mapper转换后-dbCourse的情况---");
@@ -210,7 +211,59 @@ namespace EFCoreDemo.Services
         //dto  2 new
 
 
+        public void Method3()
+        {
+            List<DepartmentDto> departments = new List<DepartmentDto>() {
+            new DepartmentDto (){ Name="department11", Budget=11.1M},
+             new DepartmentDto (){Name="department11", Budget=11.1M},
+            };
+
+            List<DepartmentDto> departments2 = new List<DepartmentDto>() {
+            new DepartmentDto (){ Name="department22", Budget=22.1M},
+            new DepartmentDto (){Name="department22", Budget=22.1M},
+            };
+
+            List<InstructorDto> instructorDtos = new List<InstructorDto>()
+            {
+              new InstructorDto(){LastName="Kapoor111",FirstMidName="Candace111",Departments=departments},
+              new InstructorDto(){LastName="Kapoor111",FirstMidName="Candace111",Departments=departments2}};
+
+            CourseDto courseDto = new CourseDto() { Title = "Chemistry111",InstructorDtos= instructorDtos };   
+
+            string json=System.Text.Json.JsonSerializer.Serialize(courseDto);
+
+            var course = _mapper.Map<Course>(courseDto);
+            if (course != null)
+            {
+                var lst = _mapper.Map<List<InstructorDto>, List<Instructor>>(courseDto.InstructorDtos);
+                course.Instructors = lst;
+                if (lst != null)
+                {
+                    foreach (var instructor in courseDto.InstructorDtos)
+                    {
+                        var deList = _mapper.Map<List<DepartmentDto>, List<Department>>(instructor.Departments);
+
+                    }
+                }
+            }
+        }
 
 
+
+
+        public void Method4()
+        {          
+            var orderDto = new ex_OrderDto
+            {              
+                OrderNumber = "20210801",
+                Details = new List<ex_OrderDetailDto>
+                {
+                    new ex_OrderDetailDto {  ItemName = "Item1" },
+                    new ex_OrderDetailDto {  ItemName = "Item2" }
+                }
+            };
+            string json = System.Text.Json.JsonSerializer.Serialize(orderDto);
+            var order = _mapper.Map<ex_Order>(orderDto);
+        }
     }
 }

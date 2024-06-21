@@ -7,6 +7,7 @@ using EFCoreDemo;
 using Microsoft.EntityFrameworkCore;
 using EFCoreDemo.Services.Example;
 using System.Reflection;
+using AutoMapper;
 
 
 try
@@ -23,12 +24,6 @@ try
     var assambly= Assembly.LoadFrom($"{AppDomain.CurrentDomain.BaseDirectory}\\EFCoreDemo.dll");
     builder.Services.AddAutoMapper(assambly);
 
-
-    //Mapper.Initialize(cfg =>
-    //{
-    //    cfg.AddCollectionMappers();
-    //    // Configuration code
-    //});
 
 
     builder.Services.AddTransient<BulkExecute>();
@@ -89,8 +84,9 @@ try
         //attachMethod.Method1();
 
         //await  attachMethodService.Method1();
-
-        await  attachMethodService.Method2();
+        attachMethodService.Method4();
+        attachMethodService.Method3();
+       
         //attachMethodService.Flattening();
     }
 

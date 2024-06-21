@@ -23,7 +23,7 @@ namespace EFCoreDemo.Models
 
         public bool IsDeleted { get; set; } = false;
 
-        public ICollection<Enrollment> Enrollments { get; set; }
-        public ICollection<Instructor> Instructors { get; set; }
+        //public ICollection<Enrollment> Enrollments { get; set; }
+        public List<Instructor> Instructors { get; set; }
     }
 }

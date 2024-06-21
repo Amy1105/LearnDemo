@@ -39,12 +39,10 @@ namespace EFCoreDemo.Models
 
         public int CourseID {  get; set; }
 
-        public Course Course { get; set; } = new Course();
+        public Course Course { get; set; } = new Course();   
 
-        public int? DeparmenmtID { get; set; }
-
-        public Department? department { get; set; }
+        public List<Department> Departments { get; set; }
       
-        public OfficeAssignment? officeAssignment { get; set; }
+        //public OfficeAssignment? officeAssignment { get; set; }
     } 
 }

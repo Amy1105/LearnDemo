@@ -17,18 +17,43 @@ namespace EFCoreDemo.Profiles
         public CourseProfile()
         {
 
+            CreateMap<ex_OrderDto, ex_Order>();
+            CreateMap<ex_OrderDetailDto, ex_OrderDetail>();
+       
+            //CreateMap<CourseDto, Course>()
+            //    .ForMember(dest => dest.Instructors, opt => opt.MapFrom(src => src.InstructorDtos));
 
-            CreateMap<Course, CourseDto>().ReverseMap();//.EqualityComparison((odto, o) => odto.CourseID == o.CourseID);
+            //CreateMap<InstructorDto, Instructor>()
+            //    .ForMember(dest => dest.department, opt => opt.MapFrom(src => src.Departments));
 
 
-     
+
+
+            CreateMap<CourseDto, Course>();
+            CreateMap<InstructorDto, Instructor>();
+            CreateMap<DepartmentDto, Department>();
+
+
+            //.ReverseMap();
+
+            // .EqualityComparison((odto, o) => odto.CourseID == o.CourseID)
+
+
+            //.EqualityComparison((odto, o) => odto.ID == o.ID)
+
+
+            //.EqualityComparison((odto, o) => odto.DepartmentID == o.DepartmentID).
+            //  ForMember(destination => destination.IncludedMember, member => member.MapFrom(source => source))
+
+
             // CreateMap<CourseDto,Course>();
 
-            CreateMap<Instructor, InstructorDto>().ReverseMap();
+            //CreateMap<Instructor, InstructorDto>().ForMember(d => d.Departments, opt => opt.MapFrom(src => src.department))
+            //    .ReverseMap().EqualityComparison((odto, o) => odto.ID == o.ID);
 
-            //
+            //CreateMap<Department, DepartmentDto>().ReverseMap().EqualityComparison((odto, o) => odto.DepartmentID == o.DepartmentID);
 
-            var cfg=CreateMap<Source, Destination>().ReverseMap();
+            var cfg =CreateMap<Source, Destination>().ReverseMap();
 
             //AllowNullCollections 如何配置  to  do。。。
 

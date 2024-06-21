@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EFCoreDemo.Dto
 {
-    internal class CourseDto
+    public class CourseDto
     {
         public int CourseID { get; set; }
 
@@ -18,17 +18,28 @@ namespace EFCoreDemo.Dto
 
         public int? Credits { get; set; }
 
-        public List<InstructorDto> InstructorDtos { get; set; }=new List<InstructorDto>();
+        public List<InstructorDto> InstructorDtos { get; set; }
     }
 
     public class InstructorDto
     {
-        public int?  ID { get; set; }
+        public int ID { get; set; }
 
         public string LastName { get; set; } 
 
-        public string FirstMidName { get; set; } 
+        public string FirstMidName { get; set; }
 
+         public List<DepartmentDto> Departments { get; set; }
+    }
+
+    public class DepartmentDto
+    {
+        public int DepartmentID { get; set; }
+     
+        public string Name { get; set; }
+     
+        public decimal Budget { get; set; }
+     
     }
 
     public class OrderDto
