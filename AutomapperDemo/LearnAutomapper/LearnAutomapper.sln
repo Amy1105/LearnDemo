@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34607.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnAutomapper", "LearnAutomapper.csproj", "{85E75095-6E03-4A34-A461-8F196B8A2369}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85E75095-6E03-4A34-A461-8F196B8A2369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E75095-6E03-4A34-A461-8F196B8A2369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E75095-6E03-4A34-A461-8F196B8A2369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E75095-6E03-4A34-A461-8F196B8A2369}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E4C9520-C403-45AC-8E2B-08F1AC03D813}
+	EndGlobalSection
+EndGlobal
