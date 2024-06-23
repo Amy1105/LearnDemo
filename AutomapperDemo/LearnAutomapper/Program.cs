@@ -23,17 +23,23 @@ try
 
 
     builder.Services.AddTransient<CourseService>();
-
+    builder.Services.AddTransient<ex_orderService>();
 
     var app = builder.Build();
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
         var courseService = services.GetRequiredService<CourseService>();
-        //courseService.InitDB();
+
+        var ex_orderService = services.GetRequiredService<ex_orderService>();
+
+        courseService.InitDB();
         await courseService.AddCourse();
         courseService.SelectCourse();
-        //courseService.UpdateCourse()
+        //courseService.UpdateCourse();
+
+        //ex_orderService.Add();
+        //ex_orderService.SelectCourse();
     }
     Console.WriteLine("Done.");
     app.Run();

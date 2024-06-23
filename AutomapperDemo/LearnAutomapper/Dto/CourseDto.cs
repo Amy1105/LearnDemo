@@ -10,11 +10,11 @@ namespace LearnAutomapper.Dto
     {
         public int CourseID { get; set; }
 
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; set; } 
 
         public int? Credits { get; set; }
 
-        public List<InstructorDto> InstructorDtos { get; set; }
+        public List<CourseInstructorDto> InstructorDtos { get; set; }
     }
 
 }

@@ -14,8 +14,10 @@ namespace LearnAutomapper
         public CourseProfile()
         {
             CreateMap<CourseDto, Course>().ReverseMap();
-            CreateMap<InstructorDto, Instructor>().ReverseMap();
-            CreateMap<DepartmentDto, Department>().ReverseMap();
+            CreateMap<CourseInstructorDto, CourseInstructor>().ReverseMap();
+            CreateMap<CourseInstructorDepartmentDto, CourseInstructorDepartment>().ReverseMap();
+
+            CreateMap<ex_OrderDetailDto, ex_OrderDetail>().ReverseMap();
         }
     }
 }

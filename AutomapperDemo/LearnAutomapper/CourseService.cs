@@ -40,15 +40,15 @@ namespace LearnAutomapper
 
         public async Task AddCourse()
         {
-            List<DepartmentDto> departments = new List<DepartmentDto>()
+            List<CourseInstructorDepartmentDto> departments = new List<CourseInstructorDepartmentDto>()
                 {
-                    new DepartmentDto (){ Name="departmentA", Budget=1.1M},
-                    new DepartmentDto (){Name="departmentB", Budget=2.2M},
+                    new CourseInstructorDepartmentDto (){ Name="departmentA", Budget=1.1M},
+                    new CourseInstructorDepartmentDto (){Name="departmentB", Budget=2.2M},
                 };
-            List<InstructorDto> instructorDtos = new List<InstructorDto>()
+            List<CourseInstructorDto> instructorDtos = new List<CourseInstructorDto>()
             {
-              new InstructorDto(){LastName="Kapoor",FirstMidName="Candace",Departments=departments},
-              new InstructorDto(){LastName="Amy",FirstMidName="Lucy",Departments=departments}
+              new CourseInstructorDto(){LastName="Kapoor",FirstMidName="Candace",Departments=departments},
+              new CourseInstructorDto(){LastName="Amy",FirstMidName="Lucy",Departments=departments}
             };
             CourseDto courseDto = new CourseDto() { Title = "Chemistry", Credits = 1,InstructorDtos= instructorDtos };  //instructorDtos
             var course = mapper.Map<Course>(courseDto);
@@ -65,16 +65,16 @@ namespace LearnAutomapper
             List<CourseDto> courses = new List<CourseDto>();
             foreach (var i in Enumerable.Range(1, 50))
             {
-                List<DepartmentDto> departments = new List<DepartmentDto>() 
+                List<CourseInstructorDepartmentDto> departments = new List<CourseInstructorDepartmentDto>() 
                 {
-                    new DepartmentDto (){ Name="departmentA"+i, Budget=1.1M},
-                    new DepartmentDto (){Name="departmentB"+i, Budget=2.2M},
+                    new CourseInstructorDepartmentDto (){ Name="departmentA"+i, Budget=1.1M},
+                    new CourseInstructorDepartmentDto (){Name="departmentB"+i, Budget=2.2M},
                 };
 
-                List<InstructorDto> instructorDtos = new List<InstructorDto>()
+                List<CourseInstructorDto> instructorDtos = new List<CourseInstructorDto>()
                 {
-                      new InstructorDto(){LastName="Kapoor"+i,FirstMidName="Candace"+i,Departments=departments},
-                      new InstructorDto(){LastName="Amy"+i,FirstMidName="Lucy"+i,Departments=departments}
+                      new CourseInstructorDto(){LastName="Kapoor"+i,FirstMidName="Candace"+i,Departments=departments},
+                      new CourseInstructorDto(){LastName="Amy"+i,FirstMidName="Lucy"+i,Departments=departments}
                 };
                 courses.Add(new CourseDto() { Title = "Chemistry"+i, Credits = i, InstructorDtos = instructorDtos });
             }              

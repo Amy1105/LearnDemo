@@ -26,13 +26,13 @@ namespace LearnAutomapper.Models
         public bool IsDeleted { get; set; } = false;
 
         //public ICollection<Enrollment> Enrollments { get; set; }
-        public List<Instructor> Instructors { get; set; }
+        public List<CourseInstructor> Instructors { get; set; }
     }
 
     /// <summary>
     /// 教师
     /// </summary>
-    public class Instructor
+    public class CourseInstructor
     {
         public int ID { get; set; }
 
@@ -62,7 +62,7 @@ namespace LearnAutomapper.Models
 
         public Course Course { get; set; } = new Course();
 
-        public List<Department> Departments { get; set; }
+        public List<CourseInstructorDepartment> Departments { get; set; }
 
         //public OfficeAssignment? officeAssignment { get; set; }
     }
@@ -70,8 +70,9 @@ namespace LearnAutomapper.Models
     /// <summary>
     /// 部门
     /// </summary>
-    public class Department
+    public class CourseInstructorDepartment
     {
+        [Key]
         public int DepartmentID { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
