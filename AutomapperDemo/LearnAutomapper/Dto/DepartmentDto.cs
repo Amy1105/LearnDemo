@@ -1,6 +1,6 @@
 ﻿namespace LearnAutomapper.Dto
 {
-    public class CourseInstructorDepartmentDto
+    public class DepartmentDto
     {
         public int DepartmentID { get; set; }
 

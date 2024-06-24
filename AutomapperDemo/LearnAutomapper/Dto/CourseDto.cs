@@ -14,7 +14,7 @@ namespace LearnAutomapper.Dto
 
         public int? Credits { get; set; }
 
-        public List<CourseInstructorDto> InstructorDtos { get; set; }
+        public List<InstructorDto> Instructors { get; set; }
     }
 
 }
