@@ -125,27 +125,30 @@ using System.Collections.ObjectModel;
 //d.M3();
 
 
-var values=Enum.GetValues(typeof(OUT_ORDER_STATUS));
+//只读集合，没搞起来  to  do ...
+//var values=Enum.GetValues(typeof(OUT_ORDER_STATUS));
 
 
-var names = Enum.GetNames(typeof(OUT_ORDER_STATUS));
-foreach (var item in names)
-{
-    Console.WriteLine(item);
-}
+//var names = Enum.GetNames(typeof(OUT_ORDER_STATUS));
+//foreach (var item in names)
+//{
+//    Console.WriteLine(item);
+//}
 
-Dictionary<int, string> pairs = new Dictionary<int, string>();
-foreach (OUT_ORDER_STATUS item in values)
-{
-    pairs.Add(item.GetValue(), item.GetDescription());
-}
-
-// 遍历只读集合
-foreach (var pair in pairs)
-{
-    Console.WriteLine($"Key: {pair.Key}, Value: {pair.Value}");
-}
+//Dictionary<int, string> pairs = new Dictionary<int, string>();
+//foreach (OUT_ORDER_STATUS item in values)
+//{
+//    pairs.Add(item.GetValue(), item.GetDescription());
+//}
 
 
+//foreach (var pair in pairs)
+//{
+//    Console.WriteLine($"Key: {pair.Key}, Value: {pair.Value}");
+//}
+
+Console.WriteLine(DateTime.Now);
+
+Console.WriteLine(DateTime.UtcNow);
 
 Console.WriteLine("Done.");
