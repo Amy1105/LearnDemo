@@ -26,13 +26,13 @@ namespace LearnAutomapper.Models
         public bool IsDeleted { get; set; } = false;
 
         //public ICollection<Enrollment> Enrollments { get; set; }
-        public List<CourseInstructor> Instructors { get; set; }
+        public List<Instructor> Instructors { get; set; }
     }
 
     /// <summary>
     /// 教师
     /// </summary>
-    public class CourseInstructor
+    public class Instructor
     {
         public int ID { get; set; }
 
@@ -62,18 +62,17 @@ namespace LearnAutomapper.Models
 
         public Course Course { get; set; } = new Course();
 
-        public List<CourseInstructorDepartment> Departments { get; set; }
+        public List<Department> Departments { get; set; }
 
-        //public OfficeAssignment? officeAssignment { get; set; }
     }
 
     /// <summary>
     /// 部门
     /// </summary>
-    public class CourseInstructorDepartment
+    public class Department
     {
         [Key]
-        public int DepartmentID { get; set; }
+        public int ID { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
@@ -88,13 +87,8 @@ namespace LearnAutomapper.Models
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
-        //[NotMapped]
-        //[Display(Name = "主任")]
-        //public int? InstructorID { get; set; }
-        //[NotMapped]
-        //public Instructor Administrator { get; set; }
+        public int InstructorID { get; set; }
 
-        //[Display(Name = "所属该部门的老师")]
-        //public ICollection<Instructor> Instructors { get; set; }
+        public Instructor instructor { get; set; }
     }
 }

@@ -41,10 +41,10 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        var bulkExecute = services.GetRequiredService<BulkExecute>();
 
-        AttachMethod attachMethod = services.GetRequiredService<AttachMethod>();
-        autoMapperDemo attachMethodService = services.GetRequiredService<autoMapperDemo>();
+        //var bulkExecute = services.GetRequiredService<BulkExecute>();
+        //AttachMethod attachMethod = services.GetRequiredService<AttachMethod>();
+        //autoMapperDemo attachMethodService = services.GetRequiredService<autoMapperDemo>();
 
         //bulkExecute.InitDB();
 
@@ -84,10 +84,13 @@ try
         //attachMethod.Method1();
 
         //await  attachMethodService.Method1();
-        attachMethodService.Method4();
-        attachMethodService.Method3();
+        //attachMethodService.Method4();
+        //attachMethodService.Method3();
        
         //attachMethodService.Flattening();
+
+
+
     }
 
     //基准测试

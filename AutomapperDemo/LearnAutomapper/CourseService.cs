@@ -40,17 +40,17 @@ namespace LearnAutomapper
 
         public async Task AddCourse()
         {
-            List<CourseInstructorDepartmentDto> departments = new List<CourseInstructorDepartmentDto>()
+            List<DepartmentDto> departments = new List<DepartmentDto>()
                 {
-                    new CourseInstructorDepartmentDto (){ Name="departmentA", Budget=1.1M},
-                    new CourseInstructorDepartmentDto (){Name="departmentB", Budget=2.2M},
+                    new DepartmentDto (){ Name="departmentA", Budget=1.1M},
+                    new DepartmentDto (){Name="departmentB", Budget=2.2M},
                 };
-            List<CourseInstructorDto> instructorDtos = new List<CourseInstructorDto>()
+            List<InstructorDto> instructorDtos = new List<InstructorDto>()
             {
-              new CourseInstructorDto(){LastName="Kapoor",FirstMidName="Candace",Departments=departments},
-              new CourseInstructorDto(){LastName="Amy",FirstMidName="Lucy",Departments=departments}
+              new InstructorDto(){LastName="Kapoor",FirstMidName="Candace",Departments=departments},
+              new InstructorDto(){LastName="Amy",FirstMidName="Lucy",Departments=departments}
             };
-            CourseDto courseDto = new CourseDto() { Title = "Chemistry", Credits = 1,InstructorDtos= instructorDtos };  //instructorDtos
+            CourseDto courseDto = new CourseDto() { Title = "Chemistry", Credits = 1,Instructors= instructorDtos };  //instructorDtos
             var course = mapper.Map<Course>(courseDto);
             context.Courses.Add(course);
             await context.SaveChangesAsync();
@@ -65,18 +65,18 @@ namespace LearnAutomapper
             List<CourseDto> courses = new List<CourseDto>();
             foreach (var i in Enumerable.Range(1, 50))
             {
-                List<CourseInstructorDepartmentDto> departments = new List<CourseInstructorDepartmentDto>() 
+                List<DepartmentDto> departments = new List<DepartmentDto>() 
                 {
-                    new CourseInstructorDepartmentDto (){ Name="departmentA"+i, Budget=1.1M},
-                    new CourseInstructorDepartmentDto (){Name="departmentB"+i, Budget=2.2M},
+                    new DepartmentDto (){ Name="departmentA"+i, Budget=1.1M},
+                    new DepartmentDto (){Name="departmentB"+i, Budget=2.2M},
                 };
 
-                List<CourseInstructorDto> instructorDtos = new List<CourseInstructorDto>()
+                List<InstructorDto> instructorDtos = new List<InstructorDto>()
                 {
-                      new CourseInstructorDto(){LastName="Kapoor"+i,FirstMidName="Candace"+i,Departments=departments},
-                      new CourseInstructorDto(){LastName="Amy"+i,FirstMidName="Lucy"+i,Departments=departments}
+                      new InstructorDto(){LastName="Kapoor"+i,FirstMidName="Candace"+i,Departments=departments},
+                      new InstructorDto(){LastName="Amy"+i,FirstMidName="Lucy"+i,Departments=departments}
                 };
-                courses.Add(new CourseDto() { Title = "Chemistry"+i, Credits = i, InstructorDtos = instructorDtos });
+                courses.Add(new CourseDto() { Title = "Chemistry"+i, Credits = i, Instructors = instructorDtos });
             }              
             var course = mapper.Map<List<Course>>(courses);
 
@@ -112,12 +112,12 @@ namespace LearnAutomapper
                 {
                     foreach (var instructor in course.Instructors)
                     {
-                        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}");
+                        Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FullName}-{instructor.CourseID}");
                         if(instructor.Departments.Any())
                         {
                             foreach (var department in instructor.Departments)
                             {
-                                Console.WriteLine($"----部门 :{department.DepartmentID}-{department.Name}");
+                                Console.WriteLine($"----部门 :{department.ID}-{department.Name}-{department.InstructorID}");
                             }
                         }
                     }
@@ -132,9 +132,9 @@ namespace LearnAutomapper
             if (course != null)
             {
                 Console.WriteLine($"课程:{course.CourseID},{course.Title}");
-                if (course.InstructorDtos.Any())
+                if (course.Instructors.Any())
                 {
-                    foreach (var instructor in course.InstructorDtos)
+                    foreach (var instructor in course.Instructors)
                     {
                         Console.WriteLine($"----教师 :{instructor.ID}-{instructor.FirstMidName}-{instructor.LastName}");
                         if (instructor.Departments.Any())

@@ -56,7 +56,7 @@ namespace EFCoreDemo.Services
 
                     var storeTypeStr2 = property.FindRelationalTypeMapping()?.StoreType;
 
-                    IEntityType entityType2 = model.FindEntityType(typeof(OutOrderHeader));
+                    IEntityType entityType2 = model.FindEntityType(typeof(Course));
                     var property2 = entityType2.FindProperty("ID");
                    // var columnComment = property2.GetColumnComment();
 

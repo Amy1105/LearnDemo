@@ -1,6 +1,6 @@
 ﻿namespace LearnAutomapper.Dto
 {
-    public class CourseInstructorDto
+    public class InstructorDto
     {
         public int ID { get; set; }
 
@@ -8,7 +8,7 @@
 
         public string? FirstMidName { get; set; }
 
-        public List<CourseInstructorDepartmentDto> Departments { get; set; }
+        public List<DepartmentDto> Departments { get; set; }
     }
 
 }
