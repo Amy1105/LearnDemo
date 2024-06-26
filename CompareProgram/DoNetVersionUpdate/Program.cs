@@ -188,11 +188,7 @@ item.Name = "Item 1";
 item.SubItems = subItems;
 var itemJson = JsonConvert.SerializeObject(item);
 
-
-
 Item item2 = JsonConvert.DeserializeObject<Item>(itemJson);
-
-
 
 
 Console.WriteLine("Done.");
