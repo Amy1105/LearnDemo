@@ -2,9 +2,13 @@
 using DoNetVersionUpdate;
 using DoNetVersionUpdate.DoNet5Update;
 using DoNetVersionUpdate.enums;
+using DoNetVersionUpdate.JsonConvertLearn.Models;
+using DoNetVersionUpdate.JsonConvertLearn;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 /*
  C#13 
@@ -150,5 +154,45 @@ using System.Collections.ObjectModel;
 Console.WriteLine(DateTime.Now);
 
 Console.WriteLine(DateTime.UtcNow);
+
+
+
+string json = @"{
+    'id': 1,
+    'name': 'Item 1',
+    'subItems': [
+        {'subId': 11, 'subName': 'SubItem 11'},
+        {'subId': 12, 'subName': 'SubItem 12'}
+    ]
+}";
+
+SubItem subItem1 = new SubItem()
+{
+    SubId = 11,
+    SubName = "SubItem 11"
+};
+
+SubItem subItem2 = new SubItem()
+{
+    SubId = 12,
+    SubName = "SubItem 12"
+};
+
+List<SubItem> subItems = new List<SubItem>();
+subItems.Add(subItem1);
+subItems.Add(subItem2);
+
+Item item = new Item();
+item.Id = 1;
+item.Name = "Item 1";
+item.SubItems = subItems;
+var itemJson = JsonConvert.SerializeObject(item);
+
+
+
+Item item2 = JsonConvert.DeserializeObject<Item>(itemJson);
+
+
+
 
 Console.WriteLine("Done.");
