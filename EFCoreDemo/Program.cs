@@ -36,17 +36,18 @@ try
     builder.Services.AddTransient<EFBullkBenchmarkRead>();
 
     builder.Services.AddTransient<autoMapperDemo>();
+    builder.Services.AddTransient<EnumService>();
 
     var app = builder.Build();
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
 
-        //var bulkExecute = services.GetRequiredService<BulkExecute>();
+        var bulkExecute = services.GetRequiredService<BulkExecute>();
         //AttachMethod attachMethod = services.GetRequiredService<AttachMethod>();
         //autoMapperDemo attachMethodService = services.GetRequiredService<autoMapperDemo>();
 
-        //bulkExecute.InitDB();
+        bulkExecute.InitDB();
 
         //await bulkExecute.BulkInsertAsync();       
         //await bulkExecute.BulkInsertAsync();        
@@ -86,11 +87,12 @@ try
         //await  attachMethodService.Method1();
         //attachMethodService.Method4();
         //attachMethodService.Method3();
-       
+
         //attachMethodService.Flattening();
 
-
-
+        var enumService = services.GetRequiredService<EnumService>();
+        enumService.InsertAddress();
+        enumService.Search();
     }
 
     //基准测试
