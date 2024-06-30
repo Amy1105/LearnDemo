@@ -111,9 +111,18 @@ namespace EFCoreDemo.Models
         /// </summary>
         public string Postal_code { get; set; }
 
+        public Status status { get; set; }
+
         public override string ToString()
         {
             return $"{Name}-{Province}-{City}-{District}-{Street}";
         }
+    }
+
+    public enum Status
+    {
+        None=0,
+        Success=1, 
+        Error=2,
     }
 }
