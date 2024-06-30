@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace WebAPI.Controllers
 {
@@ -29,5 +30,25 @@ namespace WebAPI.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost(Name = "GeFiles")]
+        public ActionResult GeFile()
+        {
+            string name = "∂Õ¡∂º∆ªÆ.xlsx";
+            string filePath = @"D:\file1.xlsx";
+            try
+            {
+                Response.Headers.TryAdd("Access-Control-Expose-Headers", "Content-Disposition");
+                Response.Headers.TryAdd("Content-Disposition", "attachment;filename=" + name);
+                byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                return new JsonResult(new { result = false, msg = "œ¬‘ÿ ß∞‹£°" });
+            }
+        }
+       
     }
 }
