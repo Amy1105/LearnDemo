@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EFCoreDemo.Services.Example;
 using System.Reflection;
 using AutoMapper;
+using System.Text;
 
 
 try
@@ -93,6 +94,51 @@ try
         var enumService = services.GetRequiredService<EnumService>();
         enumService.InsertAddress();
         enumService.Search();
+
+        string[] messages = [
+            "Hello",
+            "World",
+            "from",
+            "C#"
+            ];
+        var lines=string.Join("\n", messages);
+         lines.Split("\n", StringSplitOptions.TrimEntries).Select(x=>x.Length);
+
+       var s= lines.ReplaceLineEndings().Length;
+
+        var message = "hello,world!";
+        var array = message.ToCharArray();
+        Array.Reverse(array);
+
+        var res=new string(array);
+
+       var s1= string.Join("", array);
+
+        string sub = "\n";
+        char c = '?';
+
+        message.IndexOf(sub);
+        message.CompareTo(c);
+
+        /////////////////////////////////////////////////////
+
+        var sb = new StringBuilder();
+        sb.Append("Hello");
+        sb.Replace("ll", "LL");
+        sb.Remove(1, 3);
+        sb.Insert(1, "ell");
+        sb.Append(' ',5);
+        sb.AppendLine("World!");
+        sb.ToString();
+
+        ///////////////////////////
+        string.Join(Environment.NewLine, messages);//newline 通用平台的换行符
+
+        //
+        //Path.Combine  //跨平台的路径  斜杠
+
+        //字符串池
+
     }
 
     //基准测试

@@ -1,13 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using BenchmarkDotNet.Toolchains;
 using EFCore.BulkExtensions;
-using EFCoreDemo.Models;
-using Microsoft.Data.SqlClient;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace EFCoreDemo.Services
 {
