@@ -34,13 +34,14 @@ namespace WebAPI.Controllers
         [HttpPost(Name = "GeFiles")]
         public ActionResult GeFile()
         {
-            string name = "∂Õ¡∂º∆ªÆ.xlsx";
-            string filePath = @"D:\file1.xlsx";
+            string name = "ee.xlsx";
+            string filePath = @"C:\Projects\LiMS-Files\ExportOutOrderHeader20240701093336.xlsx";
             try
             {
                 Response.Headers.TryAdd("Access-Control-Expose-Headers", "Content-Disposition");
                 Response.Headers.TryAdd("Content-Disposition", "attachment;filename=" + name);
                 byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+                Console.WriteLine(fileBytes);
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",name);
             }
             catch (Exception ex)

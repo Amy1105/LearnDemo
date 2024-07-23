@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacDemo", "AutofacDemo.csproj", "{0F74FE7A-5408-4A28-89B9-0FFF1630B7AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F74FE7A-5408-4A28-89B9-0FFF1630B7AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F74FE7A-5408-4A28-89B9-0FFF1630B7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F74FE7A-5408-4A28-89B9-0FFF1630B7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F74FE7A-5408-4A28-89B9-0FFF1630B7AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B774F112-E7C3-4514-93CE-46905C52E963}
+	EndGlobalSection
+EndGlobal
