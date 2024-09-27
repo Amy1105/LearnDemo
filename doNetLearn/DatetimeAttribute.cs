@@ -14,31 +14,30 @@ namespace doNetLearn
         public static void show()
         {
             //获取当前时刻的日期和时间，调整为本地时区。
-            DateTime saveNow = DateTime.Now;
-            
+            DateTime saveLocalNow = DateTime.Now;
+            DisplayNow("LOcalNow: .............", saveLocalNow);
+
             //获取以协调世界时（UTC）表示的当前时刻的日期和时间。
             DateTime saveUtcNow = DateTime.UtcNow;
-            DateTime myDt;
 
             // 显示以UTC和当地时间表示的当前时刻的值和Kind属性。
-
             DisplayNow("UtcNow: ..........", saveUtcNow);
-            DisplayNow("Now: .............", saveNow);
+           
+                      
             Console.WriteLine();
 
             // 将当前时刻的Kind属性更改为DateTimeKind。Utc并显示结果。
-
-            myDt = DateTime.SpecifyKind(saveNow, DateTimeKind.Utc);
+            DateTime myDt = DateTime.SpecifyKind(saveLocalNow, DateTimeKind.Utc);
             Display("Utc: .............", myDt);
 
             //将当前时刻的Kind属性更改为DateTimeKind。本地并显示结果。
 
-            myDt = DateTime.SpecifyKind(saveNow, DateTimeKind.Local);
+            myDt = DateTime.SpecifyKind(saveLocalNow, DateTimeKind.Local);
             Display("Local: ...........", myDt);
 
             // 将当前时刻的Kind属性更改为DateTimeKind。未指定并显示结果。
 
-            myDt = DateTime.SpecifyKind(saveNow, DateTimeKind.Unspecified);
+            myDt = DateTime.SpecifyKind(saveLocalNow, DateTimeKind.Unspecified);
             Display("Unspecified: .....", myDt);
         }
 
@@ -50,6 +49,9 @@ namespace doNetLearn
         public static void Display(string title, DateTime inputDt)
         {
             DateTime dispDt = inputDt;
+
+            DisplayNow(datePatt, dispDt);
+
             string dtString;
 
             // Display the original DateTime.
@@ -58,11 +60,11 @@ namespace doNetLearn
             Console.WriteLine("{0} {1}, Kind = {2}",
                               title, dtString, dispDt.Kind);
 
-            // Convert inputDt to local time and display the result.
-            // If inputDt.Kind is DateTimeKind.Utc, the conversion is performed.
-            // If inputDt.Kind is DateTimeKind.Local, the conversion is not performed.
-            // If inputDt.Kind is DateTimeKind.Unspecified, the conversion is
-            // performed as if inputDt was universal time.
+            // 将inputDt转换为本地时间并显示结果。
+            // 如果输入Dt。Kind是DateTimeKind。Utc，执行转换。
+            // 如果输入Dt。Kind是DateTimeKind。本地，不执行转换。
+            // 如果输入Dt。Kind是DateTimeKind。未指定，转换为
+            // 就像inputDt是世界时间一样执行。
 
             dispDt = inputDt.ToLocalTime();
             dtString = dispDt.ToString(datePatt);
