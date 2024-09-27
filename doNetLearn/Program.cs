@@ -1,6 +1,10 @@
 ﻿
 using doNetLearn;
 
+////Convert.ChangeType 会根据当前区域获取数据
+//// Convert a Continent to a Double.
+//Continent cont = Continent.NorthAmerica;
+//        Console.WriteLine("{0:N2}",Convert.ChangeType(cont, typeof(Double)));
 
 Console.WriteLine("返回指定类型的对象，其值等于指定对象");
 {
