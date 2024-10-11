@@ -42,35 +42,36 @@ Console.WriteLine("DateTime kind 属性");
     DatetimeAttribute.show();
 }
 
+//未成功
 Console.WriteLine("人脸识别接口试用");
 {
-    // 加载已知的人脸图片
-    var knownImage = Image.Load("known_face.jpg");   //这？
+    //// 加载已知的人脸图片
+    //var knownImage = Image.Load("known_face.jpg");   //这？
 
-    // 将图片中的人脸特征提取出来
-    var knownFaceEncoding = FaceRecognition.FaceEncodings(knownImage)[0].ToArray();
+    //// 将图片中的人脸特征提取出来
+    //var knownFaceEncoding = FaceRecognition.FaceEncodings(knownImage)[0].ToArray();
 
-    // 加载待检测的人脸图片
-    var image = Image.FromFile("unknown_face.jpg");
+    //// 加载待检测的人脸图片
+    //var image = Image.FromFile("unknown_face.jpg");
 
-    // 也提取待检测图片中的人脸特征
-    var faceEncodings = FaceRecognition.FaceEncodings(image);
+    //// 也提取待检测图片中的人脸特征
+    //var faceEncodings = FaceRecognition.FaceEncodings(image);
 
-    // 遍历所有检测到的人脸
-    foreach (var faceEncoding in faceEncodings)
-    {
-        // 使用FaceDistance来比较两个人脸特征的相似度
-        var faceDistance = FaceRecognition.FaceDistance(new[] { knownFaceEncoding }, faceEncoding.ToArray());
+    //// 遍历所有检测到的人脸
+    //foreach (var faceEncoding in faceEncodings)
+    //{
+    //    // 使用FaceDistance来比较两个人脸特征的相似度
+    //    var faceDistance = FaceRecognition.FaceDistance(new[] { knownFaceEncoding }, faceEncoding.ToArray());
 
-        // 如果faceDistance小于一个阈值，我们可以认为这是同一个人脸
-        if (faceDistance < 0.6)
-        {
-            Console.WriteLine($"Matched {faceDistance}!");
-        }
-        else
-        {
-            Console.WriteLine($"Unmatched {faceDistance}!");
-        }
-    }
+    //    // 如果faceDistance小于一个阈值，我们可以认为这是同一个人脸
+    //    if (faceDistance < 0.6)
+    //    {
+    //        Console.WriteLine($"Matched {faceDistance}!");
+    //    }
+    //    else
+    //    {
+    //        Console.WriteLine($"Unmatched {faceDistance}!");
+    //    }
+    //}
 }
 
