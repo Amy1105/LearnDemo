@@ -38,10 +38,6 @@ namespace doNetLearn.DataStructures
     }
 
 
-
-       
-    }
-
     public class Item
     {
         public string Category { get; set; }
