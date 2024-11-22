@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,26 @@ namespace doNetLearn
     /// </summary>
     public class DatetimeAttribute
     {
+        public static void TimeZoneExample()
+        {
+            // 获取所有已知时区的列表
+            ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+
+            // 选择一个时区
+            TimeZoneInfo timeZone = timeZones[0]; // 使用第一个时区，例如"Dateline Standard Time"
+            var frenceTime = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            // 获取当前时间
+            DateTime now = DateTime.Now;
+            DateTime timeInfrence = TimeZoneInfo.ConvertTime(now, frenceTime);
+
+            // 转换到指定时区的时间
+            DateTime timeInNewYork = TimeZoneInfo.ConvertTime(now, timeZone);
+
+            Console.WriteLine($"Current time in {timeZone.DisplayName}: {now}");
+            Console.WriteLine($"Time in {timeZone.DisplayName} is {timeInNewYork} in New York");
+        }
+
+
         public static void show()
         {
             //获取当前时刻的日期和时间，调整为本地时区。
