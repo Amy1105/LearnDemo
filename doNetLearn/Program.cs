@@ -1,5 +1,7 @@
 ﻿
+using BenchmarkDotNet.Running;
 using doNetLearn;
+using doNetLearn.DataTypes;
 using System.Text.Json;
 
 
@@ -42,7 +44,7 @@ using System.Text.Json;
 //}
 
 //未成功
-Console.WriteLine("人脸识别接口试用");
+//Console.WriteLine("人脸识别接口试用");
 {
     //// 加载已知的人脸图片
     //var knownImage = Image.Load("known_face.jpg");   //这？
@@ -74,19 +76,35 @@ Console.WriteLine("人脸识别接口试用");
     //}
 }
 
-//为什么不一样呢？
-ParentClass parentClass = new ParentClass();
+{
+    //Json序列化如何实现的
 
-ChildClass child = new ChildClass();
-string json = JsonSerializer.Serialize(child);
-Console.WriteLine(json);
+    ////为什么不一样呢？
+    //ParentClass parentClass = new ParentClass();
 
-
-
-
-
-var s=parentClass.GetformValue(child);
-Console.WriteLine(s);
+    //ChildClass child = new ChildClass();
+    //string json = JsonSerializer.Serialize(child);
+    //Console.WriteLine(json);
 
 
-DatetimeAttribute.TimeZoneExample();
+    //var s=parentClass.GetformValue(child);
+    //Console.WriteLine(s);
+
+
+    //DatetimeAttribute.TimeZoneExample();
+}
+
+{
+    //ValueTypeDemo.SpanLearn();
+
+    //ArraySegmentLearn.Method();
+
+    //ArraySegmentLearn arraySegmentLearn = new ArraySegmentLearn();
+    //await arraySegmentLearn.Method2();
+
+    //ArraySegmentLearn.Method3();
+
+    var summary = BenchmarkRunner.Run<SpanBenchmark>();
+
+    //BenchmarkRunner.Run<VerifyDecimalPlaces>();
+}
