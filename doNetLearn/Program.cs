@@ -2,6 +2,8 @@
 using BenchmarkDotNet.Running;
 using doNetLearn;
 using doNetLearn.DataTypes;
+using doNetLearn.TypeConversion;
+using System.Globalization;
 using System.Text.Json;
 
 
@@ -26,16 +28,16 @@ using System.Text.Json;
 //}
 
 //{
-//    // 设置当前线程的文化信息为西班牙语（西班牙）
-//    CultureInfo spanishCulture = new CultureInfo("es-ES");
-//    Thread.CurrentThread.CurrentCulture = spanishCulture;
-//    Thread.CurrentThread.CurrentUICulture = spanishCulture;
+//// 设置当前线程的文化信息为西班牙语（西班牙）
+//CultureInfo spanishCulture = new CultureInfo("es-ES");
+//Thread.CurrentThread.CurrentCulture = spanishCulture;
+//Thread.CurrentThread.CurrentUICulture = spanishCulture;
 
-//    // 创建一个DateTime对象
-//    DateTime now = DateTime.Now;
+//// 创建一个DateTime对象
+//DateTime now = DateTime.Now;
 
-//    // 输出格式化后的DateTime对象
-//    Console.WriteLine(now.ToString()); // 使用当前线程文化信息进行格式化
+//// 输出格式化后的DateTime对象
+//Console.WriteLine(now.ToString()); // 使用当前线程文化信息进行格式化
 //}
 
 //Console.WriteLine("DateTime kind 属性");
@@ -104,11 +106,20 @@ using System.Text.Json;
 
     //ArraySegmentLearn.Method3();
 
-    SpanBenchmark spanBenchmark = new SpanBenchmark();
-    spanBenchmark.ReserveUseSpan();
-    spanBenchmark.ReserveMethod();
+    //SpanBenchmark spanBenchmark = new SpanBenchmark();
+    //spanBenchmark.ReserveUseSpan();
+    //spanBenchmark.ReserveMethod();
 
    // var summary = BenchmarkRunner.Run<SpanBenchmark>();
 
     //BenchmarkRunner.Run<VerifyDecimalPlaces>();
+}
+
+{
+    TypeConversionDemo typeConversionDemo = new TypeConversionDemo();
+
+    //typeConversionDemo.Method();
+    //typeConversionDemo.Method2();
+    //typeConversionDemo.Method3();
+    typeConversionDemo.Method4();
 }
