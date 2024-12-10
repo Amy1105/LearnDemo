@@ -71,6 +71,7 @@ namespace doNetLearn.TypeConversion
             Student student = new Student(1, "tom", "高三的学生", 17);
             SpecialStudent specialStudent = new SpecialStudent(2, "danel", "高三的学生", 17, "special", "specialComment");
 
+            var student1 = specialStudent as Student;
 
             //基类转成派生类，失败了
 

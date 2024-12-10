@@ -118,8 +118,8 @@ using System.Text.Json;
 {
     TypeConversionDemo typeConversionDemo = new TypeConversionDemo();
 
-    //typeConversionDemo.Method();
-    //typeConversionDemo.Method2();
-    //typeConversionDemo.Method3();
+    typeConversionDemo.Method();
+    typeConversionDemo.Method2();
+    typeConversionDemo.Method3();
     typeConversionDemo.Method4();
 }
