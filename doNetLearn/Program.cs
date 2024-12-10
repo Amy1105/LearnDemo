@@ -104,7 +104,11 @@ using System.Text.Json;
 
     //ArraySegmentLearn.Method3();
 
-    var summary = BenchmarkRunner.Run<SpanBenchmark>();
+    SpanBenchmark spanBenchmark = new SpanBenchmark();
+    spanBenchmark.ReserveUseSpan();
+    spanBenchmark.ReserveMethod();
+
+   // var summary = BenchmarkRunner.Run<SpanBenchmark>();
 
     //BenchmarkRunner.Run<VerifyDecimalPlaces>();
 }

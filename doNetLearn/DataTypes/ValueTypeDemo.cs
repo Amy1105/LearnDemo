@@ -382,7 +382,7 @@ namespace doNetLearn.DataTypes
                 SpanBenchmark spanBenchmark = new SpanBenchmark();
                 //spanBenchmark.TestSplitStringWithSpan();
 
-                spanBenchmark.TestFilterWithSpan();
+                //spanBenchmark.TestFilterWithSpan();
 
               
 
