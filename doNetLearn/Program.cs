@@ -115,11 +115,28 @@ using System.Text.Json;
     //BenchmarkRunner.Run<VerifyDecimalPlaces>();
 }
 
-{
-    TypeConversionDemo typeConversionDemo = new TypeConversionDemo();
+//{
+//    TypeConversionDemo typeConversionDemo = new TypeConversionDemo();
 
-    typeConversionDemo.Method();
-    typeConversionDemo.Method2();
-    typeConversionDemo.Method3();
-    typeConversionDemo.Method4();
+//    typeConversionDemo.Method();
+//    typeConversionDemo.Method2();
+//    typeConversionDemo.Method3();
+//    typeConversionDemo.Method4();
+//}
+
+{
+    DateTime? CalibrationDate = null;
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime date))
+    {
+        CalibrationDate = date;
+    }
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AllowLeadingWhite, out DateTime date1))
+    {
+        CalibrationDate = date1;
+    }
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal, out DateTime date2))
+    {
+        CalibrationDate = date2;
+    }
+    
 }
