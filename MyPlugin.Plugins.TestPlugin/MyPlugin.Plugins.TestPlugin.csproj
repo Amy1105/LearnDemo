@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyPlugin.Base\MyPlugin.Base.csproj" />
+	  <OutputPath>..\plugins\MyPlugin.Plugins.TestPlugin</OutputPath>
+	  <OutDir>$(OutputPath)</OutDir>
   </ItemGroup>
 
 </Project>

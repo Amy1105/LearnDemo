@@ -12,8 +12,4 @@
     <PackageReference Include="Sep" Version="0.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MyPlugin.Base\MyPlugin.Base.csproj" />
-  </ItemGroup>
-
 </Project>
