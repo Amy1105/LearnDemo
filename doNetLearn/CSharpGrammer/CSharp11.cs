@@ -60,21 +60,21 @@ namespace doNetLearn.CSharpGrammer
         /// <summary>
         /// 2. 泛型数学支持 , 泛型数学支持使泛型类型能够进行算术运算。这对于需要对不同数值类型进行操作的数学库或算法特别有用。
         /// </summary>
-        public static T Average<T>(T x, T y) where T : INumber<T>
-        {
-            return (x + y) / T.Create(2);
-        }
-        public class Vector2D<T> where T : INumber<T>
-        {
-            public T X { get; }
-            public T Y { get; }
-            public Vector2D(T x, T y)
-            {
-                X = x;
-                Y = y;
-            }
-            public T Magnitude() => T.Sqrt(X * X + Y * Y);
-        }
+        //public static T Average<T>(T x, T y) where T : INumber<T>
+        //{
+        //    return (x + y) / T.Create(2);
+        //}
+        //public class Vector2D<T> where T : INumber<T>
+        //{
+        //    public T X { get; }
+        //    public T Y { get; }
+        //    public Vector2D(T x, T y)
+        //    {
+        //        X = x;
+        //        Y = y;
+        //    }
+        //    public T Magnitude() => T.Sqrt(X * X + Y * Y);
+        //}
 
         /*
       优缺点：
@@ -120,7 +120,9 @@ namespace doNetLearn.CSharpGrammer
             ReadOnlySpan<byte> utf8Message = "Hello, world!"u8; //直接处理UTF-8编码的字符串
 
             //将文本数据直接以UTF-8格式存储可以减少网络通信中的内存开销。
-            var utf8Data = Encoding.UTF8.GetBytes("Some text data");  
+            var utf8Data = Encoding.UTF8.GetBytes("Some text data");
+
+           
 
         }
 
@@ -275,25 +277,25 @@ namespace doNetLearn.CSharpGrammer
         /// 
         /// C# 11引入了在结构体中声明ref字段的能力，通过引用现有数据而不复制数据，实现更高效的内存管理
         /// </summary>
-        public struct BufferWrapper
-        {
-            //结构体中的ref字段    在之前的版本中，这需要诸如使用指针或不安全代码之类的变通方法。
-            private ref int _value;
+        //public struct BufferWrapper
+        //{
+        //    //结构体中的ref字段    在之前的版本中，这需要诸如使用指针或不安全代码之类的变通方法。
+        //    private ref int _value;
 
-            public BufferWrapper(ref int value)
-            {
-                _value = ref value;
-            }
-        }
+        //    public BufferWrapper(ref int value)
+        //    {
+        //        _value = ref value;
+        //    }
+        //}
 
-        /// <summary>
-        /// 作用域ref参数
-        /// </summary>
-        /// <param name="value"></param>
-        public void ModifyValue(scoped ref int value)
-        {
-            value *= 2;
-        }
+        ///// <summary>
+        ///// 作用域ref参数
+        ///// </summary>
+        ///// <param name="value"></param>
+        //public void ModifyValue(scoped ref int value)
+        //{
+        //    value *= 2;
+        //}
 
 
         /*

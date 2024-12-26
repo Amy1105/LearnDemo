@@ -1,0 +1,11 @@
+{
+  "namespace": "MyPlugin.Plugins.TestPlugin",
+  "version": "1.0.0",
+  "versionCode": 1,
+  "description": "This is a sample plugin",
+  "dependencies": [
+  ],
+  "options": {
+    "Option1": "Value1"
+  }
+}

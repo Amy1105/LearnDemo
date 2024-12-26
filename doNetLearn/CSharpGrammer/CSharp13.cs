@@ -70,10 +70,10 @@ ReadOnlySpan<T>的关键特性：
         public void Method()
         {
 
-            foreach ((int index, City city) in cities.Index())
-            {
-                Console.WriteLine($"Index: {index}, City: {city.Name}");
-            }
+            //foreach ((int index, City city) in cities.Index()) //C# 13 = .net 9
+            //{
+            //    Console.WriteLine($"Index: {index}, City: {city.Name}");
+            //}
         }
 
         public void Method2()

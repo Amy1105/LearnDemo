@@ -146,31 +146,33 @@ using System.Text.Json;
 //sep demo
 {
 
-    {
-        // 指定CSV文件的路径
-        string filePath = "file.csv";
+    //{
+    //    // 指定CSV文件的路径
+    //    string filePath = "file.csv";
 
-        // 使用Sep库创建一个CSV读取器，从文件中读取数据
-        using var reader = Sep.Reader().FromFile(filePath);
+    //    // 使用Sep库创建一个CSV读取器，从文件中读取数据
+    //    using var reader = Sep.Reader().FromFile(filePath);
 
-        // 遍历CSV文件中的每一行
-        foreach (var readRow in reader)
-        {
-            // 假设我们知道CSV文件的列结构，可以直接通过列名访问数据
-            string columnA = readRow["A"].ToString();
-            string columnB = readRow["B"].ToString();
-            int columnC = readRow["C"].Parse<int>();
-            double columnD = readRow["D"].Parse<double>();
+    //    // 遍历CSV文件中的每一行
+    //    foreach (var readRow in reader)
+    //    {
+    //        // 假设我们知道CSV文件的列结构，可以直接通过列名访问数据
+    //        string columnA = readRow["A"].ToString();
+    //        string columnB = readRow["B"].ToString();
+    //        int columnC = readRow["C"].Parse<int>();
+    //        double columnD = readRow["D"].Parse<double>();
 
-            // 处理每一行的数据
-            Console.WriteLine($"A: {columnA}, B: {columnB}, C: {columnC}, D: {columnD}");
-        }
-    }
-    {
-        ReadCSV readCSV = new ReadCSV();
+    //        // 处理每一行的数据
+    //        Console.WriteLine($"A: {columnA}, B: {columnB}, C: {columnC}, D: {columnD}");
+    //    }
+    //}
+    //{
+    //    ReadCSV readCSV = new ReadCSV();
 
-        readCSV.ProcessProducts(@"C:\Users\yingying.zhu\Downloads\11.csv", "样品生产条码");
-    }
+    //    readCSV.ProcessProducts(@"C:\Users\yingying.zhu\Downloads\11.csv", "样品生产条码");
+    //}
+
+
     //{
     //    // 定义一个多行字符串，表示一个CSV格式的数据。
     //    var text = """
@@ -222,4 +224,13 @@ using System.Text.Json;
 
     //    Console.WriteLine(writer.ToString());
     //}
+
+
+
+    {
+
+        DataTypeDemo dataTypeDemo = new DataTypeDemo();
+        dataTypeDemo.MethodDictionary();
+
+    }
 }
