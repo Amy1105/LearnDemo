@@ -182,7 +182,7 @@ namespace doNetLearn.LinqDemo
         /// </summary>
         public void Method10()
         {
-            //            var query = dbContext.Employees.SelectMany(
+            //  var query = dbContext.Employees.SelectMany(
             //    e => dbContext.Departments,
             //    (e, d) => new { e.Name, d.Name }
             //).ToList();
