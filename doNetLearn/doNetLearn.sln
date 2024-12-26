@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "doNetLearn", "doNetLearn.csproj", "{B5816DFA-D994-483F-83CF-7609F229B23B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBDemo", "..\MongoDBDemo\MongoDBDemo.csproj", "{31BB98B5-A69B-4548-ABC9-91D47EFB2DB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDBDemo", "..\MongoDBDemo\MongoDBDemo.csproj", "{31BB98B5-A69B-4548-ABC9-91D47EFB2DB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "..\TestProject1\TestProject1.csproj", "{0BF07B31-9307-43A6-AAF9-4FAAC8998A56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{31BB98B5-A69B-4548-ABC9-91D47EFB2DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31BB98B5-A69B-4548-ABC9-91D47EFB2DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31BB98B5-A69B-4548-ABC9-91D47EFB2DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BF07B31-9307-43A6-AAF9-4FAAC8998A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF07B31-9307-43A6-AAF9-4FAAC8998A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF07B31-9307-43A6-AAF9-4FAAC8998A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF07B31-9307-43A6-AAF9-4FAAC8998A56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
