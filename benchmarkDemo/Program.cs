@@ -6,5 +6,8 @@ using BenchmarkDotNet.Running;
 
 //BenchmarkRunner.Run<VerifyDecimalPlaces>();
 
-object?  n = null;
-Console.WriteLine(n.ToString());
+var summary = BenchmarkRunner.Run<CompareSplitList>();
+
+
+//object?  n = null;
+//Console.WriteLine(n.ToString());
