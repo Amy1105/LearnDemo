@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoNetVersionUpdate.JsonConvertLearn.Models
+namespace doNetLearn.JsonConvertLearn
 {
     public class SubItem
     {

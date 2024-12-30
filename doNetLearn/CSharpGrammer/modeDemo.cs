@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoNetVersionUpdate.DoNet5Update
+namespace doNetLearn.CSharpGrammer
 {
     /// <summary>
     /// 模式匹配
@@ -229,7 +228,7 @@ namespace DoNetVersionUpdate.DoNet5Update
             public void Deconstruct(out int x, out int y) => (x, y) = (X, Y);
         }
 
-      public  static string Classify(Point2 point) => point switch
+        public static string Classify(Point2 point) => point switch
         {
             (0, 0) => "Origin",
             (1, 0) => "positive X basis end",
@@ -300,10 +299,10 @@ namespace DoNetVersionUpdate.DoNet5Update
         #endregion
         #region var 模式 ：用于匹配任何表达式并将其结果分配给声明的变量
         //可使用 var 模式来匹配任何表达式（包括 null），并将其结果分配给新的局部变量
-      public  static bool IsAcceptable(int id, int absLimit) =>
-    SimulateDataFetch(id) is var results
-    && results.Min() >= -absLimit
-    && results.Max() <= absLimit;
+        public static bool IsAcceptable(int id, int absLimit) =>
+      SimulateDataFetch(id) is var results
+      && results.Min() >= -absLimit
+      && results.Max() <= absLimit;
 
         static int[] SimulateDataFetch(int id)
         {
@@ -370,7 +369,7 @@ namespace DoNetVersionUpdate.DoNet5Update
             Console.WriteLine(numbers is [1, 2, 4]);  // False
             Console.WriteLine(numbers is [1, 2, 3, 4]);  // False
             Console.WriteLine(numbers is [0 or 1, <= 2, >= 3]);  // True
-           
+
             if (numbers is [var first, _, _])
             {
                 Console.WriteLine($"The first element of a three-item list is {first}.");
@@ -401,7 +400,7 @@ namespace DoNetVersionUpdate.DoNet5Update
         ///还可以在切片模式中嵌套子模式
         public static void MatchMessage(string message)
         {
-            var result = message is ['a' or 'A', ..var s, 'a' or 'A']
+            var result = message is ['a' or 'A', .. var s, 'a' or 'A']
                 ? $"Message {message} matches; inner part is {s}."
                 : $"Message {message} doesn't match.";
             Console.WriteLine(result);

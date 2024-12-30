@@ -1,4 +1,4 @@
-﻿/*
+﻿
  设计模式的六大原则
 1、开闭原则（Open Close Principle）
 
@@ -23,5 +23,4 @@
 6、合成复用原则（Composite Reuse Principle）
 
 合成复用原则是指：尽量使用合成/聚合的方式，而不是使用继承。
- */
-
+ 

@@ -1,16 +1,13 @@
-﻿using DoNetVersionUpdate.JsonConvertLearn.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
-namespace DoNetVersionUpdate.JsonConvertLearn
+namespace doNetLearn.JsonConvertLearn
 {
     public class SubItemConverter : Newtonsoft.Json.JsonConverter
     {

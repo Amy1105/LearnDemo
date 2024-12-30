@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoNetVersionUpdate
+namespace doNetLearn.CSharpGrammer
 {
     /// <summary>
     /// init 关键字在属性或索引器中定义访问器方法。 init-only 资源库仅在对象构造期间为属性或索引器元素赋值。 
@@ -56,7 +56,7 @@ namespace DoNetVersionUpdate
             PersonPrivateSet personPrivateSet = new("Bill", "Gates");
             //通过 private set 版本，人员可在构造实例后更改其名称。
             personPrivateSet.ChangeName("Amy", "Wall");
-         
+
             PersonReadOnly personReadOnly = new("Bill", "Gates");
 
             // init 版本不需要构造函数,调用方可使用对象初始值设定项初始化属性
