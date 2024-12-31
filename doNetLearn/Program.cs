@@ -8,6 +8,14 @@ using System.Globalization;
 using System.Text.Json;
 
 
+var timeZones = TimeZoneInfo.GetSystemTimeZones();
+
+// 打印每个时区的显示名称
+foreach (var timeZone in timeZones)
+{
+Console.WriteLine(timeZone.Id);
+}
+
 //Console.WriteLine("返回指定类型的对象，其值等于指定对象");
 //{
 
