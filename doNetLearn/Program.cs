@@ -237,8 +237,14 @@ Console.WriteLine(timeZone.Id);
 
     {
 
-        DataTypeDemo dataTypeDemo = new DataTypeDemo();
-        dataTypeDemo.MethodDictionary();
+        //DataTypeDemo dataTypeDemo = new DataTypeDemo();
+        //dataTypeDemo.MethodDictionary();
 
+    }
+
+
+    {
+        CopyExample copyExample = new CopyExample();
+        copyExample.Method();
     }
 }
