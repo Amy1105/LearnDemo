@@ -205,6 +205,64 @@ namespace TestProject1
                     }
                 }
             }
-        }
+
+            [TestCase(42)]
+            public void TestInt(int val)
+            {
+                Assert.That(val, Is.EqualTo(4));
+            }
+
+
+
+            /// <summary>
+            /// 改进后的结果消息现在提供了更清晰的见解，更容易识别导致每次失败的具体断言
+            /// </summary>
+            [Test]
+            public void TestMultiple()
+            {
+                var x = 2;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(x * 2, Is.EqualTo(42));
+                    Assert.That(x * 1 + 40, Is.EqualTo(42));
+                    Assert.That(x * 3 + 42, Is.EqualTo(42));
+                });
+            }
+
+
+            //请注意NUnit中断言消息的一个重大变化。不再支持以前使用params args的格式。
+            //如果您需要类似的消息格式，现在需要将其转换为插值字符串。
+
+
+
+            //正确的async/await，您现在可以等待断言
+            //在版本3中，使用'sync-over-async'，
+            //在版本4中，通过一系列新的断言方法assert实现了正确的async/await。可以唤醒的同步。
+
+
+            [Test]
+            public async Task AssertionPasses_CompletedTaskWithResult_EqualsResult()
+            {
+                await Assert.ThatAsync(() => Task.FromResult(42), Is.EqualTo(42));
+            }
+
+
+
+            //版本4还引入了一个名为Assert的新功能。MultipleAsync，它允许您在同一块中混合异步和同步断言。
+            //这使您能够以更简洁和简化的方式执行异步和同步的多个断言。
+            //此外，重要的是要注意断言。MultipleAsync是可行的，在处理异步操作和断言方面提供了灵活性
+
+
+            [Test]
+            public async Task AssertMultipleAsyncSucceeds()
+            {
+                await Assert.MultipleAsync(async () =>
+                {
+                await Assert.ThatAsync(() => Task.FromResult(42), Is.EqualTo(42));
+                Assert.That("hello", Is.EqualTo("hello"));
+                await Assert.ThatAsync(() => Task.FromException(new ArgumentNullException)), Throws.ArgumentNullException);
+            });
+}
+    }
     }
 }
