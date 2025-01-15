@@ -32,8 +32,8 @@ namespace TestProject1
                 };
                 var categoryFilter = new CategoryFilter("Electronics");
                 var filteredProducts = categoryFilter.Filter(products);
-                Assert.AreEqual(1, filteredProducts.Count());
-                Assert.AreEqual("Laptop", filteredProducts.First().Name);
+                Assert.That(1, Is.EqualTo( filteredProducts.Count()));
+                Assert.That("Laptop", filteredProducts.First().Name);
             }
 
             [Test]
