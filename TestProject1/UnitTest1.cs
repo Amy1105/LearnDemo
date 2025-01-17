@@ -46,8 +46,8 @@ namespace TestProject1
                 };
                 var priceFilter = new PriceFilter(50, 2000);
                 var filteredProducts = priceFilter.Filter(products);
-                Assert.AreEqual(1, filteredProducts.Count());
-                Assert.AreEqual("Laptop", filteredProducts.First().Name);
+                Assert.That(1, Is.EqualTo(filteredProducts.Count()));
+                Assert.That("Laptop", Is.EqualTo(filteredProducts.First().Name));
             }
 
 
@@ -260,7 +260,8 @@ namespace TestProject1
                 {
                 await Assert.ThatAsync(() => Task.FromResult(42), Is.EqualTo(42));
                 Assert.That("hello", Is.EqualTo("hello"));
-                await Assert.ThatAsync(() => Task.FromException(new ArgumentNullException)), Throws.ArgumentNullException);
+                await Assert.ThatAsync(() => Task.FromException(new ArgumentNullException)),
+                    Throws.ArgumentNullException);
             });
 }
     }
