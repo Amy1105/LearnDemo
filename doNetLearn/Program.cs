@@ -134,20 +134,37 @@ Console.WriteLine(timeZone.Id);
 //}
 
 {
-    //DateTime? CalibrationDate = null;
-    //if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime date))
-    //{
-    //    CalibrationDate = date;
-    //}
-    //if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AllowLeadingWhite, out DateTime date1))
-    //{
-    //    CalibrationDate = date1;
-    //}
-    //if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal, out DateTime date2))
-    //{
-    //    CalibrationDate = date2;
-    //}
-    
+    DateTime? CalibrationDate = null;
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime date))
+    {
+        CalibrationDate = date;
+    }
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AllowLeadingWhite, out DateTime date1))
+    {
+        CalibrationDate = date1;
+    }
+    if (DateTime.TryParseExact("2019-12-20", "yyyy-MM-dd", System.Globalization.CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal, out DateTime date2))
+    {
+        CalibrationDate = date2;
+    }
+
+    //不同文化环境下，不同时间显示格式，时间可以比较吗？值一样吗？
+
+    var dateA ="2025-02-05";
+    if (DateTime.TryParseExact(dateA, "yyyy-MM-dd", new CultureInfo("en-US"), DateTimeStyles.AdjustToUniversal, out DateTime datea))
+    {
+        if (DateTime.TryParseExact(dateA, "yyyy-MM-dd", new CultureInfo("fr-FR"), DateTimeStyles.AdjustToUniversal, out DateTime dateb))
+        {
+            if(datea== dateb)
+            {
+                Console.WriteLine("same value");
+            }
+            else
+            {
+                Console.WriteLine("no same value");
+            }
+        }
+    }
 }
 
 
@@ -244,8 +261,8 @@ Console.WriteLine(timeZone.Id);
 
 
     {
-        CopyExample copyExample = new CopyExample();
-        copyExample.Method();
+        //CopyExample copyExample = new CopyExample();
+        //copyExample.Method();
     }
 
     //源代码生成器
