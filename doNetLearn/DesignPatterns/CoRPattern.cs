@@ -1,12 +1,4 @@
-﻿using doNetLearn.DesignPatterns.CORPattern;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static doNetLearn.DesignPatterns.CORPattern.Class1;
-
-namespace doNetLearn.DesignPatterns.CORPattern
+﻿namespace doNetLearn.DesignPatterns
 {
     /// <summary>
     ///  什么是责任链模式？
@@ -19,10 +11,27 @@ namespace doNetLearn.DesignPatterns.CORPattern
     ///  3. 当某个处理器处理请求或链结束时终止流程
     /// 
     /// </summary>
-    public class Class1
-    {
-        //责任链 vs 多重if-else：谁更胜一筹？
+    public class CoRPattern
+    {        
+        /// <summary>
+        /// 责任链 vs 多重if-else：谁更胜一筹？
+        /// 步骤3：构建处理链并运行
+        /// </summary>
+       public static void execute()
+        {
+            var consoleHandler = new ConsoleLogHandler();
+            var fileHandler = new FileLogHandler();
+            var errorHandler = new ErrorLogHandler();
 
+            // 构建责任链
+            consoleHandler.SetNext(fileHandler);
+            fileHandler.SetNext(errorHandler);
+
+            // 触发处理
+            consoleHandler.Handle("这是一条信息级日志", LogLevel.Info);
+            consoleHandler.Handle("这是一条警告级日志", LogLevel.Warning);
+            consoleHandler.Handle("这是一条错误级日志", LogLevel.Error);
+        }
 
         /// <summary>
         /// 
@@ -154,23 +163,6 @@ namespace doNetLearn.DesignPatterns.CORPattern
     }
     class program2
     {
-        /// <summary>
-        /// 步骤3：构建处理链并运行
-        /// </summary>
-        static void Main2()
-        {
-            var consoleHandler = new ConsoleLogHandler();
-            var fileHandler = new FileLogHandler();
-            var errorHandler = new ErrorLogHandler();
-
-            // 构建责任链
-            consoleHandler.SetNext(fileHandler);
-            fileHandler.SetNext(errorHandler);
-
-            // 触发处理
-            consoleHandler.Handle("这是一条信息级日志", LogLevel.Info);
-            consoleHandler.Handle("这是一条警告级日志", LogLevel.Warning);
-            consoleHandler.Handle("这是一条错误级日志", LogLevel.Error);
-        }
+        
     }
 }

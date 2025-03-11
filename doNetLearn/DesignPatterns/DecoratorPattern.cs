@@ -17,7 +17,7 @@ namespace doNetLearn.DesignPatterns
         /// 它为扩展功能提供了一种比继承更灵活的替代方案。装饰器模式使用组合而非继承的方式——用另一个对象（装饰器）来包装一个对象，
         /// 以此扩展其行为
         /// </summary>
-        public void Method()
+        public void execute()
         {
             /* 优点：
             灵活性：与静态的继承不同，装饰器模式使你能够在运行时为对象添加行为。

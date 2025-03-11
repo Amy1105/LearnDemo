@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace doNetLearn.DesignPatterns.StatePatterns
 {
-    public class OrderMain
+    public class StatePatterns
     {
-        public void Method()
+        public void execute()
         {
             var order = new NewOrder();
             order.Pay();      // 输出：Order has been paid.

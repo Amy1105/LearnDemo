@@ -1,6 +1,7 @@
 ﻿
 
 
+using doNetLearn.DesignPatterns;
 using doNetLearn.Expressions;
 
 
@@ -9,6 +10,9 @@ ExpressionsMethod expressionsMethod =new ExpressionsMethod();
 expressionsMethod.Execute();
 
 
+
+DesignPatternsMethod designPatternsMethod = new DesignPatternsMethod();
+designPatternsMethod.execute();
 
 
     //源代码生成器
