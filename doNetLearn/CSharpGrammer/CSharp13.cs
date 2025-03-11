@@ -53,7 +53,7 @@ ReadOnlySpan<T>的关键特性：
     /// <summary>
     /// linq 引入了新方法：CountBy，AggregateBy，Index
     /// </summary>
-    internal class CSharp13LinqDemo
+    internal class CSharp13
     {
 
         public List<City> cities = new List<City>()

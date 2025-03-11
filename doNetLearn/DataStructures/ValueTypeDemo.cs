@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Text.Json;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     /// ValueType值类型
@@ -96,7 +96,7 @@ namespace doNetLearn.DataTypes
                 Console.WriteLine($" Next day: {nextDay}");
                 Console.WriteLine($" Previous day: {previousDay}");
                 Console.WriteLine($" Decade later: {decadeLater}");
-                Console.WriteLine($" Last month: {lastMonth}");                
+                Console.WriteLine($" Last month: {lastMonth}");
             }
 
 
@@ -107,7 +107,7 @@ namespace doNetLearn.DataTypes
 
                 Console.WriteLine(theDate.ToString("m", CultureInfo.InvariantCulture));     // Month day pattern
                 Console.WriteLine(theDate2.ToString("o", CultureInfo.InvariantCulture));    // ISO 8601 format
-                Console.WriteLine(theDate2.ToLongDateString());               
+                Console.WriteLine(theDate2.ToLongDateString());
             }
 
 
@@ -123,30 +123,30 @@ namespace doNetLearn.DataTypes
                 Console.WriteLine($" Is {dateLater} after? {dateLater > theDate} ");
                 Console.WriteLine($" Is {dateLater} before? {dateLater < theDate} ");
                 Console.WriteLine($" Is {dateBefore} after? {dateBefore > theDate} ");
-                Console.WriteLine($" Is {dateBefore} before? {dateBefore < theDate} ");              
+                Console.WriteLine($" Is {dateBefore} before? {dateBefore < theDate} ");
 
             }
 
             //在引入 TimeOnly 类型之前，程序员通常使用 DateTime 类型或 TimeSpan 类型来表示特定时间。
             //但是，使用这些结构来模拟没有日期的时间可能会导致一些问题，而 TimeOnly 可以解决这些问题：
-            
+
             //1.TimeSpan 表示经过的时间，例如使用秒表测量的时间。 上限范围超过 29,000 年，它的值可以是负值，表示在时间上向后移动。
             //负的 TimeSpan 并不表示一天中的特定时间。
-            
+
             //2.如果将 TimeSpan 用作一天中的某个时间，则存在可能将其操作为 24 小时以外的值的风险。
             //TimeOnly 就没有这种风险。 例如，如果一个员工的工作班次从 18:00 开始且持续 8 小时，那么，向 TimeOnly 结构加上 8 小时将滚动到 2:00
-            
+
             //3.要将 DateTime 用于一天中的某个时间，需要将任意日期与该时间相关联，然后被忽略。
             //通常的做法是选择 DateTime.MinValue(0001 - 01 - 01) 作为日期，但如果从 DateTime 值中减去小时数，可能会发生 OutOfRange 异常。
             //TimeOnly 就没有这个问题，因为时间在 24 小时的时间范围内前后滚动。
-            
+
             //4.序列化 DateTime 结构包括日期部分，这可能会掩盖数据的意图。 此外，TimeOnly 序列化的数据更少。
 
 
             //将 DateTime 转换为 TimeOnly
             {
                 var now = TimeOnly.FromDateTime(DateTime.Now);
-                Console.WriteLine($"It is {now} right now");              
+                Console.WriteLine($"It is {now} right now");
             }
 
             //加/减时间
@@ -163,7 +163,7 @@ namespace doNetLearn.DataTypes
                 Console.WriteLine($" Minutes before: {minutesBefore}");
                 Console.WriteLine($" Seconds after: {secondsAfter}");
                 Console.WriteLine($" {daysLater} is the time, which is {wrappedDays} days later");
-                Console.WriteLine($" {daysBehind} is the time, which is {wrappedDaysFromHours} days prior");               
+                Console.WriteLine($" {daysBehind} is the time, which is {wrappedDaysFromHours} days prior");
             }
 
             //分析 TimeOnly 并设置其格式
@@ -219,7 +219,7 @@ namespace doNetLearn.DataTypes
                     Console.WriteLine($"Time only is {theTime}");
                     Console.WriteLine();
                     Console.WriteLine($"Combined to a DateTime type, the value is {theDateTime}");
-                    Console.WriteLine($"Converted back from DateTime, the time is {reverseTime}");                  
+                    Console.WriteLine($"Converted back from DateTime, the time is {reverseTime}");
                 }
             }
 
@@ -237,7 +237,7 @@ namespace doNetLearn.DataTypes
                 Console.WriteLine($" Is {start} less than {end}? {start < end}");
                 Console.WriteLine($" Is {start} greater than {end}? {start > end}");
                 Console.WriteLine($" Does {start} equal {end}? {start == end}");
-                Console.WriteLine($" The time between {start} and {end} is {end - start}");             
+                Console.WriteLine($" The time between {start} and {end} is {end - start}");
             }
 
         }
@@ -261,12 +261,12 @@ namespace doNetLearn.DataTypes
             {
 
                 //创建和使用‌：
-                string[] arrStr = new string[] { "apple","banana","pear","pineapple", "watermelon" , "strawberry" };
+                string[] arrStr = new string[] { "apple", "banana", "pear", "pineapple", "watermelon", "strawberry" };
 
                 Span<string> strings0 = arrStr.AsSpan();
                 Console.WriteLine(strings0[3]);
                 Span<string> strings = new Span<string>(arrStr);
-                Span<string> stringsSplit= new Span<string>(arrStr,2,4);
+                Span<string> stringsSplit = new Span<string>(arrStr, 2, 4);
 
                 //1-直接修改元素
                 {
@@ -311,7 +311,7 @@ namespace doNetLearn.DataTypes
 
                 //创建切片
                 //Span<T> 的一个强大特性是，可以使用它访问数组的部分或切片。使用切片时，不会复制数组元素，它们是从span 中直接访问的。
-                {                   
+                {
                     int[] source = { 1, 6, 23, 76, 88, 213 };
                     Span<int> span1 = new Span<int>(source, start: 1, length: 4);
                     Span<int> span2 = span1.Slice(start: 1, length: 3);
@@ -319,7 +319,7 @@ namespace doNetLearn.DataTypes
                     DisplaySpan("span1 contains the elements:", span1);
                     DisplaySpan("span2 contains the elements:", span2);
 
-                     static void DisplaySpan(string content, Span<int> span1)
+                    static void DisplaySpan(string content, Span<int> span1)
                     {
                         Console.Write(content);
 
@@ -351,7 +351,7 @@ namespace doNetLearn.DataTypes
                 //Span<T>可以用于高效地处理字符串，例如字符串拆分、搜索、替换等操作，避免不必要的字符串分配和拷贝。
                 {
                     string text = "Hello, World!";
-                    var  span = text.AsSpan();
+                    var span = text.AsSpan();
                     // 假设我们要反转字符串
                     char[] reversed = new char[span.Length];
                     for (int i = 0; i < span.Length; i++)
@@ -384,7 +384,7 @@ namespace doNetLearn.DataTypes
 
                 //spanBenchmark.TestFilterWithSpan();
 
-              
+
 
                 //限制和注意事项
                 ////‌生命周期‌：Span<T> 是值类型，它不能是非堆栈类型的字段，不能被装箱，也不能是异步方法的参数或局部变量‌。
@@ -401,8 +401,8 @@ namespace doNetLearn.DataTypes
 
 
 
-    
-      
+
+
         /// <summary>
         /// Memory<T> 连续内存区域的包装器。 Memory<T> 实例可以由 T 类型数组、String 或内存管理器提供支持。 
         /// 因为 Memory<T> 可以存储在托管堆上，所以它没有任何 Span<T> 限制。
@@ -410,16 +410,16 @@ namespace doNetLearn.DataTypes
         /// </summary>
         public static void MemoryLearn()
         {
-//            类似 Span<T>， Memory<T> 表示内存的连续区域。 但是Memory<T>，与引用结构不同Span<T>。 这意味着 Memory< T > 可以放置在托管堆上，而 Span<T> 不能。 因此，结构 Memory< T > 没有与 Span<T> 实例相同的限制。 具体而言：
+            //            类似 Span<T>， Memory<T> 表示内存的连续区域。 但是Memory<T>，与引用结构不同Span<T>。 这意味着 Memory< T > 可以放置在托管堆上，而 Span<T> 不能。 因此，结构 Memory< T > 没有与 Span<T> 实例相同的限制。 具体而言：
 
-//它可以用作类中的字段。
+            //它可以用作类中的字段。
 
-//它可以跨await``yield边界使用。
+            //它可以跨await``yield边界使用。
 
-//此外 Memory<T>，还可以用于 System.ReadOnlyMemory<T> 表示不可变内存或只读内存
+            //此外 Memory<T>，还可以用于 System.ReadOnlyMemory<T> 表示不可变内存或只读内存
         }
 
-        
+
         /// <summary>
         /// DictionaryEntry 结构  定义可设置或检索的字典键/值对。
         /// Index 结构
@@ -427,11 +427,11 @@ namespace doNetLearn.DataTypes
         /// Range   表示具有开始和结束索引的范围。
         /// </summary>
         public static void OtherLearn()
-        {           
+        {
         }
     }
 
-   public class AppointmentCls
+    public class AppointmentCls
     {
         public AppointmentCls(Guid id, string description, DateOnly date, TimeOnly startTime, TimeOnly endTime)
         {
@@ -444,11 +444,11 @@ namespace doNetLearn.DataTypes
 
         public Guid Id { get; set; }
 
-        public string  Description { get; set; }
+        public string Description { get; set; }
 
         public DateOnly Date { get; set; }
-         
+
         public TimeOnly StartTime { get; set; }
-        public TimeOnly EndTime  { get; set; }
+        public TimeOnly EndTime { get; set; }
     }
 }

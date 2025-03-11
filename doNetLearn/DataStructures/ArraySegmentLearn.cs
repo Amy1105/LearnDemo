@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     ///  ArraySegment<T> 结构  , 分隔一维数组的一部分
@@ -15,7 +15,7 @@ namespace doNetLearn.DataTypes
     {
         public static void Method()
         {
-           
+
             string[] myArr = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
 
             // 显示数组的初始内容。
@@ -51,7 +51,7 @@ namespace doNetLearn.DataTypes
         {
             if (arrSeg.Array != null)
             {
-                for (int i = arrSeg.Offset; i < (arrSeg.Offset + arrSeg.Count); i++)
+                for (int i = arrSeg.Offset; i < arrSeg.Offset + arrSeg.Count; i++)
                 {
                     Console.WriteLine("   [{0}] : {1}", i, arrSeg.Array[i]);
                 }
@@ -59,7 +59,7 @@ namespace doNetLearn.DataTypes
             Console.WriteLine();
         }
 
-        public static void PrintIndexAndValues(String[] myArr)
+        public static void PrintIndexAndValues(string[] myArr)
         {
             for (int i = 0; i < myArr.Length; i++)
             {
@@ -81,7 +81,7 @@ namespace doNetLearn.DataTypes
         /// 结果显示，使用 ArraySegment<T> 类以这种方式操作元素会更改其基础数组的值。
         /// </summary>
         /// <returns></returns>
-        public  async Task Method2()
+        public async Task Method2()
         {
             List<Task> tasks = new List<Task>();
 
@@ -93,14 +93,15 @@ namespace doNetLearn.DataTypes
 
             // 以10段为单位处理数组。
             // Math.Ceiling() 返回大于或等于指定值的最小整数值双精度浮点数。
-            for (int ctr = 1; ctr <= Math.Ceiling(((double)arr.Length) / segmentSize); ctr++)
+            for (int ctr = 1; ctr <= Math.Ceiling((double)arr.Length / segmentSize); ctr++)
             {
                 int multiplier = ctr;
                 int elements = (multiplier - 1) * 10 + segmentSize > arr.Length ?
                                 arr.Length - (multiplier - 1) * 10 : segmentSize;
                 ArraySegment<int> segment = new ArraySegment<int>(arr, (ctr - 1) * 10, elements);
-                tasks.Add(Task.Run(() => {
-                    IList<int> list = (IList<int>)segment;
+                tasks.Add(Task.Run(() =>
+                {
+                    IList<int> list = segment;
                     for (int index = 0; index < list.Count; index++)
                         list[index] = list[index] * multiplier;
                 }));
@@ -137,7 +138,7 @@ namespace doNetLearn.DataTypes
         /// </summary>
         public static void Method3()
         {
-            String[] names = { "Adam", "Bruce", "Charles", "Daniel",
+            string[] names = { "Adam", "Bruce", "Charles", "Daniel",
                          "Ebenezer", "Francis", "Gilbert",
                          "Henry", "Irving", "John", "Karl",
                          "Lucian", "Michael" };

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn
+namespace doNetLearn.ThreadDemo
 {
     public class OutExcel
     {
@@ -72,7 +72,7 @@ namespace doNetLearn
             {
                 Console.WriteLine("导出结束");
                 using (FileStream file = new FileStream(
-                    System.DateTime.Now.Ticks.ToString() + ".xls", FileMode.Create))
+                    DateTime.Now.Ticks.ToString() + ".xls", FileMode.Create))
                 {
                     _workbook.Write(file);
                 }
@@ -90,13 +90,13 @@ namespace doNetLearn
                 }
                 try
                 {
-                    if (count > 0 && (count % 1000000 == 0))
+                    if (count > 0 && count % 1000000 == 0)
                     {
                         sheetNum++;
                         count = 0;
                         sheet1 = _workbook.CreateSheet($"开始创建第{sheetNum}个工作簿");
                     }
-                    if (count > 0 && (count % 100000 == 0))
+                    if (count > 0 && count % 100000 == 0)
                     {
                         Console.WriteLine($"导入{count}条！");
                     }

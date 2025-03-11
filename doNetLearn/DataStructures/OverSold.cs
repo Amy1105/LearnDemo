@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     /// 超卖案例，分析多线程情况

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace doNetLearn.CSharpGrammer
 {
-    internal class CSharp11
+    public class CSharp11
     {
         /// <summary>
         /// 1. 原始字符串字面量 , 原始字符串字面量使得处理多行字符串更为简便，无需对特殊字符进行转义，也不用担心缩进问题。

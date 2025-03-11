@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace doNetLearn.TypeConversion
+namespace doNetLearn.CSharpGrammer
 {
     /// <summary>
     /// .NET 中的类型转换  https://learn.microsoft.com/zh-cn/dotnet/standard/base-types/type-conversion?redirectedfrom=MSDN
@@ -26,7 +26,7 @@ namespace doNetLearn.TypeConversion
     /// Convert 类，该类提供了一组方法来实现 IConvertible 接口中的方法。
     /// TypeConverter 类，该类是一个基类，可以扩展该类以支持指定的类型到任何其他类型的转换。
     /// </summary>
-    internal class TypeConversionDemo
+    internal class TypeConversion
     {
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace doNetLearn.TypeConversion
         /// </summary>
         public void Method()
         {
-            
+
             Student student = new Student(1, "tom", "高三的学生", 17);
-            SpecialStudent  specialStudent = new SpecialStudent(2, "danel", "高三的学生", 17,"special","specialComment");
-          
+            SpecialStudent specialStudent = new SpecialStudent(2, "danel", "高三的学生", 17, "special", "specialComment");
+
             //IS
             //a.检查对象类型的兼容性，并返回结果：true或者false；　　
             //b.不会抛出异常；　　
@@ -53,10 +53,10 @@ namespace doNetLearn.TypeConversion
             //c.如果结果判断为空，则强制执行类型转换将抛出NullReferenceExcep异常；　　
             //d.as必须和引用类型一起使用。
 
-            Student b = (Student)specialStudent;
+            Student b = specialStudent;
             // 如果类型转换不成功，会抛出异常　　
             // 对于上面的as操作，等效于下面的is操作：　　　　XX b = o is XX ? (XX)o: null ;　　实现的语法更加简明，且不会引发异常，在类型转换时值得推荐。
-           
+
             //综上所述，as模式较is模式执行效率上更胜一筹，但是通常来说，is用于进行类型判断，as用于类型转型
 
         }
@@ -81,7 +81,7 @@ namespace doNetLearn.TypeConversion
 
             return stu;
         }
-      
+
         public void Method3()
         {
             //3、从实现接口的类型转换为表示该接口的接口对象。 此转换不需要强制转换或转换运算符。
@@ -90,7 +90,7 @@ namespace doNetLearn.TypeConversion
 
             //4、从接口对象转换回实现该接口的原始类型。 在 C# 中，此转换需要强制转换运算符。 在 Visual Basic 中，如果 Option Strict 处于开启状态，则它需要 CType 运算符。
             CommonClass commonClass = new CommonClass();
-            CommonInterface commonInterface2= commonClass as CommonInterface;
+            CommonInterface commonInterface2 = commonClass as CommonInterface;
 
 
 
@@ -99,10 +99,10 @@ namespace doNetLearn.TypeConversion
 
         public void Method4()
         {
-            SByte sbyteValue = -120;
+            sbyte sbyteValue = -120;
             ByteWithSign value = sbyteValue;
             Console.WriteLine(value);
-            value = Byte.MaxValue;
+            value = byte.MaxValue;
             Console.WriteLine(value);
             // The example displays the following output:
             //       -120
@@ -169,7 +169,7 @@ namespace doNetLearn.TypeConversion
 
         public void Method6()
         {
-            int largeValue = Int32.MaxValue;
+            int largeValue = int.MaxValue;
             byte newValue;
 
             try
@@ -201,8 +201,8 @@ namespace doNetLearn.TypeConversion
             //    Converted the Int32 value 2147483647 to the Byte value 255.
             //    2147483647 is outside the range of the Byte data type.
         }
-   
-    
+
+
         public void Method7()
         {
             ByteWithSignE value;
@@ -265,18 +265,18 @@ namespace doNetLearn.TypeConversion
 
     public struct ByteWithSign
     {
-        private SByte signValue;
-        private Byte value;
+        private sbyte signValue;
+        private byte value;
 
-        public static implicit operator ByteWithSign(SByte value)
+        public static implicit operator ByteWithSign(sbyte value)
         {
             ByteWithSign newValue;
-            newValue.signValue = (SByte)Math.Sign(value);
+            newValue.signValue = (sbyte)Math.Sign(value);
             newValue.value = (byte)Math.Abs(value);
             return newValue;
         }
 
-        public static implicit operator ByteWithSign(Byte value)
+        public static implicit operator ByteWithSign(byte value)
         {
             ByteWithSign newValue;
             newValue.signValue = 1;
@@ -293,8 +293,8 @@ namespace doNetLearn.TypeConversion
 
     public struct ByteWithSignE
     {
-        private SByte signValue;
-        private Byte value;
+        private sbyte signValue;
+        private byte value;
 
         private const byte MaxValue = byte.MaxValue;
         private const int MinValue = -1 * byte.MaxValue;
@@ -302,20 +302,20 @@ namespace doNetLearn.TypeConversion
         public static explicit operator ByteWithSignE(int value)
         {
             // Check for overflow.
-            if (value > ByteWithSignE.MaxValue || value < ByteWithSignE.MinValue)
-                throw new OverflowException(String.Format("'{0}' is out of range of the ByteWithSignE data type.",
+            if (value > MaxValue || value < MinValue)
+                throw new OverflowException(string.Format("'{0}' is out of range of the ByteWithSignE data type.",
                                                           value));
 
             ByteWithSignE newValue;
-            newValue.signValue = (SByte)Math.Sign(value);
+            newValue.signValue = (sbyte)Math.Sign(value);
             newValue.value = (byte)Math.Abs(value);
             return newValue;
         }
 
         public static explicit operator ByteWithSignE(uint value)
         {
-            if (value > ByteWithSignE.MaxValue)
-                throw new OverflowException(String.Format("'{0}' is out of range of the ByteWithSignE data type.",
+            if (value > MaxValue)
+                throw new OverflowException(string.Format("'{0}' is out of range of the ByteWithSignE data type.",
                                                           value));
 
             ByteWithSignE newValue;
@@ -331,7 +331,7 @@ namespace doNetLearn.TypeConversion
     }
 
     public class Student
-    {      
+    {
         public Student(int id, string name, string description, int age)
         {
             Id = id;
@@ -359,8 +359,8 @@ namespace doNetLearn.TypeConversion
 
 
     public class SpecialStudent : Student
-    {      
-        public SpecialStudent(int id, string name, string description, int age,string specialType, string comment):base(id, name, description, age)
+    {
+        public SpecialStudent(int id, string name, string description, int age, string specialType, string comment) : base(id, name, description, age)
         {
             SpecialType = specialType;
             Comment = comment;
@@ -368,7 +368,7 @@ namespace doNetLearn.TypeConversion
 
         public string SpecialType { get; set; }
 
-        public string Comment {  get; set; }
+        public string Comment { get; set; }
     }
 
 
@@ -380,8 +380,8 @@ namespace doNetLearn.TypeConversion
     }
 
     public class CommonClass : CommonInterface
-    {      
-       public int Id { get =>1; set => throw new NotImplementedException(); }
+    {
+        public int Id { get => 1; set => throw new NotImplementedException(); }
 
         public string GetString()
         {

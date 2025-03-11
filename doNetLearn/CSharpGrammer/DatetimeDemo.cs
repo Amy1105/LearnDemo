@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn
+namespace doNetLearn.CSharpGrammer
 {
     /// <summary>
     /// 此代码示例演示了DateTime Kind、Now和UtcNow属性以及SpecificKind（）、ToLocalTime（）,以及ToUniversalTime（）方法
     /// </summary>
-    public class DatetimeAttribute
+    public class DatetimeDemo
     {
         public static void TimeZoneExample()
         {
@@ -43,8 +43,8 @@ namespace doNetLearn
 
             // 显示以UTC和当地时间表示的当前时刻的值和Kind属性。
             DisplayNow("UtcNow: ..........", saveUtcNow);
-           
-                      
+
+
             Console.WriteLine();
 
             // 将当前时刻的Kind属性更改为DateTimeKind。Utc并显示结果。
@@ -105,7 +105,7 @@ namespace doNetLearn
             Console.WriteLine();
         }
 
-     
+
         /// <summary>
         /// 展示值和kind属性
         /// </summary>

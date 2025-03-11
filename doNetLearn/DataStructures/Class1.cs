@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     /// Memory<T> 和 Span<T> 使用准则
@@ -53,7 +53,7 @@ namespace doNetLearn.DataTypes
         //支持所有权转让的模型。 缓冲区的所有权可以从其原始所有者（其创建者）转让给其他组件，该组件随后将负责缓冲区的生存期管理。 该所有者可以反过来将所有权转让给其他组件等。
 
 
-      static void Method()
+        static void Method()
         {
             //使用 System.Buffers.IMemoryOwner<T> 接口显式管理缓冲区的所有权
             //IMemoryOwner<T> 支持两种所有权模型。 具有 IMemoryOwner<T> 引用的组件拥有缓冲区
@@ -69,7 +69,7 @@ namespace doNetLearn.DataTypes
                 if (s is null)
                     return;
 
-                var value = Int32.Parse(s);
+                var value = int.Parse(s);
 
                 var memory = owner.Memory;
 
@@ -86,7 +86,7 @@ namespace doNetLearn.DataTypes
             }
             catch (OverflowException)
             {
-                Console.WriteLine($"You entered a number less than {Int32.MinValue:N0} or greater than {Int32.MaxValue:N0}.");
+                Console.WriteLine($"You entered a number less than {int.MinValue:N0} or greater than {int.MaxValue:N0}.");
             }
             finally
             {
@@ -94,7 +94,7 @@ namespace doNetLearn.DataTypes
             }
         }
 
-      public  static void WriteInt32ToBuffer(int value, Memory<char> buffer)
+        public static void WriteInt32ToBuffer(int value, Memory<char> buffer)
         {
             var strValue = value.ToString();
 
@@ -122,7 +122,7 @@ namespace doNetLearn.DataTypes
                     if (s is null)
                         return;
 
-                    var value = Int32.Parse(s);
+                    var value = int.Parse(s);
 
                     var memory = owner.Memory;
                     WriteInt32ToBuffer(value, memory);
@@ -134,7 +134,7 @@ namespace doNetLearn.DataTypes
                 }
                 catch (OverflowException)
                 {
-                    Console.WriteLine($"You entered a number less than {Int32.MinValue:N0} or greater than {Int32.MaxValue:N0}.");
+                    Console.WriteLine($"You entered a number less than {int.MinValue:N0} or greater than {int.MaxValue:N0}.");
                 }
             }
         }
@@ -160,13 +160,13 @@ namespace doNetLearn.DataTypes
             if (s is null)
                 return;
 
-            var value = Int32.Parse(s);
+            var value = int.Parse(s);
 
             WriteInt32ToBuffer(value, memory);
             DisplayBufferToConsole(memory);
         }
 
-       
+
     }
 
     //规则一：对于同步 API，如有可能，请使用 Span<T>（而不是 Memory<T>）作为参数

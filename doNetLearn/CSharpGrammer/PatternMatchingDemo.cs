@@ -10,7 +10,7 @@ namespace doNetLearn.CSharpGrammer
     /// 模式匹配
     ///  以下 C# 表达式和语句支持模式匹配：is表达式、switch 语句、switch 表达式    
     /// </summary>
-    internal class modeDemo
+    public class PatternMatchingDemo
     {
         #region 声明模式 ：用于检查表达式的运行时类型，如果匹配成功，则将表达式结果分配给声明的变量。类型模式 用于检查表达式的运行时类型
 

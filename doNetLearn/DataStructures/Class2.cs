@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     /// 引用类型中的集合类型
@@ -93,7 +93,7 @@ namespace doNetLearn.DataTypes
 
             Console.ReadLine();
 
-           // 经过对两者的比较，ConcurrentDictionary读取性能更好，Dictionary写入性能更好
+            // 经过对两者的比较，ConcurrentDictionary读取性能更好，Dictionary写入性能更好
         }
     }
 }

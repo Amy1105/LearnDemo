@@ -1,13 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace doNetLearn.DataTypes
+namespace doNetLearn.DataStructures
 {
     /// <summary>
     /// span 结构学习
@@ -56,33 +50,33 @@ namespace doNetLearn.DataTypes
 
 
         //从 HTML 代码中提取文本内容              
-//        const string HtmlCode = @"<html>
-//<head>
-//    <meta charset=""utf-8"">
-//    <title>Test Page</title>
-//</head>
-//<body>
-//    <header>...</header>
-//    <main>
-//        <article>
-//            <h3>Country list</h3>
-//            <ul>
-//                <li><span>Australia</span></li>
-//                <li><span>Brazil</span></li>
-//                <li><span>Canada</span></li>
-//                <li><span>China</span></li>
-//                <li><span>France</span></li>
-//                <li><span>Germany</span></li>
-//                <li><span>Japan</span></li>
-//                <li><span>South Korea</span></li>
-//                <li><span>United States</span></li>
-//                <li><span>United Kingdom</span></li>
-//            </ul>
-//        </article>
-//    </main>
-//    <footer>...</footer>
-//</body>
-//</html>";
+        //        const string HtmlCode = @"<html>
+        //<head>
+        //    <meta charset=""utf-8"">
+        //    <title>Test Page</title>
+        //</head>
+        //<body>
+        //    <header>...</header>
+        //    <main>
+        //        <article>
+        //            <h3>Country list</h3>
+        //            <ul>
+        //                <li><span>Australia</span></li>
+        //                <li><span>Brazil</span></li>
+        //                <li><span>Canada</span></li>
+        //                <li><span>China</span></li>
+        //                <li><span>France</span></li>
+        //                <li><span>Germany</span></li>
+        //                <li><span>Japan</span></li>
+        //                <li><span>South Korea</span></li>
+        //                <li><span>United States</span></li>
+        //                <li><span>United Kingdom</span></li>
+        //            </ul>
+        //        </article>
+        //    </main>
+        //    <footer>...</footer>
+        //</body>
+        //</html>";
 
         //[Benchmark]
         //public string[] TestFilterWithRegularExpression()
@@ -148,7 +142,7 @@ namespace doNetLearn.DataTypes
         [Benchmark]
         public void ReserveMethod()
         {
-            string text = "Hello, World!";              
+            string text = "Hello, World!";
             Console.WriteLine(text.Reverse()); // 输出 "!dlroW ,olleH"
         }
     }
