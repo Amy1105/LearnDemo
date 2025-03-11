@@ -1,6 +1,0 @@
-@WebApiOnWindows_HostAddress = http://localhost:5244
-
-GET {{WebApiOnWindows_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

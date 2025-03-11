@@ -7,9 +7,6 @@ namespace ConsoleApp1
 {
     public class mytimezon
     {
-
-
-
         public const string China = "China";
         public const string Chinses = "zh-CN";
         public const string USA = "USA";
