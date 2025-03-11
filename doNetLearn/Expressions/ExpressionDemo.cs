@@ -21,8 +21,8 @@ namespace doNetLearn.Expressions
             ////类的完全限定名称
             string className = "MyClass";
 
-            ////获取类型
-            Type? type = Type.GetType(className);  //根据类的完全限定名称获取类型
+            ////根据类的完全限定名称获取类型
+            Type? type = Type.GetType(className);  
             if (type == null)
             {
                 Console.WriteLine("Type not found.");
@@ -35,7 +35,6 @@ namespace doNetLearn.Expressions
             ////调用方法
             var methodInfo = type.GetMethod("Print");  //调用实例的方法
             methodInfo?.Invoke(instance, null);
-
 
             //2.动态获取对象的属性或字段值
             var person = new Person { Name = "Alice", Age = 30 };
@@ -91,9 +90,15 @@ namespace doNetLearn.Expressions
             //调用方法并传入参数
             return methodInfo.Invoke(obj, parameters);
         }
-
      
     }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+
 
     public class Calculator
     {
