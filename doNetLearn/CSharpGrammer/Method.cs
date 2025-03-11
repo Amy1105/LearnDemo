@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace doNetLearn.CSharpGrammer
 {
-    public class Method
+    public class CSharpGrammerMethod
     {
-        public void Execaute()
+        public void Execute()
         {
             //
             ConvertsMethod m = new ConvertsMethod();
@@ -16,6 +16,10 @@ namespace doNetLearn.CSharpGrammer
 
             //类型转换
             TypeConversion typeConversion = new TypeConversion();
+           typeConversion.Method();
+           typeConversion.Method2();
+           typeConversion.Method3();
+            typeConversion.Method4();
 
             DatetimeDemo datetimeDemo = new DatetimeDemo();
 

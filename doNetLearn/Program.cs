@@ -1,50 +1,15 @@
 ﻿
 
 
-{
-    //ValueTypeDemo.SpanLearn();
-
-    //ArraySegmentLearn.Method();
-
-    //ArraySegmentLearn arraySegmentLearn = new ArraySegmentLearn();
-    //await arraySegmentLearn.Method2();
-
-    //ArraySegmentLearn.Method3();
-
-    //SpanBenchmark spanBenchmark = new SpanBenchmark();
-    //spanBenchmark.ReserveUseSpan();
-    //spanBenchmark.ReserveMethod();
-
-   // var summary = BenchmarkRunner.Run<SpanBenchmark>();
-
-    //BenchmarkRunner.Run<VerifyDecimalPlaces>();
-}
-
-//{
-//    TypeConversionDemo typeConversionDemo = new TypeConversionDemo();
-
-//    typeConversionDemo.Method();
-//    typeConversionDemo.Method2();
-//    typeConversionDemo.Method3();
-//    typeConversionDemo.Method4();
-//}
+using doNetLearn.Expressions;
 
 
 
+ExpressionsMethod expressionsMethod =new ExpressionsMethod();
+expressionsMethod.Execute();
 
 
-    {
 
-        //DataTypeDemo dataTypeDemo = new DataTypeDemo();
-        //dataTypeDemo.MethodDictionary();
-
-    }
-
-
-    {
-        //CopyExample copyExample = new CopyExample();
-        //copyExample.Method();
-    }
 
     //源代码生成器
     //一、源代码生成器项目得创建和调试
@@ -92,18 +57,3 @@
     }
 
 
-    //分模块测试
-
-
-    //每个模块里面有自己的测试方式
-
-
-
-}
-
-
-
-{
-
-   // ExpressionDemo.Test();
-}

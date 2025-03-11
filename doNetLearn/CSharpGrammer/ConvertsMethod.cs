@@ -26,7 +26,7 @@ namespace doNetLearn.CSharpGrammer
             Double d1 = -2.345;
             int i = (int)Convert.ChangeType(d1, typeof(int));
 
-            Console.WriteLine("The double value {0} when converted to an int becomes {1}", d, i);
+            Console.WriteLine("The double value {0} when converted to an int becomes {1}", d1, i);
 
             string s = "12/12/98";
             DateTime dt = (DateTime)Convert.ChangeType(s, typeof(DateTime));

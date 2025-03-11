@@ -1,13 +1,4 @@
-﻿using BenchmarkDotNet.Running;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace doNetLearn.CSharpGrammer
 {
@@ -28,16 +19,13 @@ namespace doNetLearn.CSharpGrammer
     /// </summary>
     internal class TypeConversion
     {
-
         /// <summary>
         /// 1、从派生类转换为基类。 例如，这意味着可将任何类或结构的实例转换为 Object 实例。 此转换不需要强制转换或转换运算符
         /// </summary>
         public void Method()
         {
-
             Student student = new Student(1, "tom", "高三的学生", 17);
             SpecialStudent specialStudent = new SpecialStudent(2, "danel", "高三的学生", 17, "special", "specialComment");
-
             //IS
             //a.检查对象类型的兼容性，并返回结果：true或者false；　　
             //b.不会抛出异常；　　
@@ -62,7 +50,7 @@ namespace doNetLearn.CSharpGrammer
         }
 
         /// <summary>
-        /// 2、从基类转换回原始的派生类。 在 C# 中，此转换需要强制转换运算符。 在 Visual Basic 中，如果 Option Strict 处于开启状态，则它需要 CType 运算符。
+        /// 2、从基类转换回原始的派生类。 在C#中,此转换需要强制转换运算符。在 Visual Basic 中，如果 Option Strict 处于开启状态，则它需要 CType 运算符。
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -81,19 +69,14 @@ namespace doNetLearn.CSharpGrammer
 
             return stu;
         }
-
         public void Method3()
         {
             //3、从实现接口的类型转换为表示该接口的接口对象。 此转换不需要强制转换或转换运算符。
             CommonInterface commonInterface = new CommonClass();
 
-
             //4、从接口对象转换回实现该接口的原始类型。 在 C# 中，此转换需要强制转换运算符。 在 Visual Basic 中，如果 Option Strict 处于开启状态，则它需要 CType 运算符。
             CommonClass commonClass = new CommonClass();
             CommonInterface commonInterface2 = commonClass as CommonInterface;
-
-
-
         }
 
 
@@ -118,9 +101,7 @@ namespace doNetLearn.CSharpGrammer
             long number1 = int.MaxValue + 20L;
             uint number2 = int.MaxValue - 1000;
             ulong number3 = int.MaxValue;
-
             int intNumber;
-
             try
             {
                 intNumber = checked((int)number1);
@@ -136,7 +117,6 @@ namespace doNetLearn.CSharpGrammer
                     Console.WriteLine("Conversion failed: {0} is less than {1}.",
                                       number1, int.MinValue);
             }
-
             try
             {
                 intNumber = checked((int)number2);
@@ -148,7 +128,6 @@ namespace doNetLearn.CSharpGrammer
                 Console.WriteLine("Conversion failed: {0} exceeds {1}.",
                                   number2, int.MaxValue);
             }
-
             try
             {
                 intNumber = checked((int)number3);
@@ -171,7 +150,6 @@ namespace doNetLearn.CSharpGrammer
         {
             int largeValue = int.MaxValue;
             byte newValue;
-
             try
             {
                 newValue = unchecked((byte)largeValue);
@@ -201,7 +179,6 @@ namespace doNetLearn.CSharpGrammer
             //    Converted the Int32 value 2147483647 to the Byte value 255.
             //    2147483647 is outside the range of the Byte data type.
         }
-
 
         public void Method7()
         {
@@ -339,25 +316,20 @@ namespace doNetLearn.CSharpGrammer
             Description = description;
             Age = age;
         }
-
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Age { get; set; } = 0;
-
         /// <summary>
         /// 生日
         /// </summary>
         public DateOnly Birth { get; set; }
-
         /// <summary>
         /// 考试开始时间
         /// </summary>
         public TimeOnly Time { get; set; }
     }
-
-
     public class SpecialStudent : Student
     {
         public SpecialStudent(int id, string name, string description, int age, string specialType, string comment) : base(id, name, description, age)
@@ -365,9 +337,7 @@ namespace doNetLearn.CSharpGrammer
             SpecialType = specialType;
             Comment = comment;
         }
-
         public string SpecialType { get; set; }
-
         public string Comment { get; set; }
     }
 
