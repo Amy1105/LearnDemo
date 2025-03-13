@@ -4,14 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SearchString;
 
-//// 指定要搜索的目录
-//string directoryPath = @"C:\Your\Source\Code\Directory";
-
-//// 指定要查找的字符串
-//string searchString = "YourSearchString";
-
-//// 递归查找目录中的所有.cs文件
-//Class1.SearchFiles(directoryPath, searchString);
 
 
 
@@ -58,12 +50,11 @@ using (var scope = app.Services.CreateScope())
 {
 
     ////搜索源码中所有需要翻译的text，保存成excel
-    //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
-    //await searchTextExecute.SearchText();
+    SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
+    await searchTextExecute.SearchText();
 
 
     //读取excel的key，多线程查询
-
     myDBContext myDBContext = scope.ServiceProvider.GetService<myDBContext>();
     var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
 

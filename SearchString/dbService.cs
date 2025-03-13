@@ -1,17 +1,17 @@
-﻿using Microsoft.Data.SqlClient;
-using OfficeOpenXml;
-using System;
+﻿using OfficeOpenXml;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VOL.Entity.DomainModels;
 
 namespace SearchString
 {
     public class dbService
     {
+        /// <summary>
+        /// 1.多线程读取大excel，分块去读，放在线程安全的ConcurrentBag类型中
+        /// 2. ExcelPackage保存   如果数据量超大，怎么顺利保存到excel中  1.数据分块，2.多线程写入，3.NPOI支持流式写入
+        /// </summary>
+        /// <param name="dbList"></param>
+        /// <returns></returns>
         public async Task ExcelAnlysis(List<Sys_Text_Main> dbList)
         {
             // 设置EPPlus的LicenseContext
