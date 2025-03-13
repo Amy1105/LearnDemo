@@ -1,0 +1,29 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "DbConnectionString": "Data Source= 10.201.16.11 ;Initial Catalog=tvc_test;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;",
+
+  "ConnectionStrings": {
+    "DBType": "MsSql", //MySql/MsSql/PgSql  //数据库类型，如果使用的是sqlserver此处应设置为MsSql
+    //法国正式库
+    "DbConnectionString": "Data Source= 10.201.0.13 ;Initial Catalog=tvc_prd_france;Persist Security Info=True;User ID=tvc_prd;Password=GhB#%wfgj268;Connect Timeout=500;",
+    //法国测试库
+
+    //日本测试库
+    //"DbConnectionString": "Data Source= 10.201.16.11 ;Initial Catalog=rvc_jp_test;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;",
+
+    //法国开发库
+    //"DbConnectionString": "Data Source= 10.201.16.11 ;Initial Catalog=rvc_us_test;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;",
+
+    //英国开发库
+    //"DbConnectionString": "Data Source= 10.210.87.126 ;Initial Catalog=rvc_uk_test;Persist Security Info=True;User ID=tvc_test;Password=Qwer12343!@;Connect Timeout=500;",
+    //美国开发库
+    //"DbConnectionString": "Data Source= 10.210.87.126 ;Initial Catalog=rvc_us_test;Persist Security Info=True;User ID=tvc_test;Password=Qwer12343!@;Connect Timeout=500;",
+  }
+}
