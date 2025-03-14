@@ -21,7 +21,7 @@ namespace SearchString
             Stopwatch stopwatch = Stopwatch.StartNew();
             string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
 
-            //用于存储去重后的结果
+            //用于存储结果，最后去重
             ConcurrentBag<(string file, int lineNumber, string text)> results = new ConcurrentBag<(string, int, string)>();
 
             ////获取目录中的所有.cs文件
@@ -211,11 +211,12 @@ namespace SearchString
             {
                 string Pattern = @"(?:LangManager\.GetText|ErrorAutoTranslate|OKAutoTranslate)\(\""([^\""]+)\""(?:,\s*([^)]+))?\)";
                 string pattern2 = @"\""([^\""]+)\""\.GetLangText\((?:([^)]+))?\)";
-                //string pattern3 = @"\""([^\""]+)\""\.GetLangText\((?:([^)]+))?\)";
+                string pattern3 = @"\.Cells\[\d+,\s*\d+\]\.Value\s*=\s*""([^""]+)"";";
                 // 使用正则表达式匹配所有项
 
                 GetMatch(input, Pattern, ref values, "LangManager");
                 GetMatch(input, pattern2, ref values);
+                GetMatchExcelHeader(input, pattern3, ref values);
             }
             else if(filetype.Contains(".vue") || filetype.Contains(".js"))
             {
@@ -237,6 +238,46 @@ namespace SearchString
                     string parameter = match.Groups[1].Value;
                     values.Add(parameter);
                     //Console.WriteLine("提取的参数: " + parameter);
+                }
+            }
+        }
+        public static void GetMatchExcelHeader(string input, string pattern, ref List<string> values)
+        {
+            MatchCollection matches = Regex.Matches(input, pattern, RegexOptions.IgnorePatternWhitespace);
+            foreach (Match match in matches)
+            {
+                if (match.Success)
+                {
+                    // 提取参数部分
+                    string parameter = match.Groups[1].Value;
+                    values.Add(parameter);
+                    //Console.WriteLine("提取的参数: " + parameter);
+                }
+            }
+        }
+
+
+        public static void GetMatch11()
+        {
+            // 输入的代码
+            string[] lines = {
+            ".Cells[1, 1].Value = \"设备编号\";",
+            ".Cells[1, 2].Value = \"设备号\";",
+            ".Cells[1, 3].Value = \"设编号\";"
+        };
+
+            // 正则表达式
+            string pattern = @"\.Cells\[\d+,\s*\d+\]\.Value\s*=\s*""([^""]+)"";";
+
+            // 遍历每一行
+            foreach (var line in lines)
+            {
+                Match match = Regex.Match(line, pattern);
+                if (match.Success)
+                {
+                    // 提取捕获组中的内容
+                    string value = match.Groups[1].Value;
+                    Console.WriteLine("提取的参数: " + value);
                 }
             }
         }

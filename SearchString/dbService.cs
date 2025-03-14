@@ -9,6 +9,7 @@ namespace SearchString
         /// <summary>
         /// 1.多线程读取大excel，分块去读，放在线程安全的ConcurrentBag类型中
         /// 2. ExcelPackage保存   如果数据量超大，怎么顺利保存到excel中  1.数据分块，2.多线程写入，3.NPOI支持流式写入
+        /// 3.大型报表可以后台线程执行
         /// </summary>
         /// <param name="dbList"></param>
         /// <returns></returns>
@@ -17,7 +18,7 @@ namespace SearchString
             // 设置EPPlus的LicenseContext
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            string filePath = "./SearchUniqueResults2025-03-13-10-07-54.xlsx";
+            string filePath = "./SearchUniqueResults2025-03-14-11-27-46.xlsx";
             string outputFilePath = "./Languages.xlsx";
 
             var data = new ConcurrentBag<VModel>(); // 线程安全的集合，用于存储读取的数据

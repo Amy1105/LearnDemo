@@ -41,7 +41,7 @@ var s = builder.Configuration.GetConnectionString("DbConnectionString");
 
 
 builder.Services.AddDbContext<myDBContext>(options =>
-  options.UseSqlServer("Data Source= 10.201.16.11 ;Initial Catalog=tvc_test;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;TrustServerCertificate=true"));
+  options.UseSqlServer("Data Source=10.201.0.13 ;Initial Catalog=tvc_prd_france;Persist Security Info=True;User ID=tvc_prd;Password=GhB#%wfgj268;Connect Timeout=500;TrustServerCertificate=true"));
 builder.Services.AddTransient<dbService>();
 builder.Services.AddTransient<SearchTextExecute>();
 
@@ -50,8 +50,11 @@ using (var scope = app.Services.CreateScope())
 {
 
     ////搜索源码中所有需要翻译的text，保存成excel
-    SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
-    await searchTextExecute.SearchText();
+    //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
+
+    //SearchTextExecute.GetMatch11();
+
+    // await searchTextExecute.SearchText();
 
 
     //读取excel的key，多线程查询
