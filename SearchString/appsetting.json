@@ -7,12 +7,10 @@
     "**/obj",
     "**/platforms"
   ],
-  "DbConnectionString": "Data Source= 10.201.16.11 ;Initial Catalog=tvc_test;Persist Security Info=True;User ID=tvc_test;Password=Vgh%@jhAd930;Connect Timeout=500;",
-
-  "ConnectionStrings": {
+  "ConnectionStringsOption": {
     "DBType": "MsSql", //MySql/MsSql/PgSql  //数据库类型，如果使用的是sqlserver此处应设置为MsSql
     //法国正式库
-    "DbConnectionString": "Data Source= 10.201.0.13 ;Initial Catalog=tvc_prd_france;Persist Security Info=True;User ID=tvc_prd;Password=GhB#%wfgj268;Connect Timeout=500;",
+    "DbConnectionString": "Data Source= 10.201.0.13 ;Initial Catalog=tvc_prd_france;Persist Security Info=True;User ID=tvc_prd;Password=GhB#%wfgj268;Connect Timeout=500;"
     //法国测试库
 
     //日本测试库
