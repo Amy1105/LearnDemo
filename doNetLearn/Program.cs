@@ -13,17 +13,25 @@ using System.IO;
 //expressionsMethod.Execute();
 
 
-
 //DesignPatternsMethod designPatternsMethod = new DesignPatternsMethod();
 //designPatternsMethod.execute();
 
 
-FileSystemWatcherDemo.Method();
+//FileSystemWatcherDemo.Method();
 
-PhysicalFileProvider physicalFileProvider = new PhysicalFileProvider("");
 
-Data = JsonConfigurationFileParser.Parse(physicalFileProvider.GetFileInfo());
+var stream= new FileStream(
+                           @"D:\appsetting.json",
+                           FileMode.Open,
+                           FileAccess.Read,
+                           FileShare.ReadWrite,
+                           bufferSize: 1,
+                           FileOptions.SequentialScan);
 
+
+var jsonData   = JsonConfigurationFileParser.Parse(stream);
+
+Console.WriteLine("");
 
 //源代码生成器
 //一、源代码生成器项目得创建和调试
@@ -59,15 +67,15 @@ Data = JsonConfigurationFileParser.Parse(physicalFileProvider.GetFileInfo());
 //7在想这么自动化生产之前，当然要自己手动试一遍
 {
 
-       // Syntax Visualizer
+    // Syntax Visualizer
 
 
 
-        //源生成器
+    //源生成器
 
-        //未保存的时候
+    //未保存的时候
 
-        //增量生成器
-    }
+    //增量生成器
+}
 
 

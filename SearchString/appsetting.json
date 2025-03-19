@@ -7,6 +7,7 @@
     "**/obj",
     "**/platforms"
   ],
+  "test": "terst",
   "ConnectionStringsOption": {
     "DBType": "MsSql", //MySql/MsSql/PgSql  //数据库类型，如果使用的是sqlserver此处应设置为MsSql
     //法国正式库

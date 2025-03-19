@@ -29,21 +29,18 @@ builder.Configuration.AddEnvironmentVariables(prefix: "PREFIX_");
 builder.Environment.ContentRootPath = Directory.GetCurrentDirectory();
 builder.Configuration.AddJsonFile("appsetting.json", optional: true,reloadOnChange:true);
 
-//builder.Services.AddRazorPages();
+//appsetting.json 取不到值的原因，appsetting.json 属性需要设置成始终复制
 
 
-ConnectionStringsOption options = new();
+
+ConnectionStringsOption connectionStringsOption = new();
 builder.Configuration.GetSection(nameof(ConnectionStringsOption))
-    .Bind(options);
+    .Bind(connectionStringsOption);
 
 
-var str = builder.Configuration.GetSection("ConnectionStrings")["DbConnectionString"];
-var s = builder.Configuration.GetConnectionString("DbConnectionString");
-
-// to do ...  搞清楚Configuration源码实现
 
 builder.Services.AddDbContext<myDBContext>(options =>
-  options.UseSqlServer("Data Source=10.201.0.13 ;Initial Catalog=tvc_prd_france;Persist Security Info=True;User ID=tvc_prd;Password=GhB#%wfgj268;Connect Timeout=500;TrustServerCertificate=true"));
+  options.UseSqlServer(connectionStringsOption.DbConnectionString));
 builder.Services.AddTransient<dbService>();
 builder.Services.AddTransient<SearchTextExecute>();
 
@@ -54,14 +51,12 @@ builder.Services.AddTransient<BlockingCollectionDemo>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-
     //搜索源码中所有需要翻译的text，保存成excel
     SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
 
     //SearchTextExecute.GetMatch11();
 
     await searchTextExecute.SearchText();
-
 
     //读取excel的key，多线程查询
     myDBContext myDBContext = scope.ServiceProvider.GetService<myDBContext>();
