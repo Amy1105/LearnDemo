@@ -89,8 +89,11 @@ namespace SearchString
             Console.WriteLine("task run spend:" + stopwatch.ElapsedMilliseconds);
             stopwatch.Restart();
 
-            string fileName = @".\SearchResults" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
-            string fileName2 = @".\SearchUniqueResults" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
+            string fileName = @".\SearchResults.xlsx";
+            string fileName2 = @".\SearchUniqueResults.xlsx";
+
+            //string fileName = @".\SearchResults" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
+            //string fileName2 = @".\SearchUniqueResults" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
            
             SearchTextExecute.SaveResultsToExcel(results, fileName);
             stopwatch.Stop();

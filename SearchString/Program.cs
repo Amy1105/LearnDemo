@@ -58,18 +58,22 @@ using (var scope = app.Services.CreateScope())
 
     await searchTextExecute.SearchText();
 
-    //读取excel的key，多线程查询
-    myDBContext myDBContext = scope.ServiceProvider.GetService<myDBContext>();
-    var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
+    ////读取excel的key，多线程查询
+    //myDBContext myDBContext = scope.ServiceProvider.GetService<myDBContext>();
+    //var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
 
-    var dbService = scope.ServiceProvider.GetService<dbService>();
-    await dbService.ExcelAnlysis(dbLists);
+    //var dbService = scope.ServiceProvider.GetService<dbService>();
+    //await dbService.ExcelAnlysis(dbLists);
 
     //Console.WriteLine(@".\SearchResults" + DateTime.UtcNow.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx");
     //Class1.PatternVue();
 
     //  TestBlockingCollection.Method();
     // await BlockingCollectionDemo.Method();
+
+
+    //手动比较两个excel文件
+
 
     Console.WriteLine("Done.");
 }

@@ -329,9 +329,9 @@ namespace SearchString.ConcurrentFiles
         }
     }
 
-    class ConsumerClass
+    public class ConsumerClass
     {
-        static void Main()
+       public static void Method()
         {
             var nums = Enumerable.Range(0, 10000).ToArray();
             OrderableListPartitioner<int> partitioner = new OrderableListPartitioner<int>(nums);
