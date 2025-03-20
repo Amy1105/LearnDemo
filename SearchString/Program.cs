@@ -24,9 +24,9 @@ using SearchString.Models;
 
 // 指定要搜索的目录
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-builder.Configuration.AddCommandLine(args);
-builder.Configuration.AddEnvironmentVariables(prefix: "PREFIX_");
-builder.Environment.ContentRootPath = Directory.GetCurrentDirectory();
+//builder.Configuration.AddCommandLine(args);
+//builder.Configuration.AddEnvironmentVariables(prefix: "PREFIX_");
+//builder.Environment.ContentRootPath = Directory.GetCurrentDirectory();
 builder.Configuration.AddJsonFile("appsetting.json", optional: true,reloadOnChange:true);
 
 //appsetting.json 取不到值的原因，appsetting.json 属性需要设置成始终复制
