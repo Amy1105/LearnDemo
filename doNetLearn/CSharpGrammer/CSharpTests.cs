@@ -9,6 +9,17 @@ namespace doNetLearn.CSharpGrammer
 {
     internal class CSharpTests
     {
+
+        public void Method9()
+        {
+
+        }
+
+        public void Method10()
+        {
+
+        }
+
         public void Method11()
         {
             //1.原始字符串字面量
@@ -60,5 +71,37 @@ namespace doNetLearn.CSharpGrammer
 
             //警告波 7
         }
+
+
+        public void Method12()
+        {
+            //主构造函数
+            //集合表达式
+            //ref readonly 个参数
+            //默认 lambda 参数
+            //任何类型的别名
+            //内联数组
+            //Experimental 属性
+            //拦截器
+        }
+
+        /// <summary>
+        /// .net 9    c#13
+        /// </summary>
+        public void Method13()
+        {
+            //params 集合
+            //新锁定对象
+            //新的转义序列
+            //方法组自然类型
+            //隐式索引访问
+            //迭代器和 async 方法中的 ref和 unsafe
+            //allows ref struct
+            //ref struct 接口
+            //更多部分成员
+            //重载解析优先级
+            //field 关键字
+        }
+
     }
 }
