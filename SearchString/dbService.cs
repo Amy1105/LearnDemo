@@ -66,7 +66,7 @@ namespace SearchString
                             {
                                var cntext= item.Sys_Texts.Where(x => x.Lang == "zh-CN").Select(x => x.Value).FirstOrDefault();
                               var enText=  item.Sys_Texts.Where(x => x.Lang == "en-US").Select(x => x.Value).FirstOrDefault();
-                              var jpText=  item.Sys_Texts.Where(x => x.Lang == "日本語").Select(x => x.Value).FirstOrDefault();
+                              var jpText=  item.Sys_Texts.Where(x => x.Lang == "ja-JP").Select(x => x.Value).FirstOrDefault();
                               var frText=  item.Sys_Texts.Where(x => x.Lang == "fr-FR").Select(x => x.Value).FirstOrDefault();
                                 chunkData.Add(new VModel(item.Key, cntext, enText, jpText, frText));
                             }                            
