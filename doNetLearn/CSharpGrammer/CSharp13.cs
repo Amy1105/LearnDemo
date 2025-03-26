@@ -74,15 +74,15 @@ ReadOnlySpan<T>的关键特性：
         //待基准测试 to do...
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ts"></param>
-        public void Method3(params ReadOnlySpan<T> ts)
-        {
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="ts"></param>
+        //public void Method3(params ReadOnlySpan<T> ts)
+        //{
 
-            //现在可以将 params 用于任何已识别的集合类型，包括 System.Span < T >、System.ReadOnlySpan < T >，以及那些实现 System.Collections.Generic.IEnumerable<T> 并具有 Add 方法的类型。 除了具体类型外，还可以使用接口 System.Collections.Generic.IEnumerable < T >、System.Collections.Generic.IReadOnlyCollection < T >、System.Collections.Generic.IReadOnlyList < T >、System.Collections.Generic.ICollection<T> 和 System.Collections.Generic.IList < T >。
-        }
+        //    //现在可以将 params 用于任何已识别的集合类型，包括 System.Span < T >、System.ReadOnlySpan < T >，以及那些实现 System.Collections.Generic.IEnumerable<T> 并具有 Add 方法的类型。 除了具体类型外，还可以使用接口 System.Collections.Generic.IEnumerable < T >、System.Collections.Generic.IReadOnlyCollection < T >、System.Collections.Generic.IReadOnlyList < T >、System.Collections.Generic.ICollection<T> 和 System.Collections.Generic.IList < T >。
+        //}
     }
 
     public class City
