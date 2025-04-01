@@ -374,12 +374,10 @@ namespace doNetLearn.DataStructures
 
                 //spanBenchmark.TestFilterWithSpan();
 
-
-
                 //限制和注意事项
                 ////‌生命周期‌：Span<T> 是值类型，它不能是非堆栈类型的字段，不能被装箱，也不能是异步方法的参数或局部变量‌。
                 ////‌只读版本‌：ReadOnlySpan<T> 是 Span<T> 的只读版本，通常用于字符串的切片操作，因为字符串是不可变的‌。
-
+           
             }
         }
 
