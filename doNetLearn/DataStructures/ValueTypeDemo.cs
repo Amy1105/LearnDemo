@@ -243,8 +243,6 @@ namespace doNetLearn.DataStructures
         }
 
 
-
-
         /// <summary>
         /// Span<T> 结构,是 C# 7.2 中引入的一种结构体，用于表示连续的内存区域，提供了一种高效且安全的方式来读取和写入内存。
         /// 它可以直接操作数组、堆栈和堆等内存区域，避免不必要的内存分配和复制，从而提高代码性能和效率‌。
@@ -259,7 +257,6 @@ namespace doNetLearn.DataStructures
             ////‌数组操作‌：可以直接访问和修改数组元素，而不需要复制数据。
             //‌//性能优化‌：在需要高性能处理大量数据时，使用Span<T> 可以减少内存拷贝，提高效率。
             {
-
                 //创建和使用‌：
                 string[] arrStr = new string[] { "apple", "banana", "pear", "pineapple", "watermelon", "strawberry" };
 
@@ -306,7 +303,6 @@ namespace doNetLearn.DataStructures
                         }
                         return max;
                     }
-
                 }
 
                 //创建切片
@@ -322,20 +318,14 @@ namespace doNetLearn.DataStructures
                     static void DisplaySpan(string content, Span<int> span1)
                     {
                         Console.Write(content);
-
                         foreach (var item in span1)
                         {
                             Console.Write(item + ",");
                         }
-
                         Console.WriteLine();
                     }
-
                 }
-
-
                 {
-
                     //使用Span改变值
                     //在文章开头，介绍了如何使用 Span<T> 的索引器，直接更改由 span 直接引用的数组元素，实际上它还有其他改变值的方法。
 
@@ -390,18 +380,8 @@ namespace doNetLearn.DataStructures
                 ////‌生命周期‌：Span<T> 是值类型，它不能是非堆栈类型的字段，不能被装箱，也不能是异步方法的参数或局部变量‌。
                 ////‌只读版本‌：ReadOnlySpan<T> 是 Span<T> 的只读版本，通常用于字符串的切片操作，因为字符串是不可变的‌。
 
-
-                {
-
-                }
             }
-
-
         }
-
-
-
-
 
         /// <summary>
         /// Memory<T> 连续内存区域的包装器。 Memory<T> 实例可以由 T 类型数组、String 或内存管理器提供支持。 
@@ -410,7 +390,7 @@ namespace doNetLearn.DataStructures
         /// </summary>
         public static void MemoryLearn()
         {
-            //            类似 Span<T>， Memory<T> 表示内存的连续区域。 但是Memory<T>，与引用结构不同Span<T>。 这意味着 Memory< T > 可以放置在托管堆上，而 Span<T> 不能。 因此，结构 Memory< T > 没有与 Span<T> 实例相同的限制。 具体而言：
+            //类似 Span<T>， Memory<T> 表示内存的连续区域。 但是Memory<T>，与引用结构不同Span<T>。 这意味着 Memory< T > 可以放置在托管堆上，而 Span<T> 不能。 因此，结构 Memory< T > 没有与 Span<T> 实例相同的限制。 具体而言：
 
             //它可以用作类中的字段。
 
