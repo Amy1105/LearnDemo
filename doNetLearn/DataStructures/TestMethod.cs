@@ -2,6 +2,7 @@
 using NPOI.Util;
 using System;
 using System.Collections;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -511,6 +512,77 @@ namespace doNetLearn.DataStructures
             //    ProcessBatch(batch);
             //}
 
+
+
+        }
+
+
+
+        /// <summary>
+        /// FrozenSet<T> 是.NET 8 引入的一个新类型，属于 System.Collections.Frozen 命名空间，
+        /// 专为高性能、不可变（immutable）集合场景设计。它适用于 初始化后不再修改 的集合，
+        /// 并提供比 ImmutableHashSet<T> 更快的查找性能（O(1) 时间复杂度），适合在 多线程环境 或 高频读取 场景下使用
+        /// 
+        ///  适用场景
+        ///  1.配置项或常量集合：例如国家代码、系统支持的货币类型等初始化后不变的数据。
+        ///  2.高频查询的只读数据：如缓存键、路由表等需要快速查找的场景。
+        ///  3.多线程安全：由于不可变，无需加锁即可跨线程共享。
+        /// 
+        /// 注意事项：
+        /// 1.初始化成本高：创建 FrozenSet 的时间比普通集合长，适合长期使用的集合，避免频繁重建。
+        /// 2.不可修改：调用 Add()/ Remove() 会抛出 NotSupportedException。
+        /// 3..NET 8 + 专属：需确保项目目标框架是.NET 8 或更高版本
+        /// </summary>
+        public void FrozenSetMethod()
+        {
+            //创建 FrozenSet<T> 由于FrozenSet是不可变的，只能在初始化时通过 ToFrozenSet() 扩展方法或 FrozenSet.ToFrozenSet() 静态方法创建
+
+          
+            // 从 IEnumerable<T> 创建
+            HashSet<int> sourceSet = new() { 1, 2, 3, 4 };
+            FrozenSet<int> frozenSet = sourceSet.ToFrozenSet();
+
+            // 或直接从一个集合转换
+            List<string> names = new() { "Alice", "Bob", "Charlie" };
+            FrozenSet<string> frozenNames = names.ToFrozenSet();
+
+            bool containsBob = frozenNames.Contains("Bob"); // 极快的查找速度
+            Console.WriteLine(containsBob); // 输出: True
+
+            foreach (var name in frozenNames)
+            {
+                Console.WriteLine(name); // 输出: Alice, Bob, Charlie
+            }
+
+
+
+            // 初始化数据
+            var colors = new List<string> { "Red", "Green", "Blue", "Yellow" };
+            // 转换为 FrozenSet
+            FrozenSet<string> frozenColors = colors.ToFrozenSet();
+            // 查找
+            Console.WriteLine(frozenColors.Contains("Green")); // True
+            Console.WriteLine(frozenColors.Contains("Black")); // False
+            // 遍历
+            foreach (var color in frozenColors)
+            {
+                Console.WriteLine(color);
+            }
+            // 尝试修改会抛出异常
+            // frozenColors.Add("Purple"); // NotSupportedException
+        }
+
+
+        /// <summary>
+        /// System.Collections.Immutable 包含定义不可变集合的接口和类：
+        /// 1.共享集合的方式是，其使用者可以放心，该集合永远不会更改。
+        /// 2.提供多线程应用程序中的隐式线程安全（无需锁来访问集合）。
+        /// 3.遵循函数编程做法。
+        /// 4.在枚举过程中修改集合，同时确保该原始集合不会更改。
+        /// </summary>
+        public void ImmutableMethod()
+        {
+            
 
 
         }
