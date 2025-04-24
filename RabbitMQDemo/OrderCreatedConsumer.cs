@@ -31,8 +31,16 @@ namespace RabbitMQDemo
             _queueName = _config["RabbitMQ:QueueName"];
         }
 
+        /// <summary>
+        /// 接收消息最推荐且最便捷的方式是使用接口设置订阅IAsyncBasicConsumer。
+        /// 这样，消息到达时就会自动投递，无需主动请求。
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
+
             _channel = await _connection.CreateChannel();
 
             // 声明交换机和队列
@@ -55,19 +63,22 @@ namespace RabbitMQDemo
             // 设置QoS
             await _channel.BasicQosAsync(0, 1, false);
 
+            //EventingBasicConsumer:实现消费者的一种方法是使用便利类 AsyncEventingBasicConsumer，
+            //它将交付和其他消费者生命周期事件作为 C# 事件分派
             var consumer = new AsyncEventingBasicConsumer(_channel); //EventingBasicConsumer
+
             //Received
             consumer.ReceivedAsync += async (model, ea) =>
             {
                 using var scope = _serviceProvider.CreateScope();
                 var processor = scope.ServiceProvider.GetRequiredService<IOrderProcessor>();
-
                 try
                 {
                     var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
                     var orderEvent = JsonSerializer.Deserialize<OrderCreatedEvent>(message);
 
+                    //具体消费动作
                     await processor.ProcessOrderAsync(orderEvent);
 
                     await _channel.BasicAckAsync(ea.DeliveryTag, false); //BasicAck

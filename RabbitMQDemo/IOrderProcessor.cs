@@ -20,6 +20,7 @@
 
             // 模拟处理时间
             await Task.Delay(1000);
+            //add / update
 
             // 实际业务逻辑...
             _logger.LogInformation($"Order {orderEvent.OrderId} processed successfully");
