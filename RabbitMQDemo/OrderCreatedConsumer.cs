@@ -90,6 +90,8 @@ namespace RabbitMQDemo
                 }
             };
 
+            //BasicConsume 方法是消费者（Consumer）开始消费队列消息的核心方法。
+            //它的作用是将当前信道（Channel）设置为监听指定队列，并在消息到达时自动触发回调处理
             await _channel.BasicConsumeAsync(
                  queue: _queueName,
                  autoAck: false,
