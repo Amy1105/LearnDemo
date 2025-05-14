@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VOL.Core.RabbitMQManager
 {
     public class RabbitMQOptions
     {
         [Required]
-        public string HostName { get; set; }
+        public required string HostName { get; set; }
         [Required]
-        public int Port { get; set; }
+        public required int Port { get; set; }
         [Required]
-        public string VirtualHost { get; set; }
+        public required string VirtualHost { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
         [Required]
-        public string Password { get; set; }
+        public required string Password { get; set; }
         [Required]
-        public string RouteKey { get; set; }     
+        public required string RouteKey { get; set; }     
     }
 }
