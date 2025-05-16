@@ -53,18 +53,12 @@ namespace SearchString
     //        ////异步迭代器(IAsyncEnumerable) 减少线程阻塞。
     //        const int bufferSize = 8192; // 8KB缓冲区
     //        using var reader = new StreamReader(filePath, bufferSize: bufferSize);
-
-
-
     //        //4.并行处理（可选扩展）
     //        //如需进一步加速，可并行处理多个文件：
 
     //        //var parallelResults = await Task.WhenAll(
     //        //    filePaths.Select(file => Task.Run(() => CountUrlsInFileAsync(file)))
     //        //);
-
-
-
     //        while (!reader.EndOfStream)
     //        {
     //            var line = await reader.ReadLineAsync();
@@ -72,7 +66,6 @@ namespace SearchString
     //                yield return line.Trim();
     //        }
     //    }
-
     //}
 
     public class ParallelUrlCounter
