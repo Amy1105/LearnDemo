@@ -38,7 +38,7 @@ builder.Configuration.GetSection(nameof(ConnectionStringsOption))
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    
 
-    Console.WriteLine("Done.");
+
+   
 }

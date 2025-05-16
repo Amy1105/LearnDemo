@@ -2,6 +2,7 @@
 
 
 using doNetLearn.ConfigurationDemo;
+using doNetLearn.DataStructures;
 using doNetLearn.DesignPatterns;
 using doNetLearn.Expressions;
 using Microsoft.Extensions.FileProviders;
@@ -20,18 +21,17 @@ using System.IO;
 //FileSystemWatcherDemo.Method();
 
 
-var stream= new FileStream(
-                           @"D:\appsetting.json",
-                           FileMode.Open,
-                           FileAccess.Read,
-                           FileShare.ReadWrite,
-                           bufferSize: 1,
-                           FileOptions.SequentialScan);
+//var stream= new FileStream(
+//                           @"D:\appsetting.json",
+//                           FileMode.Open,
+//                           FileAccess.Read,
+//                           FileShare.ReadWrite,
+//                           bufferSize: 1,
+//                           FileOptions.SequentialScan);
 
 
-var jsonData   = JsonConfigurationFileParser.Parse(stream);
+//var jsonData   = JsonConfigurationFileParser.Parse(stream);
 
-Console.WriteLine("");
 
 //源代码生成器
 //一、源代码生成器项目得创建和调试
@@ -78,4 +78,8 @@ Console.WriteLine("");
     //增量生成器
 }
 
+await Class3.AsyncMethodA();
+
+
+await Class3.AsyncMethodB("Value 1");
 
