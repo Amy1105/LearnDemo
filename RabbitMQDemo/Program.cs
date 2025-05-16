@@ -4,17 +4,13 @@ using RabbitMQDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//在 ASP.NET Core 中，HttpContextAccessor 是一个服务，它允许你在非控制器类中访问当前 HTTP 请求的 HttpContext
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IMessageProducer, BopProducer>(); //消息队列生产者
 
-// 添加后台服务
-builder.Services.AddHostedService<OrderCreatedConsumer>();
-builder.Services.AddScoped<IOrderProcessor, OrderProcessor>(); //消息队列消费者
-
-
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
 
 var app = builder.Build();
 
