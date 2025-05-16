@@ -51,19 +51,22 @@ builder.Services.AddTransient<BlockingCollectionDemo>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
+    //第一部分，检索所有需要翻译的文字，汇总成excel文件
     //搜索源码中所有需要翻译的text，保存成excel
-    SearchTextExecute searchTextExecute = scope.ServiceProvider.GetService<SearchTextExecute>();
+    SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
 
-    //SearchTextExecute.GetMatch11();
+    //SearchTextExecute.GetMatch11();  //测试方法
+    
+    string directoryPath = @"D:\11";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+    await searchTextExecute.SearchText(directoryPath);
 
-    //await searchTextExecute.SearchText();
-
+    //第二部分，与数据库中存在的翻译进行比较
     ////读取excel的key，多线程查询
-    myDBContext myDBContext = scope.ServiceProvider.GetService<myDBContext>();
-    var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
+    //myDBContext myDBContext = scope.ServiceProvider.GetRequiredService<myDBContext>();
+    //var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
 
-    var dbService = scope.ServiceProvider.GetService<dbService>();
-    await dbService.ExcelAnlysis(dbLists);
+    //var dbService = scope.ServiceProvider.GetRequiredService<dbService>();
+    //await dbService.ExcelAnlysis(dbLists);
 
     //Console.WriteLine(@".\SearchResults" + DateTime.UtcNow.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx");
     //Class1.PatternVue();
