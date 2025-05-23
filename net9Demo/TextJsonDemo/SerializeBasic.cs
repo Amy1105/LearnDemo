@@ -38,7 +38,7 @@ namespace net9Demo.TextJsonDemo
                 //},
                 WriteIndented = true,
                // IgnoreReadOnlyProperties = true,//忽略所有只读属性，
-               DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault //忽略所有，根据具体属性含义
+               //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault //忽略所有，根据具体属性含义
 
             }; //进行优质打印
             string jsonString = JsonSerializer.Serialize(weatherForecast, options);
@@ -49,6 +49,12 @@ namespace net9Demo.TextJsonDemo
 
     public class WeatherForecast
     {
+
+        public int ID;
+
+        [JsonInclude]
+        public string Name;
+
         [JsonPropertyOrder(-5)]  //配置序列化属性的顺序 , 属性按 Order 值从小到大的顺序编写的
         public DateTimeOffset Date { get; set; }
         [JsonPropertyOrder(-2)]

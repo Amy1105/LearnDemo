@@ -55,8 +55,8 @@ using (var scope = app.Services.CreateScope())
     //// 输出: Name: Bob, Age: 25
 
 
-    SerializeBasic.Test();
-
+  //  SerializeBasic.Test();
+    DeserializeExtra.Test();
 
 
     //var options = new JsonSerializerOptions
