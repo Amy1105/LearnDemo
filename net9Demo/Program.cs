@@ -2,6 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using net9Demo;
+using net9Demo.TextJsonDemo;
+using System.Reflection.Emit;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 
@@ -39,6 +43,31 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
 
+    //var person = new Person { Name = "Alice", Age = 30, BirthDate = new DateTime(1993, 5, 10) };
+    //string json = JsonSerializer.Serialize(person);
+    //Console.WriteLine(json);
+    //// 输出: {"Name":"Alice","Age":30,"BirthDate":"1993-05-10T00:00:00"}
 
-   
+    //// 反序列化 JSON → 对象
+    //string jsonInput = "{\"Name\":\"Bob\",\"Age\":25,\"BirthDate\":\"1998-03-15\"}";
+    //Person deserializedPerson = JsonSerializer.Deserialize<Person>(jsonInput);
+    //Console.WriteLine($"Name: {deserializedPerson.Name}, Age: {deserializedPerson.Age}");
+    //// 输出: Name: Bob, Age: 25
+
+
+    SerializeBasic.Test();
+
+
+
+    //var options = new JsonSerializerOptions
+    //{
+    //    WriteIndented = true,                // 格式化输出（缩进）
+    //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // 属性名转为驼峰命名
+    //    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, // 忽略null值
+    //    Converters = { new JsonStringEnumConverter() }     // 枚举转字符串
+    //};
+    //var data = new { Name = "Charlie", Score = 95, Level = Level.Advanced };
+    //string json2 = JsonSerializer.Serialize(data, options);
+    //Console.WriteLine(json2);
+
 }
