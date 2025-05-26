@@ -79,10 +79,13 @@ namespace net9Demo.NetDemo
             using (var httpClient = new HttpClient())
             {
                 // 调试流处理的好方法：
-                var request = new HttpRequestMessage(HttpMethod.Get, "www.baidu.com");
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://www.baidu.com");
                 var response = await httpClient.SendAsync(request,
                     HttpCompletionOption.ResponseHeadersRead);
                 var stream = await response.Content.ReadAsStreamAsync();
+
+
+                await httpClient.GetAsync("https://www.baidu.com"); // 应复用连接
 
                 // 此时stream就是具体的HttpBaseStream子类实例
 

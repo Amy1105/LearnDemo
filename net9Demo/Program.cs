@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using net9Demo;
+using net9Demo.NetDemo;
 using net9Demo.TextJsonDemo;
 using System.Reflection.Emit;
 using System.Text.Json;
@@ -33,7 +34,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 //appsetting.json 取不到值的原因，appsetting.json 属性需要设置成始终复制
 
 
-
+builder.Services.AddTransient<HeadersDemo>();
 ConnectionStringsOption connectionStringsOption = new();
 builder.Configuration.GetSection(nameof(ConnectionStringsOption))
     .Bind(connectionStringsOption);
@@ -55,10 +56,11 @@ using (var scope = app.Services.CreateScope())
     //// 输出: Name: Bob, Age: 25
 
 
-  //  SerializeBasic.Test();
-    DeserializeExtra.Test();
+    //  SerializeBasic.Test();
+    //DeserializeExtra.Test();
 
-
+    var HeadersDemo= scope.ServiceProvider.GetRequiredService<HeadersDemo>();
+    await HeadersDemo.Test1();
     //var options = new JsonSerializerOptions
     //{
     //    WriteIndented = true,                // 格式化输出（缩进）
