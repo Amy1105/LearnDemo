@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using net9Demo;
+using net9Demo.CodeDesignDemo;
 using net9Demo.NetDemo;
 using net9Demo.TextJsonDemo;
 using System.Reflection.Emit;
@@ -59,8 +60,12 @@ using (var scope = app.Services.CreateScope())
     //  SerializeBasic.Test();
     //DeserializeExtra.Test();
 
-    var HeadersDemo= scope.ServiceProvider.GetRequiredService<HeadersDemo>();
-    await HeadersDemo.Test1();
+    //var HeadersDemo= scope.ServiceProvider.GetRequiredService<HeadersDemo>();
+    //await HeadersDemo.Test1();
+
+
+    ChainPatternDemo.Test();
+
     //var options = new JsonSerializerOptions
     //{
     //    WriteIndented = true,                // 格式化输出（缩进）

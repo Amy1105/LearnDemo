@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,6 +102,28 @@ namespace net9Demo.NetDemo
                 await httpClient.SendAsync(request2);
             }
         }
+
+        /// <summary>
+        /// 利用反射查看责任链中的handler
+        /// </summary>
+        public void CheckSocketsHttpHandler()
+        {
+            var handler = new SocketsHttpHandler();
+
+            // 使用反射获取内部 Handler 链
+            var field = typeof(SocketsHttpHandler).GetField("_handler", BindingFlags.NonPublic | BindingFlags.Instance);
+            var currentHandler = field.GetValue(handler);
+
+            while (currentHandler != null)
+            {
+                Console.WriteLine(currentHandler.GetType().Name);
+
+                // DelegatingHandler 会链接到下一个 Handler
+                var innerHandlerProp = currentHandler.GetType().GetProperty("InnerHandler");
+                currentHandler = innerHandlerProp?.GetValue(currentHandler);
+            }
+        }
+
 
         /*
         二、携带具体问题去阅读（示例问题清单）
