@@ -28,29 +28,30 @@ namespace net9Demo.LockDemo
         /// </summary>
         public class ConnectionPool
         {
-            private readonly Stack<SocketsHttpConnectionContext> _idleConnections = new Stack<SocketsHttpConnectionContext>();
+            //伪代码
+            //private readonly Stack<SocketsHttpConnectionContext> _idleConnections = new Stack<SocketsHttpConnectionContext>();
 
-            // 获取连接（线程安全）
-            public SocketsHttpConnectionContext RentConnection()
-            {
-                lock (_idleConnections) // 直接使用 Stack 对象作为锁
-                {
-                    if (_idleConnections.TryPop(out var connection))
-                    {
-                        return connection;
-                    }
-                    return CreateNewConnection();
-                }
-            }
+            //// 获取连接（线程安全）
+            //public SocketsHttpConnectionContext RentConnection()
+            //{
+            //    lock (_idleConnections) // 直接使用 Stack 对象作为锁
+            //    {
+            //        if (_idleConnections.TryPop(out var connection))
+            //        {
+            //            return connection;
+            //        }
+            //        return CreateNewConnection();
+            //    }
+            //}
 
-            // 归还连接（线程安全）
-            public void ReturnConnection(SocketsHttpConnectionContext connection)
-            {
-                lock (_idleConnections) // 同一个锁对象
-                {
-                    _idleConnections.Push(connection);
-                }
-            }
+            //// 归还连接（线程安全）
+            //public void ReturnConnection(SocketsHttpConnectionContext connection)
+            //{
+            //    lock (_idleConnections) // 同一个锁对象
+            //    {
+            //        _idleConnections.Push(connection);
+            //    }
+            //}
         }
 
         public class CacheDemo
