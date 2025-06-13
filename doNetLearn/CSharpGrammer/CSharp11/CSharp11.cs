@@ -36,10 +36,10 @@ namespace doNetLearn.CSharpGrammer
 
 
 
-   
 
 
-    public class CSharp11: ICSharp11
+
+    public class CSharp11 : ICSharp11
     {
 
         [ValidateType<string>()]

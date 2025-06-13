@@ -84,6 +84,7 @@ namespace EFCoreDemo.Services
             context.BulkInsert(subEntities, bulkConfig);
 
             Console.WriteLine($"after insert bulk 课程:{context.Courses.Count()}条");
+            //var d = context.Courses;
             //查询
             var courses = context.Courses.Include(x => x.Instructors).Where(x => x.CourseID < 10000);//.Take(10);
             foreach (var cource in courses)

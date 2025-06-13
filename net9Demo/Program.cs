@@ -2,6 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using net9Demo;
+using net9Demo.CodeDesignDemo;
+using net9Demo.NetDemo;
+using net9Demo.TextJsonDemo;
+using System.Reflection.Emit;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 
@@ -29,7 +35,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 //appsetting.json 取不到值的原因，appsetting.json 属性需要设置成始终复制
 
 
-
+builder.Services.AddTransient<HeadersDemo>();
 ConnectionStringsOption connectionStringsOption = new();
 builder.Configuration.GetSection(nameof(ConnectionStringsOption))
     .Bind(connectionStringsOption);
@@ -38,7 +44,37 @@ builder.Configuration.GetSection(nameof(ConnectionStringsOption))
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    
 
-    Console.WriteLine("Done.");
+    //var person = new Person { Name = "Alice", Age = 30, BirthDate = new DateTime(1993, 5, 10) };
+    //string json = JsonSerializer.Serialize(person);
+    //Console.WriteLine(json);
+    //// 输出: {"Name":"Alice","Age":30,"BirthDate":"1993-05-10T00:00:00"}
+
+    //// 反序列化 JSON → 对象
+    //string jsonInput = "{\"Name\":\"Bob\",\"Age\":25,\"BirthDate\":\"1998-03-15\"}";
+    //Person deserializedPerson = JsonSerializer.Deserialize<Person>(jsonInput);
+    //Console.WriteLine($"Name: {deserializedPerson.Name}, Age: {deserializedPerson.Age}");
+    //// 输出: Name: Bob, Age: 25
+
+
+    //  SerializeBasic.Test();
+    //DeserializeExtra.Test();
+
+    //var HeadersDemo= scope.ServiceProvider.GetRequiredService<HeadersDemo>();
+    //await HeadersDemo.Test1();
+
+
+    ChainPatternDemo.Test();
+
+    //var options = new JsonSerializerOptions
+    //{
+    //    WriteIndented = true,                // 格式化输出（缩进）
+    //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // 属性名转为驼峰命名
+    //    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, // 忽略null值
+    //    Converters = { new JsonStringEnumConverter() }     // 枚举转字符串
+    //};
+    //var data = new { Name = "Charlie", Score = 95, Level = Level.Advanced };
+    //string json2 = JsonSerializer.Serialize(data, options);
+    //Console.WriteLine(json2);
+
 }

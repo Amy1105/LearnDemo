@@ -15,12 +15,9 @@ namespace SearchString
         /// 4.查找.cs,.js,.vue后缀的文件，忽略大小写，过滤掉大文件node_modules，dist，bin    to do ...
         /// </summary>
         /// <returns></returns>
-        public async Task SearchText()
+        public async Task SearchText(string directoryPath)
         {
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-
+            Stopwatch stopwatch = Stopwatch.StartNew();           
             //用于存储结果，最后去重
             ConcurrentBag<(string file, int lineNumber, string text)> results = new ConcurrentBag<(string, int, string)>();
 
