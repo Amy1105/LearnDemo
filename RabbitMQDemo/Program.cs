@@ -3,23 +3,9 @@ using RabbitMQDemo;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 添加RabbitMQ服务
-builder.Services.AddSingleton<IRabbitMQConnection>(sp => {
-    var factory = new ConnectionFactory()
-    {
-        HostName = builder.Configuration["RabbitMQ:HostName"],
-        UserName = builder.Configuration["RabbitMQ:UserName"],
-        Password = builder.Configuration["RabbitMQ:Password"]
-    };
-    return new RabbitMQConnection(factory);
-});
+builder.Services.Configure(builder.Configuration.GetSection("RabbitMQ"));
 
-builder.Services.AddSingleton<IMessageProducer, RabbitMQProducer>(); //消息队列生产者
-
-// 添加后台服务
-builder.Services.AddHostedService<OrderCreatedConsumer>();
-builder.Services.AddScoped<IOrderProcessor, OrderProcessor>(); //消息队列消费者
-
+builder.Services.AddHostedService<BopConsumerService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
