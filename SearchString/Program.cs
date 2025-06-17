@@ -54,10 +54,10 @@ using (var scope = app.Services.CreateScope())
     //第一部分，检索所有需要翻译的文字，汇总成excel文件
     //搜索源码中所有需要翻译的text，保存成excel
     {
-       // SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-       //// SearchTextExecute.GetMatch11();  //各种测试方法
-       // string directoryPath = @"D:\12";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-       // await searchTextExecute.SearchText(directoryPath);
+        //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
+        //// SearchTextExecute.GetMatch11();  //各种测试方法
+        //string directoryPath = @"D:\12";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        //await searchTextExecute.SearchText(directoryPath);
     }
  
 
