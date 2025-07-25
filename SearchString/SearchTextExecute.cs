@@ -38,23 +38,7 @@ namespace SearchString
                 Parallel.ForEach(files, options, file =>
                 {
                     try
-                    {
-                        ////读取文件内容
-                        //string[] lines = File.ReadAllLines(file);
-                        //for (int i = 0; i < lines.Length; i++)
-                        //{
-                        //    //检查每一行是否包含指定的字符串
-                        //   var list = Class1.Pattern(lines[i], file);
-                        //    if (list.Any())
-                        //    {
-                        //        foreach (var line in list)
-                        //        {
-                        //            results.Add((file, i + 1, line));
-                        //        }
-                        //    }
-                        //}
-
-
+                    {                        
                         // 逐行读取文件内容，避免一次性加载大文件到内存中             
                         using (var reader = new StreamReader(file))
                         {
