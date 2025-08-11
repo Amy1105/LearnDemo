@@ -56,7 +56,7 @@ using (var scope = app.Services.CreateScope())
     {
         //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
         //// SearchTextExecute.GetMatch11();  //各种测试方法
-        //string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        //string directoryPath = @"D:\12";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
         //await searchTextExecute.SearchText(directoryPath);
     }
 
@@ -77,11 +77,6 @@ using (var scope = app.Services.CreateScope())
         await BlockingCollectionDemo.Method();
 
     }
-
-
-
-
     
-
     Console.WriteLine("Done.");
 }
