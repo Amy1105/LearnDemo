@@ -102,7 +102,7 @@ namespace SearchString
 
             var files = extensions
             .SelectMany(ext => Directory.GetFiles(directoryPath, $"*{ext}", SearchOption.AllDirectories))               
-            .Where(file => !file.Contains("node_modules") && !file.Contains("bin")  && !file.Contains("dist")  ) // 跳过 node_modules 文件夹           
+            .Where(file => !file.Contains("node_modules") && !file.Contains("bin")  && !file.Contains("dist") && !file.Contains("build")  ) // 跳过 node_modules 文件夹           
             //.Distinct() // 去重
             .ToArray();
 
@@ -269,6 +269,7 @@ namespace SearchString
         public static void GetMatch2(string input,  ref List<string> values)
         {
             string Pattern = @"\$t\(\s*([""'])(.*?)\1\s*(?:,\s*(.*))?\)";
+           // string Pattern = @"\$t\(\s*([""'])(.*?)\1\s*(?:,\s*(.*))?\)";
 
             MatchCollection matches = Regex.Matches(input, Pattern, RegexOptions.IgnorePatternWhitespace);
             foreach (Match match in matches)
@@ -290,7 +291,9 @@ namespace SearchString
             //$t('项目总预算:{0}', { 0: generalBudget })
             //string input = "_this.$t(\"请输入\") + _this.$t(\"特殊样品SOC和物流说明\");.$t('项目总预算:{0}', { 0: generalBudget })";
 
-            string input = @"$t('样品类型');$t('基本信息') +  $t('项目总预算:{0}', { 0: generalBudget })";
+           // string input = @"$t('样品类型');$t('基本信息') +  $t('项目总预算:{0}', { 0: generalBudget })";
+
+            string input = @"<span>{{ $t('大小') + ( file.size / 1024).toFixed(2) + 'KB' }}</span>";
 
             //string Pattern = @"(?\.$t)\(\""([^\""]+)\""(?:,\s*([^)]+))?\)";
             
