@@ -42,6 +42,8 @@ builder.Configuration.GetSection(nameof(ConnectionStringsOption))
 builder.Services.AddDbContext<myDBContext>(options =>
   options.UseSqlServer(connectionStringsOption.DbConnectionString));
 builder.Services.AddTransient<dbService>();
+builder.Services.AddTransient<MatchTest>();
+
 builder.Services.AddTransient<SearchTextExecute>();
 
 builder.Services.AddTransient<TestBlockingCollection>();
@@ -51,21 +53,19 @@ builder.Services.AddTransient<BlockingCollectionDemo>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-
-
     //多线程
 
+    //MatchTest.GetVue();  //各种测试方法
 
 
-    //SearchTextExecute.PatternVue();
-
-    //第一部分，检索所有需要翻译的文字，汇总成excel文件
-    //搜索源码中所有需要翻译的text，保存成excel
     {
-        //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-        //// SearchTextExecute.GetMatch11();  //各种测试方法
-        //string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-        //await searchTextExecute.SearchText(directoryPath);
+        SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
+        string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
+
+        //查询帆软翻译键值
+        //string directoryPath = @"D:\rvc";
+        //await searchTextExecute.SearchFRText(directoryPath,"FanRuan", ".cpt");
     }
 
 
@@ -84,16 +84,6 @@ using (var scope = app.Services.CreateScope())
         //TestBlockingCollection.Method();
         //await BlockingCollectionDemo.Method();
 
-    }
-
-
-    //第三部分，检索所有需要翻译的文字，汇总成excel文件--帆软模板
-    //搜索源码中所有需要翻译的text，保存成excel
-    {
-        SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-        //SearchTextExecute.GetMatchFR();  //各种测试方法
-        string directoryPath = @"D:\rvc";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-        await searchTextExecute.SearchFRText(directoryPath);
     }
 
     Console.WriteLine("Done.");
