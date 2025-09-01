@@ -421,10 +421,10 @@ namespace SearchString
             {
                 MatchString(input, PatternVue, ref values);
             }
-            //else if (filetype.Contains(".cpt"))
-            //{
-            //    MatchString(input, UniversalPattern, ref values);
-            //}
+            else if (filetype.Contains(".cpt"))
+            {
+                MatchString(input, UniversalPattern, ref values);
+            }
             return values;
         }
 

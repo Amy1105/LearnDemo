@@ -60,12 +60,12 @@ using (var scope = app.Services.CreateScope())
 
     {
         SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-        string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-        await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
+        //string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        //await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
 
         //查询帆软翻译键值
-        //string directoryPath = @"D:\rvc";
-        //await searchTextExecute.SearchFRText(directoryPath,"FanRuan", ".cpt");
+        string directoryPath = @"D:\rvc";
+        await searchTextExecute.SearchText(directoryPath, "FanRuan", ".cpt");
     }
 
 
