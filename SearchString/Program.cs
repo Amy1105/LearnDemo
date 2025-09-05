@@ -5,6 +5,9 @@ using Microsoft.Extensions.Hosting;
 using SearchString;
 using SearchString.ConcurrentFiles;
 using SearchString.Models;
+using System.Collections;
+using System.Collections.Generic;
+using static OfficeOpenXml.ExcelErrorValue;
 
 
 
@@ -56,16 +59,16 @@ using (var scope = app.Services.CreateScope())
     //多线程
 
     //MatchTest.GetVue();  //各种测试方法
-
+  
 
     {
-        SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-        //string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-        //await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
+        //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
+        ////string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        ////await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
 
-        //查询帆软翻译键值
-        string directoryPath = @"D:\rvc";
-        await searchTextExecute.SearchText(directoryPath, "FanRuan", ".cpt");
+        ////查询帆软翻译键值
+        //string directoryPath = @"D:\rvc";
+        //await searchTextExecute.SearchText(directoryPath, "FanRuan", ".cpt");
     }
 
 
