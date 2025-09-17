@@ -56,10 +56,30 @@ builder.Services.AddTransient<BlockingCollectionDemo>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
+
+    //DateTime yesterdayStart = DateTime.Today.AddDays(-1);
+    //DateTime dayStart = DateTime.Today;
+    //Console.WriteLine(yesterdayStart);
     //多线程
 
     //MatchTest.GetVue();  //各种测试方法
-  
+
+    string start = "2025-9-15 00:00:00";
+    string end = "2025-9-15 9:11:37";
+    DateTime.TryParse(start, out DateTime dayStart);
+       DateTime.TryParse(end, out DateTime dayEnd);
+
+
+
+    //统计时长 = min（24，统计结束 - 统计开始）
+    var timeSpan = (dayEnd - dayStart); //(按分钟取，转小时存)
+
+    //时长存0.00h
+    double TotalHours = 0;
+    if (timeSpan.TotalHours > 0)
+    {
+        TotalHours = Math.Round(timeSpan.TotalHours, 2);
+    }
 
     {
         //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
