@@ -18,7 +18,7 @@ namespace SearchString
             // 设置EPPlus的LicenseContext
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            string filePath = "./SearchUniqueResults.xlsx";
+            string filePath = "./GLimsUnique.xlsx";
             string outputFilePath = "./Languages.xlsx";
 
             var data = new ConcurrentBag<VModel>(); // 线程安全的集合，用于存储读取的数据

@@ -71,41 +71,41 @@ using (var scope = app.Services.CreateScope())
 
 
 
-    //统计时长 = min（24，统计结束 - 统计开始）
-    var timeSpan = (dayEnd - dayStart); //(按分钟取，转小时存)
+    ////统计时长 = min（24，统计结束 - 统计开始）
+    //var timeSpan = (dayEnd - dayStart); //(按分钟取，转小时存)
 
-    //时长存0.00h
-    double TotalHours = 0;
-    if (timeSpan.TotalHours > 0)
-    {
-        TotalHours = Math.Round(timeSpan.TotalHours, 2);
-    }
+    ////时长存0.00h
+    //double TotalHours = 0;
+    //if (timeSpan.TotalHours > 0)
+    //{
+    //    TotalHours = Math.Round(timeSpan.TotalHours, 2);
+    //}
 
     {
         //SearchTextExecute searchTextExecute = scope.ServiceProvider.GetRequiredService<SearchTextExecute>();
-        ////string directoryPath = @"D:\Projects\LiMS";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
-        ////await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
+        //string directoryPath = @"D:\lims-dis-danger";//  @"D:\Projects\LiMS\TVC.Server\TVC.ApplicationForm\Services\ApplicationForm\Partial";
+        //await searchTextExecute.SearchText(directoryPath, "GLims", ".cs", ".js", ".vue");
 
-        ////查询帆软翻译键值
-        //string directoryPath = @"D:\rvc";
-        //await searchTextExecute.SearchText(directoryPath, "FanRuan", ".cpt");
+        //////查询帆软翻译键值
+        ////string directoryPath = @"D:\rvc";
+        ////await searchTextExecute.SearchText(directoryPath, "FanRuan", ".cpt");
     }
 
 
     //第二部分，与数据库中存在的翻译进行比较
     //读取excel的key，多线程查询
     {
-        //myDBContext myDBContext = scope.ServiceProvider.GetRequiredService<myDBContext>();
-        //var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
+        myDBContext myDBContext = scope.ServiceProvider.GetRequiredService<myDBContext>();
+        var dbLists = myDBContext.sys_Text_Mains.Include(x => x.Sys_Texts).ToList();
 
-        //var dbService = scope.ServiceProvider.GetRequiredService<dbService>();
-        //await dbService.ExcelAnlysis(dbLists);
+        var dbService = scope.ServiceProvider.GetRequiredService<dbService>();
+        await dbService.ExcelAnlysis(dbLists);
 
-        //Console.WriteLine(@".\SearchResults" + DateTime.UtcNow.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx");
-        ////Class1.PatternVue();
+        Console.WriteLine(@".\SearchResults" + DateTime.UtcNow.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx");
+        //Class1.PatternVue();
 
-        //TestBlockingCollection.Method();
-        //await BlockingCollectionDemo.Method();
+        TestBlockingCollection.Method();
+        await BlockingCollectionDemo.Method();
 
     }
 
